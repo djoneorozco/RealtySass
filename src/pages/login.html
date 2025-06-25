@@ -3,36 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Templates – RealtySass</title>
+  <title>Login – RealtySass</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Montserrat', sans-serif; background-color: #0d0d0d; margin:0; color: #333; }
-    h1,h2,h3 { font-family: 'Lora', serif; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #0d0d0d;
+      color: #fff;
+      margin: 0;
+    }
+    h1, h2, h3 {
+      font-family: 'Lora', serif;
+    }
     .text-gold { color: #d4af37; }
     .bg-gold { background-color: #d4af37; }
-    .hero { background-color: #0d0d0d; color: #fff; text-align: center; padding: 6rem 1rem; position: relative; }
-    .logo-bar { position: relative; }
-    .logo-bar::before {
-      content: '';
-      position: absolute;
-      top: 50%; left: 50%;
-      width: 60%; height: 300px;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle at center, rgba(212,175,55,0.4), transparent);
-      z-index: 0;
-    }
-    .logo-bar img { position: relative; z-index: 1; }
-    .showcase { background-color: #fbf9f3; }
-    .showcase h2 { color: #1a1a1a; }
-    .showcase p { color: #555; }
-    .showcase .domain { font-size: 0.85rem; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; }
-    a.btn { display: inline-block; padding: 0.75rem 1.5rem; background-color: #d4af37; color: #0d0d0d; font-weight: 600; border-radius: 0.375rem; }
   </style>
 </head>
 <body>
-  <!-- Navbar with glass effect -->
-  <header class="fixed top-0 w-full glass z-50">
+
+  <!-- Navbar -->
+  <header class="fixed top-0 w-full bg-black bg-opacity-80 z-50 shadow-md">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-white">RealtySass</h1>
       <nav class="hidden md:flex space-x-6 text-gray-200">
@@ -46,76 +37,30 @@
     </div>
   </header>
 
-  <main class="pt-28">
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="max-w-4xl mx-auto">
-        <h1 class="text-5xl font-bold mb-4">Award-winning real estate website designs</h1>
-        <p class="text-lg mb-12">With over 1,500 five-star reviews and numerous RealTrends awards, RealtySass is the leading provider of beautiful, effective real estate websites for agents, teams, and brokers. Check out our portfolio of our most recent designs.</p>
-        <div class="logo-bar flex flex-wrap justify-center items-center gap-8">
-          <img src="/src/assets/logo1.png" alt="Client Logo 1" class="h-12 opacity-70 hover:opacity-100 transition">
-          <img src="/src/assets/logo2.png" alt="Client Logo 2" class="h-12 opacity-70 hover:opacity-100 transition">
-          <img src="/src/assets/logo3.png" alt="Client Logo 3" class="h-12 opacity-70 hover:opacity-100 transition">
-          <img src="/src/assets/logo4.png" alt="Client Logo 4" class="h-12 opacity-70 hover:opacity-100 transition">
-          <img src="/src/assets/logo5.png" alt="Client Logo 5" class="h-12 opacity-70 hover:opacity-100 transition">
+  <!-- Login Form -->
+  <main class="pt-36 flex flex-col items-center justify-center min-h-screen bg-[#0d0d0d] px-4">
+    <img src="/src/assets/SaSS.png" alt="RealtySass Logo" class="w-32 mb-8" />
+
+    <div class="bg-white text-black rounded-lg shadow-xl w-full max-w-md p-8">
+      <h2 class="text-2xl font-semibold mb-6 text-center">Welcome Back</h2>
+      <form>
+        <div class="mb-4">
+          <label for="email" class="block mb-2 font-medium">Email</label>
+          <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold" />
         </div>
-      </div>
-    </section>
-
-    <!-- Showcase Section -->
-    <section class="showcase py-20 px-4">
-      <div class="max-w-6xl mx-auto space-y-20">
-
-        <!-- Item 1 -->
-        <div class="grid md:grid-cols-2 gap-8 items-center">
-          <div>
-            <div class="domain">kumarawilcoxon.com</div>
-            <h2 class="text-3xl font-semibold mb-4">Kumara Wilcoxon</h2>
-            <p class="mb-6">With over $3.1B in sales, Kumara Wilcoxon’s site reflects luxury estates with rich imagery and elegant typography.</p>
-            <a href="#" class="btn">Show More</a>
-          </div>
-          <div>
-            <img src="/src/assets/kumara.jpg" alt="Kumara Wilcoxon Website">
-          </div>
+        <div class="mb-6">
+          <label for="password" class="block mb-2 font-medium">Password</label>
+          <input type="password" id="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold" />
         </div>
-
-        <!-- Item 2 -->
-        <div class="grid md:grid-cols-2 gap-8 items-center">
-          <div class="md:order-2">
-            <div class="domain">carolwoodpartners.com</div>
-            <h2 class="text-3xl font-semibold mb-4">Carolwood Partners</h2>
-            <p class="mb-6">Carolwood Estates’ boutique brokerage site combines clean lines with cinematic video backgrounds for a timeless elegance.</p>
-            <a href="#" class="btn">Show More</a>
-          </div>
-          <div class="md:order-1">
-            <img src="/src/assets/carolwood.jpg" alt="Carolwood Partners Website">
-          </div>
-        </div>
-
-        <!-- Item 3 -->
-        <div class="grid md:grid-cols-2 gap-8 items-center">
-          <div>
-            <div class="domain">gingermartinco.com</div>
-            <h2 class="text-3xl font-semibold mb-4">GingerMartin + Co</h2>
-            <p class="mb-6">Interactive menus and subtle animations bring the GingerMartin + Co brand to life.</p>
-            <a href="#" class="btn">Show More</a>
-          </div>
-          <div>
-            <img src="/src/assets/ginger.jpg" alt="GingerMartin + Co Website">
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="text-center py-10 text-sm text-gray-400">
-      &copy; 2025 RealtySass – Built with sass, style, and strategy.
-    </footer>
+        <button type="submit" class="w-full bg-gold text-black font-semibold py-2 rounded hover:opacity-90 transition duration-200">Log In</button>
+      </form>
+    </div>
   </main>
 
-  <!-- Overlays & Scripts -->
-  <!-- (same as index) -->
+  <!-- Footer -->
+  <footer class="text-center py-10 text-sm text-gray-400">
+    &copy; 2025 RealtySass – Built with sass, style, and strategy.
+  </footer>
 
 </body>
 </html>

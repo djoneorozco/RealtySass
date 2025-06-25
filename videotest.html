@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Video Test</title>
+  <style>
+    body {
+      background: #111;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: sans-serif;
+    }
+    h1 { margin-bottom: 1rem; }
+  </style>
 </head>
-<body style="background:#111; color:white; text-align:center; padding:2rem;">
-  <h1>Testing MP4 Load</h1>
-  <video width="720" controls autoplay>
-    <source src="/introvideo.mp4" type="video/mp4">
-    Your browser does not support the video tag.
+<body>
+  <h1>🎬 Video Test</h1>
+  <video controls width="720">
+    <!-- adjust this path if you keep it somewhere else -->
+    <source src="public/video/introvideo.mp4" type="video/mp4">
+    Your browser doesn’t support HTML5 video.
   </video>
 </body>
 </html>

@@ -51,25 +51,29 @@
     </div>
   </section>
 
-  <!-- Tab Filters (static for now) -->
+  <!-- Tab Filters -->
   <div class="text-center py-4 bg-[#f5f5f5] text-gray-700">
-    <div class="inline-flex gap-4 justify-center text-sm font-medium">
-      <button class="px-4 py-2 rounded-full tab-active">All</button>
-      <button class="px-4 py-2 rounded-full hover:bg-gray-300">Monthly</button>
-      <button class="px-4 py-2 rounded-full hover:bg-gray-300">Annual</button>
-      <button class="px-4 py-2 rounded-full hover:bg-gray-300">Enterprise</button>
+    <div id="pricingTabs" class="inline-flex gap-4 justify-center text-sm font-medium">
+      <button data-filter="all" class="px-4 py-2 rounded-full tab-active">All</button>
+      <button data-filter="monthly" class="px-4 py-2 rounded-full hover:bg-gray-300">Monthly</button>
+      <button data-filter="annual" class="px-4 py-2 rounded-full hover:bg-gray-300">Annual</button>
+      <button data-filter="enterprise" class="px-4 py-2 rounded-full hover:bg-gray-300">Enterprise</button>
     </div>
   </div>
 
   <!-- Pricing Cards Grid -->
   <section class="py-16 bg-[#f5f5f5] text-gray-800">
     <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4">
-      
-      <!-- Starter -->
-      <div class="bg-white rounded-xl shadow-lg p-6">
+
+      <!-- Starter (Monthly & Annual) -->
+      <div data-frequency="monthly annual" class="bg-white rounded-xl shadow-lg p-6">
         <h3 class="text-xl font-semibold mb-2">Starter</h3>
-        <p class="text-3xl font-bold mb-2">$99<span class="text-sm font-normal">/mo</span></p>
-        <p class="text-sm text-gray-600 mb-4">Perfect for new agents launching their brand online with an elegant site.</p>
+        <!-- default show monthly price -->
+        <p class="price text-3xl font-bold mb-2"><span class="monthly-price">$99</span><span class="annual-price hidden">$990</span><span class="text-sm font-normal">/unit</span></p>
+        <p class="desc text-sm text-gray-600 mb-4">
+          <span class="monthly-desc">Perfect for new agents launching their brand online with an elegant site.</span>
+          <span class="annual-desc hidden">Save 17% when you pay annually.</span>
+        </p>
         <ul class="text-sm space-y-2">
           <li>✓ Custom Website Template</li>
           <li>✓ Basic SEO Optimization</li>
@@ -77,11 +81,14 @@
         </ul>
       </div>
 
-      <!-- Pro -->
-      <div class="bg-white rounded-xl shadow-lg p-6 border-2 border-yellow-500">
+      <!-- Pro (Monthly & Annual) -->
+      <div data-frequency="monthly annual" class="bg-white rounded-xl shadow-lg p-6 border-2 border-yellow-500">
         <h3 class="text-xl font-semibold mb-2">Pro</h3>
-        <p class="text-3xl font-bold mb-2">$249<span class="text-sm font-normal">/mo</span></p>
-        <p class="text-sm text-gray-600 mb-4">Ideal for growing agents who want more visibility and marketing power.</p>
+        <p class="price text-3xl font-bold mb-2"><span class="monthly-price">$249</span><span class="annual-price hidden">$2490</span><span class="text-sm font-normal">/unit</span></p>
+        <p class="desc text-sm text-gray-600 mb-4">
+          <span class="monthly-desc">Ideal for growing agents who want more visibility and marketing power.</span>
+          <span class="annual-desc hidden">Best value when billed yearly.</span>
+        </p>
         <ul class="text-sm space-y-2">
           <li>✓ Everything in Starter</li>
           <li>✓ AI Listing Enhancer</li>
@@ -90,11 +97,13 @@
         </ul>
       </div>
 
-      <!-- Elite -->
-      <div class="bg-white rounded-xl shadow-lg p-6">
+      <!-- Elite (Enterprise Only) -->
+      <div data-frequency="enterprise" class="bg-white rounded-xl shadow-lg p-6">
         <h3 class="text-xl font-semibold mb-2">Elite</h3>
-        <p class="text-3xl font-bold mb-2">$499<span class="text-sm font-normal">/mo</span></p>
-        <p class="text-sm text-gray-600 mb-4">Best for top-tier brokers and teams looking to dominate their market.</p>
+        <p class="price text-3xl font-bold mb-2">$499<span class="text-sm font-normal">/mo</span></p>
+        <p class="desc text-sm text-gray-600 mb-4">
+          Best for top-tier brokers and teams looking to dominate their market.
+        </p>
         <ul class="text-sm space-y-2">
           <li>✓ Full Custom Website</li>
           <li>✓ Dedicated Account Manager</li>
@@ -110,6 +119,37 @@
   <footer class="text-center py-10 text-sm text-gray-500 bg-[#0d0d0d]">
     &copy; 2025 RealtySass – Built with sass, style, and strategy.
   </footer>
+
+  <!-- Filtering Script -->
+  <script>
+    const tabs = document.querySelectorAll('#pricingTabs button');
+    const cards = document.querySelectorAll('[data-frequency]');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // toggle active tab style
+        tabs.forEach(t => t.classList.remove('tab-active'));
+        tab.classList.add('tab-active');
+
+        const filter = tab.dataset.filter;
+        cards.forEach(card => {
+          // show/hide cards
+          if (filter === 'all' || card.dataset.frequency.split(' ').includes(filter)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+          // also toggle monthly/annual text inside cards
+          const isAnnual = filter === 'annual';
+          card.querySelectorAll('.monthly-price, .monthly-desc').forEach(el => {
+            el.classList.toggle('hidden', isAnnual);
+          });
+          card.querySelectorAll('.annual-price, .annual-desc').forEach(el => {
+            el.classList.toggle('hidden', !isAnnual);
+          });
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>

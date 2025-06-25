@@ -7,20 +7,18 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Font overrides */
     body { font-family: 'Montserrat', sans-serif; background-color: #0d0d0d; color: #f5f5f5; }
     h1, h2, h3 { font-family: 'Lora', serif; }
-
-    /* Glass effect utility */
     .glass {
       background-color: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
+    .gold { --tw-bg-opacity: 1; background-color: rgba(212, 175, 55, var(--tw-bg-opacity)); }
   </style>
 </head>
 <body>
-  <!-- Header/Navbar with glassmorphism -->
+  <!-- Header -->
   <header class="w-full py-4 fixed z-50 glass">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-white">RealtySass</h1>
@@ -29,15 +27,15 @@
         <a href="#vibe" class="text-gray-200 hover:text-gold">Templates</a>
         <a href="#" class="text-gray-200 hover:text-gold">Pricing</a>
         <a href="javascript:void(0)" onclick="openLogin()" class="text-gray-200 hover:text-gold">Login</a>
-        <a href="javascript:void(0)" onclick="openSignup()" class="px-4 py-2 bg-gold text-gray-900 rounded-full hover:opacity-90 transition">Sign Up</a>
+        <a href="javascript:void(0)" onclick="openSignup()" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Sign Up</a>
       </nav>
     </div>
   </header>
 
-  <!-- Hero Video Section -->
-  <section class="pt-28 flex justify-center items-center" style="background: url('/src/assets/hero-bg.jpg') no-repeat center/cover;">
+  <!-- Hero Video Section (autoplay with sound) -->
+  <section class="pt-28 flex justify-center items-center bg-black">
     <div class="glass rounded-xl shadow-2xl p-4 max-w-5xl w-full">
-      <video class="rounded-md w-full h-auto" controls poster="/src/assets/hero-poster.jpg">
+      <video class="rounded-md w-full h-auto" autoplay controls>
         <source src="introvideo.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
@@ -48,10 +46,10 @@
   <section class="text-center py-16 px-4">
     <h2 class="text-5xl font-bold mb-4">Professional Real Estate Websites for Growing Agents</h2>
     <p class="text-lg mb-6 max-w-2xl mx-auto">Launch your brand. Showcase listings. Close more deals.</p>
-    <a href="#" class="inline-block px-8 py-4 bg-gold text-gray-900 font-semibold rounded-full hover:opacity-90 transition">Try Free Demo</a>
+    <a href="#" class="inline-block px-8 py-4 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Try Free Demo</a>
   </section>
 
-  <!-- Choose Your Vibe Section with glass cards -->
+  <!-- Choose Your Vibe -->
   <section id="vibe" class="py-20 px-4">
     <div class="max-w-6xl mx-auto text-center mb-10">
       <h3 class="text-3xl font-bold">Choose Your Vibe</h3>
@@ -61,33 +59,29 @@
       <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
         <p class="text-gray-200 mb-4">AI-crafted listings with design flair and viral potential.</p>
-        <button onclick="openRedefined()" class="px-6 py-3 bg-gold text-gray-900 font-semibold rounded-full hover:opacity-90 transition">Explore</button>
+        <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
       <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
         <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
-        <a href="/flip" class="px-6 py-3 bg-gold text-gray-900 font-semibold rounded-full hover:opacity-90 transition">Explore</a>
+        <a href="/flip" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
       </div>
       <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
-        <p class="text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
-        <a href="/webx" class="px-6 py-3 bg-gold text-gray-900 font-semibold rounded-full hover:opacity-90 transition">Explore</a>
+        <p class="text-sm text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
+        <a href="/webx" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
       </div>
     </div>
   </section>
 
   <!-- Feature Video Section -->
-  <section class="py-20 px-4 bg-white/5">
-    <div class="max-w-6xl mx-auto text-center mb-6">
-      <h3 class="text-3xl font-bold">Launch Your Dream Website</h3>
-    </div>
-    <div class="flex justify-center mb-10">
-      <video class="rounded-lg shadow-xl w-full max-w-4xl" autoplay muted loop playsinline>
-        <source src="introvideo.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </div>
-    <div class="grid md:grid-cols-3 gap-8 px-6 text-left">
+  <section class="py-20 px-4 bg-white/5 text-center">
+    <h3 class="text-3xl font-bold mb-6">Launch Your Dream Website</h3>
+    <video class="rounded-lg shadow-xl w-full max-w-4xl mx-auto" autoplay muted loop playsinline>
+      <source src="introvideo.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <div class="grid md:grid-cols-3 gap-8 px-6 text-left mt-10">
       <div><h4 class="font-semibold mb-2">Website Design</h4><p>Bold, conversion-friendly themes styled for agents.</p></div>
       <div><h4 class="font-semibold mb-2">AI Listing Tools</h4><p>Smart copywriting and SEO descriptions in seconds.</p></div>
       <div><h4 class="font-semibold mb-2">Lead Funnels</h4><p>Integrated forms + smart routing to grow faster.</p></div>

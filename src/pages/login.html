@@ -1,98 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login – RealtySass</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { margin: 0; font-family: 'Montserrat', sans-serif; background-color: #0d0d0d; color: #f5f5f5; }
+    body { margin: 0; font-family: 'Montserrat', sans-serif; background-color: #000; color: #fff; }
     h1, h2, h3 { font-family: 'Lora', serif; }
-    .gold { background-color: #d4af37; color: #0d0d0d; }
-    .hero { background-color: #0d0d0d; color: #fff; text-align: center; padding: 6rem 1rem; }
-    .glass { background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-    .card { background-color: #fff; color: #333; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-    .btn { padding: 0.75rem 1.5rem; border-radius: 4px; font-weight: 600; }
+    .bg-gold { background-color: #d4af37; }
   </style>
 </head>
 <body>
   <!-- Navbar -->
-  <header class="fixed top-0 w-full hero z-50">
-    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">RealtySass</h1>
-      <nav class="hidden md:flex space-x-6">
+  <header class="fixed top-0 w-full bg-black bg-opacity-90 backdrop-blur z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-white">RealtySass</h1>
+      <nav class="hidden md:flex space-x-6 text-gray-200">
         <a href="index.html" class="hover:text-gold">Home</a>
         <a href="products.html" class="hover:text-gold">Products</a>
         <a href="pricing.html" class="hover:text-gold">Pricing</a>
         <a href="templates.html" class="hover:text-gold">Templates</a>
         <a href="login.html" class="hover:text-gold">Login</a>
-        <a href="login.html#signup" class="px-4 py-2 gold">Join Us</a>
+        <a href="signup.html" class="px-4 py-2 bg-gold text-black rounded">Join Us</a>
       </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h2 class="text-4xl md:text-5xl font-bold mb-4">Secure Access to Your Dashboard</h2>
-    <p class="text-lg max-w-2xl mx-auto">Enter your credentials below to join our community or sign in to continue.</p>
-  </section>
-
-  <!-- Login/Signup Card -->
-  <main class="flex flex-col md:flex-row items-center justify-center min-h-[calc(100vh-20rem)] px-4 py-12">
-    <div class="card max-w-md w-full p-8 space-y-6">
-      <img src="SaSS.png" alt="RealtySass Logo" class="mx-auto mb-4 w-32 h-auto">
-      <!-- Login Form -->
-      <section id="login" class="space-y-4">
-        <h3 class="text-2xl font-semibold text-center">Log In</h3>
-        <form id="loginForm" class="space-y-4">
-          <input type="email" id="loginEmail" placeholder="Email Address" class="w-full px-4 py-2 border rounded" required>
-          <input type="password" id="loginPassword" placeholder="Password" class="w-full px-4 py-2 border rounded" required>
-          <button type="submit" class="w-full btn bg-gold">Continue</button>
-        </form>
-      </section>
-      <hr class="border-gray-200">
-      <!-- Signup Form -->
-      <section id="signup" class="space-y-4">
-        <h3 class="text-2xl font-semibold text-center">Join Us</h3>
-        <form id="signupForm" class="space-y-4">
-          <input type="text" id="signupName" placeholder="Full Name" class="w-full px-4 py-2 border rounded" required>
-          <input type="email" id="signupEmail" placeholder="Email Address" class="w-full px-4 py-2 border rounded" required>
-          <input type="password" id="signupPassword" placeholder="Password" class="w-full px-4 py-2 border rounded" required>
-          <input type="password" id="signupConfirm" placeholder="Confirm Password" class="w-full px-4 py-2 border rounded" required>
-          <button type="submit" class="w-full btn bg-gold">Join Us</button>
-        </form>
-      </section>
-    </div>
-
-    <!-- Optional side image if needed -->
-    <div class="mt-12 md:mt-0 md:ml-12 max-w-xs w-full">
-      <img src="SaSS.png" alt="Illustration" class="rounded-lg shadow-lg">
+  <!-- Login Card -->
+  <main class="flex items-center justify-center min-h-screen pt-20 px-4">
+    <div class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+      <img src="SaSS.png" alt="RealtySass Logo" class="mx-auto mb-6 w-32 h-auto">
+      <p class="text-center text-gray-600 mb-6">To get started, please sign in.</p>
+      <form>
+        <label for="email" class="block text-gray-800 mb-1">Email address</label>
+        <input id="email" type="email" placeholder="" class="w-full border border-gray-300 rounded px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-gold" required>
+        <label for="password" class="block text-gray-800 mb-1">Password</label>
+        <input id="password" type="password" placeholder="" class="w-full border border-gray-300 rounded px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-gold" required>
+        <button type="submit" class="w-full bg-black text-white py-2 rounded mb-4 hover:opacity-90">Continue</button>
+      </form>
+      <div class="text-center">
+        <a href="#" class="text-sm text-gray-500 hover:underline">Forgot password?</a>
+      </div>
+      <div class="text-center mt-6">
+        <a href="#" class="text-sm text-gray-400 hover:underline">Privacy Policy</a>
+      </div>
     </div>
   </main>
-
-  <script>
-    // Simple localStorage-based auth
-    document.getElementById('signupForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const name = document.getElementById('signupName').value;
-      const email = document.getElementById('signupEmail').value;
-      const pw = document.getElementById('signupPassword').value;
-      const confirm = document.getElementById('signupConfirm').value;
-      if (pw !== confirm) return alert('Passwords do not match');
-      localStorage.setItem('rs_user', JSON.stringify({ name, email, pw }));
-      alert('Account created! Please log in.');
-      location.hash = '#login';
-    });
-
-    document.getElementById('loginForm').addEventListener('submit', e => {
-      e.preventDefault();
-      const email = document.getElementById('loginEmail').value;
-      const pw = document.getElementById('loginPassword').value;
-      const user = JSON.parse(localStorage.getItem('rs_user')||'null');
-      if (user && user.email === email && user.pw === pw) alert(`Welcome back, ${user.name}!`);
-      else alert('Invalid email or password');
-    });
-  </script>
 </body>
 </html>

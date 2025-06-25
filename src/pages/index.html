@@ -12,6 +12,10 @@
     .glass { background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
     .gold { --tw-bg-opacity: 1; background-color: rgba(212,175,55,var(--tw-bg-opacity)); }
     video { outline: none; }
+    /* White glow behind hero video */
+    #heroVideo {
+      box-shadow: 0 0 20px rgba(255,255,255,0.6);
+    }
   </style>
 </head>
 <body>
@@ -20,9 +24,9 @@
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-white">RealtySass</h1>
       <nav class="hidden md:flex space-x-6">
-        <a href="#" class="text-gray-200 hover:text-gold">Products</a>
-        <a href="#vibe" class="text-gray-200 hover:text-gold">Templates</a>
-        <a href="#" class="text-gray-200 hover:text-gold">Pricing</a>
+        <a href="products.html" class="text-gray-200 hover:text-gold">Products</a>
+        <a href="templates.html" class="text-gray-200 hover:text-gold">Templates</a>
+        <a href="pricing.html" class="text-gray-200 hover:text-gold">Pricing</a>
         <a href="javascript:void(0)" onclick="openLogin()" class="text-gray-200 hover:text-gold">Login</a>
         <a href="javascript:void(0)" onclick="openSignup()" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Sign Up</a>
       </nav>
@@ -32,7 +36,7 @@
   <!-- Hero Video Section: autoplay muted, unmute on click -->
   <section class="pt-28 flex justify-center items-center bg-black">
     <div class="glass rounded-xl shadow-2xl p-4 max-w-5xl w-full">
-      <video id="heroVideo" class="rounded-md w-full h-auto" autoplay controls playsinline>
+      <video id="heroVideo" class="rounded-md w-full h-auto" autoplay muted controls playsinline>
         <source src="introvideo.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
@@ -61,17 +65,17 @@
       <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
         <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
-        <a href="/flip" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
+        <a href="flip.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
       </div>
       <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
         <p class="text-sm text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
-        <a href="/webx" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
+        <a href="webx.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
       </div>
     </div>
   </section>
 
-  <!-- Feature Video Section: autoplay muted loop -->
+  <!-- Feature Video Section -->
   <section class="py-20 px-4 bg-white/5 text-center">
     <h3 class="text-3xl font-bold mb-6">Launch Your Dream Website</h3>
     <video class="rounded-lg shadow-xl w-full max-w-4xl mx-auto" autoplay muted loop playsinline controls>
@@ -95,15 +99,14 @@
 
   <script>
     // Hero unmute on click
-    const hero = document.getElementById('heroVideo');
-    hero.play().catch(()=>{});
+    const heroVideo = document.getElementById('heroVideo');
     document.addEventListener('click', () => {
-      if (hero.muted) {
-        hero.muted = false;
-        hero.play();
+      if (heroVideo.muted) {
+        heroVideo.muted = false;
+        heroVideo.play();
       }
     });
-    // Other overlay scripts unchanged
+    // Overlay functions unchanged
   </script>
 </body>
 </html>

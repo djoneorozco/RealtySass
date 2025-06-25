@@ -1,1 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up – RealtySass</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #0d0d0d;
+      color: #fff;
+      margin: 0;
+    }
+    h1, h2, h3 {
+      font-family: 'Lora', serif;
+    }
+    .text-gold { color: #d4af37; }
+    .bg-gold { background-color: #d4af37; }
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+  </style>
+</head>
+<body>
 
+  <!-- Navbar -->
+  <header class="fixed top-0 w-full bg-black bg-opacity-80 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-white">RealtySass</h1>
+      <nav class="hidden md:flex space-x-6 text-gray-200">
+        <a href="index.html" class="hover:text-gold">Home</a>
+        <a href="products.html" class="hover:text-gold">Products</a>
+        <a href="pricing.html" class="hover:text-gold">Pricing</a>
+        <a href="templates.html" class="hover:text-gold">Templates</a>
+        <a href="login.html" class="hover:text-gold">Login</a>
+        <a href="signup.html" class="px-4 py-2 bg-gold text-black rounded">Join Us</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Signup Section -->
+  <main class="pt-40 flex justify-center items-center min-h-screen px-4">
+    <div class="glass rounded-xl text-white p-10 w-full max-w-lg shadow-2xl">
+      <div class="flex justify-center mb-6">
+        <img src="/src/assets/SaSS.png" alt="RealtySass Logo" class="w-20 h-20 object-contain" />
+      </div>
+      <h2 class="text-3xl font-bold text-center mb-6">Create Your Account</h2>
+      <form>
+        <div class="mb-4">
+          <label for="name" class="block mb-1 font-medium text-sm">Full Name</label>
+          <input type="text" id="name" name="name" required class="w-full px-4 py-2 rounded bg-white bg-opacity-20 border border-white border-opacity-30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gold" placeholder="Jane Doe" />
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block mb-1 font-medium text-sm">Email</label>
+          <input type="email" id="email" name="email" required class="w-full px-4 py-2 rounded bg-white bg-opacity-20 border border-white border-opacity-30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gold" placeholder="you@email.com" />
+        </div>
+        <div class="mb-6">
+          <label for="password" class="block mb-1 font-medium text-sm">Password</label>
+          <input type="password" id="password" name="password" required class="w-full px-4 py-2 rounded bg-white bg-opacity-20 border border-white border-opacity-30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gold" placeholder="••••••••" />
+        </div>
+        <button type="submit" class="w-full bg-gold text-black font-bold py-2 rounded hover:bg-yellow-500 transition">Sign Up</button>
+        <p class="mt-4 text-sm text-center text-gray-300">Already have an account? <a href="login.html" class="text-gold hover:underline">Log in</a></p>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-10 text-sm text-gray-400">
+    &copy; 2025 RealtySass – Built with sass, style, and strategy.
+  </footer>
+
+</body>
+</html>

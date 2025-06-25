@@ -6,14 +6,15 @@
   <title>RealtySass – Put some SaaS in your Listings</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
     body { font-family: 'Montserrat', sans-serif; background-color: #0d0d0d; color: #f5f5f5; }
     h1, h2, h3 { font-family: 'Lora', serif; }
     .glass { background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
     .gold { --tw-bg-opacity: 1; background-color: rgba(212,175,55,var(--tw-bg-opacity)); }
     video { outline: none; }
-    /* White glow behind hero video */
     #heroVideo { box-shadow: 0 0 20px rgba(255,255,255,0.6); }
+    .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
   </style>
 </head>
 <body>
@@ -74,17 +75,28 @@
     </div>
   </section>
 
-  <!-- Feature Video Section -->
+  <!-- Swiper Slider Section (replaces video) -->
   <section class="py-20 px-4 bg-white/5 text-center">
-    <h3 class="text-3xl font-bold mb-6">Launch Your Dream Website</h3>
-    <video class="rounded-lg shadow-xl w-full max-w-4xl mx-auto" autoplay muted loop playsinline controls>
-      <source src="introvideo.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-    <div class="grid md:grid-cols-3 gap-8 px-6 text-left mt-10">
-      <div><h4 class="font-semibold mb-2">Website Design</h4><p>Bold, conversion-friendly themes styled for agents.</p></div>
-      <div><h4 class="font-semibold mb-2">AI Listing Tools</h4><p>Smart copywriting and SEO descriptions in seconds.</p></div>
-      <div><h4 class="font-semibold mb-2">Lead Funnels</h4><p>Integrated forms + smart routing to grow faster.</p></div>
+    <h3 class="text-3xl font-bold mb-10">Launch Your Dream Website</h3>
+
+    <div class="swiper mySwiper max-w-6xl mx-auto">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide rounded-xl overflow-hidden">
+          <img src="/src/assets/SaSS.png" alt="Slide 1" />
+        </div>
+        <div class="swiper-slide rounded-xl overflow-hidden">
+          <img src="/src/assets/SaSS.png" alt="Slide 2" />
+        </div>
+        <div class="swiper-slide rounded-xl overflow-hidden">
+          <img src="/src/assets/SaSS.png" alt="Slide 3" />
+        </div>
+        <div class="swiper-slide rounded-xl overflow-hidden">
+          <img src="/src/assets/SaSS.png" alt="Slide 4" />
+        </div>
+      </div>
+      <div class="swiper-pagination mt-4"></div>
+      <div class="swiper-button-next text-white"></div>
+      <div class="swiper-button-prev text-white"></div>
     </div>
   </section>
 
@@ -93,7 +105,7 @@
     &copy; 2025 RealtySass – Built with sass, style, and strategy.
   </footer>
 
-  <!-- Login overlay -->
+  <!-- Login Overlay -->
   <div id="loginOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
     <div class="glass auth-container">
       <button class="close-auth" onclick="closeLogin()">✕</button>
@@ -105,7 +117,7 @@
     </div>
   </div>
 
-  <!-- Signup overlay -->
+  <!-- Signup Overlay -->
   <div id="signupOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
     <div class="glass auth-container">
       <button class="close-auth" onclick="closeSignup()">✕</button>
@@ -119,7 +131,7 @@
     </div>
   </div>
 
-  <!-- RE-Defined overlay + iframe -->
+  <!-- ReDefined Overlay + Iframe -->
   <div id="redefinedOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
     <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
       <button onclick="closeRedefined()" class="absolute top-2 right-2 text-white text-xl">✕</button>
@@ -127,32 +139,37 @@
     </div>
   </div>
 
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    // Hero unmute on click
     const heroVideo = document.getElementById('heroVideo');
-    heroVideo.play().catch(()=>{});
+    heroVideo.play().catch(() => {});
     document.addEventListener('click', () => {
       if (heroVideo.muted) {
         heroVideo.muted = false;
         heroVideo.play();
       }
     });
-    // Login/Signup overlay functions
+
     function openLogin() { document.getElementById('loginOverlay').classList.remove('hidden'); }
     function closeLogin() { document.getElementById('loginOverlay').classList.add('hidden'); }
     function openSignup() { document.getElementById('signupOverlay').classList.remove('hidden'); }
     function closeSignup() { document.getElementById('signupOverlay').classList.add('hidden'); }
     function switchToSignup() { closeLogin(); openSignup(); }
     function switchToLogin() { closeSignup(); openLogin(); }
-    function submitLogin() { alert('Logging in as ' + document.getElementById('loginEmail').value); closeLogin(); }
+    function submitLogin() {
+      alert('Logging in as ' + document.getElementById('loginEmail').value);
+      closeLogin();
+    }
     function submitSignup() {
       if (document.getElementById('signupPassword').value !== document.getElementById('signupConfirm').value) {
-        alert('Passwords do not match'); return;
+        alert('Passwords do not match');
+        return;
       }
       alert('Account created for ' + document.getElementById('signupEmail').value);
       closeSignup(); openLogin();
     }
-    // ReDefined overlay functions
+
     function openRedefined() {
       document.getElementById('redefinedFrame').src = 'https://realredefined.onrender.com';
       document.getElementById('redefinedOverlay').classList.remove('hidden');
@@ -161,6 +178,27 @@
       document.getElementById('redefinedOverlay').classList.add('hidden');
       document.getElementById('redefinedFrame').src = '';
     }
+
+    new Swiper(".mySwiper", {
+      effect: "slide",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: 1.2,
+      loop: true,
+      spaceBetween: 30,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      },
+      breakpoints: {
+        768: { slidesPerView: 2.2 },
+        1024: { slidesPerView: 3 }
+      }
+    });
   </script>
 
 </body>

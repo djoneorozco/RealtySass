@@ -9,6 +9,35 @@
   <style>
     body { font-family: 'Outfit', sans-serif; background-color: #0d0d0d; color: white; }
     h1, h2, h3 { font-family: 'Playfair Display', serif; }
+    /* Overlay styling */
+    #redefinedOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #redefinedOverlay .frame-container {
+      position: relative;
+      width: 80%; height: 80%;
+    }
+    #redefinedOverlay iframe {
+      width: 100%; height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
+    #redefinedOverlay button {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: transparent;
+      color: white;
+      font-size: 1.5rem;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -53,7 +82,7 @@
         <div class="bg-[#2a2a2a] rounded-xl p-6 shadow hover:shadow-lg transition">
           <h4 class="text-xl font-semibold mb-3">ReDefined.AI</h4>
           <p class="text-sm text-gray-300 mb-4">AI-crafted listings with design flair and viral potential.</p>
-          <a href="/redefined" class="inline-block px-4 py-2 bg-[#d4af37] text-black rounded-full hover:bg-[#b89c2d] transition">Explore</a>
+          <a href="javascript:void(0)" onclick="openRedefined()" class="inline-block px-4 py-2 bg-[#d4af37] text-black rounded-full hover:bg-[#b89c2d] transition">Explore</a>
         </div>
         <div class="bg-[#2a2a2a] rounded-xl p-6 shadow hover:shadow-lg transition">
           <h4 class="text-xl font-semibold mb-3">Flip.AI</h4>
@@ -99,5 +128,23 @@
     &copy; 2025 RealtySass – Built with sass, style, and strategy.
   </footer>
 
+  <!-- RE-Defined overlay + iframe -->
+  <div id="redefinedOverlay">
+    <div class="frame-container">
+      <button onclick="closeRedefined()">✕</button>
+      <iframe id="redefinedFrame" src=""></iframe>
+    </div>
+  </div>
+
+  <script>
+    function openRedefined() {
+      document.getElementById('redefinedFrame').src = 'https://realredefined.onrender.com';
+      document.getElementById('redefinedOverlay').style.display = 'flex';
+    }
+    function closeRedefined() {
+      document.getElementById('redefinedOverlay').style.display = 'none';
+      document.getElementById('redefinedFrame').src = '';
+    }
+  </script>
 </body>
 </html>

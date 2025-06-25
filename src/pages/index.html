@@ -28,7 +28,7 @@
     #redefinedOverlay button { position: absolute; top: 12px; right: 12px; background: transparent; color: white; font-size: 1.5rem; border: none; cursor: pointer; }
 
     /* Login overlay styling */
-    #loginOverlay {
+    #loginOverlay, #signupOverlay {
       display: none;
       position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
@@ -37,25 +37,25 @@
       align-items: center;
       z-index: 10000;
     }
-    #loginOverlay .login-container {
+    .auth-container {
       background: #1a1a1a;
       padding: 2rem;
       border-radius: 8px;
       width: 90%; max-width: 400px;
       position: relative;
     }
-    #loginOverlay h2 { margin-bottom: 1rem; color: white; }
-    #loginOverlay input {
+    .auth-container h2 { margin-bottom: 1rem; color: white; }
+    .auth-container input {
       width: 100%; padding: 0.5rem; margin-bottom: 1rem;
       border: none; border-radius: 4px;
     }
-    #loginOverlay button {
+    .auth-container button.submit-auth {
       width: 100%; padding: 0.75rem;
       background: #d4af37; border: none;
       border-radius: 4px; cursor: pointer;
       color: black; font-weight: 600;
     }
-    #loginOverlay .close-login {
+    .auth-container .close-auth {
       position: absolute; top: 12px; right: 12px;
       background: transparent; color: white;
       border: none; font-size: 1.5rem; cursor: pointer;
@@ -73,7 +73,7 @@
         <a href="#vibe" class="hover:text-[#d4af37]">Templates</a>
         <a href="#" class="hover:text-[#d4af37]">Pricing</a>
         <a href="javascript:void(0)" onclick="openLogin()" class="hover:text-[#d4af37]">Login</a>
-        <a href="#" class="px-4 py-2 bg-[#d4af37] text-black rounded-full hover:bg-[#b89c2d]">Get Started</a>
+        <a href="javascript:void(0)" onclick="openSignup()" class="px-4 py-2 bg-[#d4af37] text-black rounded-full hover:bg-[#b89c2d]">Sign Up</a>
       </nav>
     </div>
   </header>
@@ -147,17 +147,32 @@
 
   <!-- Footer -->
   <footer class="bg-black text-gray-500 text-center py-10 text-sm">
-    &copy; 2025 RealtySass – Built with sass, style, and strategy.
+    &copy; 2025 RealtySAss – Built with sass, style, and strategy.
   </footer>
 
   <!-- Login overlay -->
   <div id="loginOverlay">
-    <div class="login-container">
-      <button class="close-login" onclick="closeLogin()">✕</button>
+    <div class="auth-container">
+      <button class="close-auth" onclick="closeLogin()">✕</button>
       <h2>Login to RealtySass</h2>
       <input type="email" id="loginEmail" placeholder="Email" />
       <input type="password" id="loginPassword" placeholder="Password" />
-      <button onclick="submitLogin()">Log In</button>
+      <button class="submit-auth" onclick="submitLogin()">Log In</button>
+      <p class="text-gray-400 mt-2 text-center">Don't have an account? <a href="javascript:void(0)" class="text-[#d4af37] underline" onclick="switchToSignup()">Sign Up</a></p>
+    </div>
+  </div>
+
+  <!-- Signup overlay -->
+  <div id="signupOverlay">
+    <div class="auth-container">
+      <button class="close-auth" onclick="closeSignup()">✕</button>
+      <h2>Create an Account</h2>
+      <input type="text" id="signupName" placeholder="Full Name" />
+      <input type="email" id="signupEmail" placeholder="Email" />
+      <input type="password" id="signupPassword" placeholder="Password" />
+      <input type="password" id="signupConfirm" placeholder="Confirm Password" />
+      <button class="submit-auth" onclick="submitSignup()">Sign Up</button>
+      <p class="text-gray-400 mt-2 text-center">Already have an account? <a href="javascript:void(0)" class="text-[#d4af37] underline" onclick="switchToLogin()">Log In</a></p>
     </div>
   </div>
 
@@ -171,15 +186,35 @@
 
   <script>
     function openLogin() {
+      closeSignup();
       document.getElementById('loginOverlay').style.display = 'flex';
     }
     function closeLogin() {
       document.getElementById('loginOverlay').style.display = 'none';
     }
-    function submitLogin() {
-      // TODO: handle login logic
-      alert('Logging in with ' + document.getElementById('loginEmail').value);
+    function openSignup() {
       closeLogin();
+      document.getElementById('signupOverlay').style.display = 'flex';
+    }
+    function closeSignup() {
+      document.getElementById('signupOverlay').style.display = 'none';
+    }
+    function switchToSignup() {
+      closeLogin(); openSignup();
+    }
+    function switchToLogin() {
+      closeSignup(); openLogin();
+    }
+    function submitLogin() {
+      alert('Logging in as ' + document.getElementById('loginEmail').value);
+      closeLogin();
+    }
+    function submitSignup() {
+      if (document.getElementById('signupPassword').value !== document.getElementById('signupConfirm').value) {
+        alert('Passwords do not match'); return;
+      }
+      alert('Account created for ' + document.getElementById('signupEmail').value);
+      closeSignup(); openLogin();
     }
     function openRedefined() {
       document.getElementById('redefinedFrame').src = 'https://realredefined.onrender.com';

@@ -9,60 +9,65 @@
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      background-color: #0d0d0d;
-      color: #fff;
-      margin: 0;
+      background-color: #ffffff;
+      color: #1a1a1a;
     }
-    h1, h2, h3 {
+    h1, h2 {
       font-family: 'Lora', serif;
     }
-    .text-gold { color: #d4af37; }
-    .bg-gold { background-color: #d4af37; }
+    .highlight {
+      background-color: #e5e5e5;
+      padding: 0 4px;
+      border-radius: 4px;
+    }
   </style>
 </head>
-<body>
+<body class="flex items-center justify-center min-h-screen px-4">
 
-  <!-- Navbar -->
-  <header class="fixed top-0 w-full bg-black bg-opacity-80 z-50 shadow-md">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-white">RealtySass</h1>
-      <nav class="hidden md:flex space-x-6 text-gray-200">
-        <a href="index.html" class="hover:text-gold">Home</a>
-        <a href="products.html" class="hover:text-gold">Products</a>
-        <a href="pricing.html" class="hover:text-gold">Pricing</a>
-        <a href="templates.html" class="hover:text-gold">Templates</a>
-        <a href="login.html" class="hover:text-gold">Login</a>
-        <a href="signup.html" class="px-4 py-2 bg-gold text-black rounded">Join Us</a>
-      </nav>
+  <div class="w-full max-w-md">
+    <div class="flex justify-center mb-8">
+      <img src="/src/assets/SaSS.png" alt="RealtySass Logo" class="h-10" />
     </div>
-  </header>
+    
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-bold leading-snug">
+        Welcome back to <span class="highlight">RealtySass</span>
+      </h1>
+      <h2 class="text-sm text-gray-500 mt-2">To get started, please sign in.</h2>
+    </div>
 
-  <!-- Login Section -->
-  <main class="pt-40 flex justify-center items-center min-h-screen px-4">
-    <div class="bg-white text-black rounded-lg shadow-2xl w-full max-w-md p-8">
-      <div class="flex justify-center mb-6">
-        <img src="/src/assets/SaSS.png" alt="RealtySass Logo" class="w-20 h-20 object-contain" />
+    <form class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
+        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black" />
       </div>
-      <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Log in to your account</h2>
-      <form>
-        <div class="mb-4">
-          <label for="email" class="block mb-1 text-sm font-medium text-gray-700">Email</label>
-          <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gold" />
-        </div>
-        <div class="mb-6">
-          <label for="password" class="block mb-1 text-sm font-medium text-gray-700">Password</label>
-          <input type="password" id="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-gold" />
-        </div>
-        <button type="submit" class="w-full bg-gold text-black font-bold py-2 rounded hover:bg-yellow-500 transition">Log In</button>
-        <p class="mt-4 text-sm text-center text-gray-600">Don’t have an account? <a href="signup.html" class="text-gold font-semibold hover:underline">Sign up</a></p>
-      </form>
-    </div>
-  </main>
+      <div class="relative">
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+        <input type="password" id="password" name="password" required class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black" />
+        <button type="button" onclick="togglePassword()" class="absolute right-2 top-[38px] text-gray-600">
+          👁️
+        </button>
+      </div>
+      <button type="submit" class="w-full bg-black text-white py-2 rounded-full font-semibold hover:opacity-90 transition">
+        Continue
+      </button>
+    </form>
 
-  <!-- Footer -->
-  <footer class="text-center py-10 text-sm text-gray-400">
-    &copy; 2025 RealtySass – Built with sass, style, and strategy.
-  </footer>
+    <div class="text-center mt-4">
+      <a href="#" class="text-sm text-gray-500 hover:underline">Forgot password?</a>
+    </div>
+    <div class="text-center mt-2">
+      <a href="/privacy.html" class="text-xs text-gray-400 hover:underline">Privacy Policy</a>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const passwordInput = document.getElementById("password");
+      const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+      passwordInput.setAttribute("type", type);
+    }
+  </script>
 
 </body>
 </html>

@@ -5,125 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RealtySass – Put some SaaS in your Listings</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Outfit', sans-serif; }
-    @keyframes fade-in {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    .animate-fade-in {
-      animation: fade-in 1.5s ease-in-out forwards;
-    }
+    body { font-family: 'Outfit', sans-serif; background-color: #0d0d0d; color: white; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
   </style>
 </head>
-<body class="bg-[#121212] text-white">
+<body>
 
-  <!-- Navbar -->
-  <header class="bg-black shadow-md fixed w-full z-10">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold tracking-tight">RealtySass</h1>
-      <nav class="space-x-6 hidden md:flex">
-        <a href="#features" class="text-sm text-white hover:text-[#d4af37] transition">Features</a>
-        <a href="#templates" class="text-sm text-white hover:text-[#d4af37] transition">Templates</a>
-        <a href="#pricing" class="text-sm text-white hover:text-[#d4af37] transition">Pricing</a>
-        <a href="#login" class="text-sm text-white hover:text-[#d4af37] transition">Login</a>
-        <a href="#get-started" class="px-4 py-2 bg-[#d4af37] text-black rounded-full text-sm shadow hover:bg-[#b89c2d] transition">Get Started</a>
+  <!-- Header/Navbar -->
+  <header class="w-full bg-black text-white py-4 fixed z-50">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">RealtySass</h1>
+      <nav class="hidden md:flex space-x-6">
+        <a href="#" class="hover:text-[#d4af37]">Products</a>
+        <a href="#" class="hover:text-[#d4af37]">Templates</a>
+        <a href="#" class="hover:text-[#d4af37]">Pricing</a>
+        <a href="#" class="hover:text-[#d4af37]">Login</a>
+        <a href="#" class="px-4 py-2 bg-[#d4af37] text-black rounded-full hover:bg-[#b89c2d]">Get Started</a>
       </nav>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="pt-32 pb-24 text-center bg-[#1c1c1c]">
-    <h2 class="text-5xl font-extrabold leading-tight mb-4">Put Some SaaS in Your Listings</h2>
-    <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-      Real estate websites built for agents who hustle — powered by tech, styled with attitude.
+  <!-- Hero Video Section -->
+  <section class="pt-28 bg-black flex justify-center items-center">
+    <video class="rounded-xl shadow-lg w-full max-w-5xl" autoplay muted loop playsinline>
+      <source src="/video/introvideo.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </section>
+
+  <!-- Headline Section -->
+  <section class="bg-black text-center py-16 px-4">
+    <h2 class="text-4xl font-bold mb-4">Discover the ultimate platform for growing your real estate business</h2>
+    <p class="text-lg text-gray-300 max-w-2xl mx-auto mb-6">
+      Built to scale with agents who hustle. Modern tools, smart design, AI-powered.
     </p>
-    <a href="#get-started" class="inline-block px-8 py-3 bg-[#d4af37] text-black text-base font-medium rounded-full shadow hover:bg-[#b89c2d] transition">
-      Build My Site
-    </a>
+    <a href="#" class="inline-block px-6 py-3 bg-[#d4af37] text-black rounded-full text-sm hover:bg-[#b89c2d] transition">Get Started</a>
   </section>
 
-  <!-- Features -->
-  <section id="features" class="py-20 bg-[#121212]">
-    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-12 text-center">
-      <div>
-        <h3 class="text-xl font-semibold mb-2">Instant Setup</h3>
-        <p class="text-sm text-gray-400">Launch your real estate site in under 10 minutes.</p>
-      </div>
-      <div>
-        <h3 class="text-xl font-semibold mb-2">Built-in AI</h3>
-        <p class="text-sm text-gray-400">Generate listing descriptions and headlines in seconds.</p>
-      </div>
-      <div>
-        <h3 class="text-xl font-semibold mb-2">Lead Capture</h3>
-        <p class="text-sm text-gray-400">Turn views into leads with smart, embedded forms.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Templates -->
-  <section id="templates" class="py-20 bg-[#1c1c1c] text-center">
-    <h2 class="text-3xl font-bold mb-4">Choose Your Vibe</h2>
-    <p class="text-gray-400 mb-10">From minimalist to bold, pick a template that fits your brand.</p>
-    <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto px-6">
-      <div class="bg-[#2a2a2a] rounded-xl shadow p-6">[ Template 1 ]</div>
-      <div class="bg-[#2a2a2a] rounded-xl shadow p-6">[ Template 2 ]</div>
-      <div class="bg-[#2a2a2a] rounded-xl shadow p-6">[ Template 3 ]</div>
-    </div>
-  </section>
-
-  <!-- Pricing -->
-  <section id="pricing" class="py-20 bg-[#121212] text-center">
-    <h2 class="text-3xl font-bold mb-6">Simple Pricing for Serious Agents</h2>
-    <div class="flex flex-col md:flex-row justify-center gap-8 max-w-4xl mx-auto px-6">
-      <div class="border border-gray-700 rounded-xl p-6 shadow bg-[#1c1c1c] w-full md:w-1/3">
-        <h3 class="text-lg font-semibold mb-2">Starter</h3>
-        <p class="text-2xl font-bold mb-4">$29/mo</p>
-        <ul class="text-sm text-left text-gray-400 space-y-2 mb-6">
-          <li>✔ 1 Website</li>
-          <li>✔ AI Listing Generator</li>
-          <li>✔ Email Support</li>
-        </ul>
-        <a href="#" class="inline-block px-4 py-2 bg-[#d4af37] text-black rounded-full text-sm hover:bg-[#b89c2d] transition">Choose Plan</a>
-      </div>
-      <div class="border border-gray-700 rounded-xl p-6 shadow bg-[#1c1c1c] w-full md:w-1/3">
-        <h3 class="text-lg font-semibold mb-2">Pro</h3>
-        <p class="text-2xl font-bold mb-4">$59/mo</p>
-        <ul class="text-sm text-left text-gray-400 space-y-2 mb-6">
-          <li>✔ Everything in Starter</li>
-          <li>✔ Multiple Pages</li>
-          <li>✔ Custom Branding</li>
-        </ul>
-        <a href="#" class="inline-block px-4 py-2 bg-[#d4af37] text-black rounded-full text-sm hover:bg-[#b89c2d] transition">Choose Plan</a>
+  <!-- Feature Video Section -->
+  <section class="bg-[#f5f5f5] text-black py-20 text-center">
+    <div class="max-w-6xl mx-auto px-4">
+      <h3 class="text-2xl font-bold mb-6">Launch your dream website</h3>
+      <video class="rounded-lg mx-auto shadow-xl w-full max-w-4xl" autoplay muted loop playsinline>
+        <source src="/video/introvideo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="grid md:grid-cols-3 gap-6 mt-10 text-left">
+        <div>
+          <h4 class="font-semibold mb-2">Website Design</h4>
+          <p class="text-sm text-gray-700">Bold, conversion-friendly themes styled for agents.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-2">AI Listing Tools</h4>
+          <p class="text-sm text-gray-700">Smart copywriting and SEO descriptions in seconds.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-2">Lead Funnels</h4>
+          <p class="text-sm text-gray-700">Integrated forms + smart routing to grow faster.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="py-10 text-center text-sm text-gray-500 bg-black">
-    © 2025 RealtySass. Built with 💻 and a little attitude.
+  <footer class="bg-black text-gray-500 text-center py-10 text-sm">
+    &copy; 2025 RealtySass – Built with sass, style, and strategy.
   </footer>
-
-  <!-- Chica Video + Button -->
-  <div class="fixed bottom-6 right-6 w-64 z-50">
-    <video id="chicaVideo" muted autoplay loop playsinline preload="auto" class="rounded-xl shadow-lg bg-black">
-      <source src="/video/intro.mp4" type="video/mp4" />
-    </video>
-    <button onclick="unmuteChica()" class="mt-2 w-full py-2 text-sm font-semibold text-black bg-[#d4af37] rounded-full hover:bg-[#b89c2d] transition">
-      Touch Me
-    </button>
-  </div>
-
-  <script>
-    function unmuteChica() {
-      const video = document.getElementById('chicaVideo');
-      video.muted = false;
-      video.currentTime = 0;
-      video.play();
-    }
-  </script>
 
 </body>
 </html>

@@ -27,8 +27,8 @@
         <a href="products.html" class="text-gray-200 hover:text-gold">Products</a>
         <a href="templates.html" class="text-gray-200 hover:text-gold">Templates</a>
         <a href="pricing.html" class="text-gray-200 hover:text-gold">Pricing</a>
-        <a href="javascript:void(0)" onclick="openLogin()" class="text-gray-200 hover:text-gold">Login</a>
-        <a href="javascript:void(0)" onclick="openSignup()" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Sign Up</a>
+        <a href="login.html" class="text-gray-200 hover:text-gold">Login</a>
+        <a href="joinus.html" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Join Us</a>
       </nav>
     </div>
   </header>
@@ -75,7 +75,7 @@
     </div>
   </section>
 
-  <!-- Swiper Slider Section (replaces video) -->
+  <!-- Swiper Slider Section -->
   <section class="py-20 px-4 bg-white/5 text-center">
     <h3 class="text-3xl font-bold mb-10">Launch Your Dream Website</h3>
 
@@ -105,32 +105,6 @@
     &copy; 2025 RealtySass – Built with sass, style, and strategy.
   </footer>
 
-  <!-- Login Overlay -->
-  <div id="loginOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
-    <div class="glass auth-container">
-      <button class="close-auth" onclick="closeLogin()">✕</button>
-      <h2>Login to RealtySass</h2>
-      <input type="email" id="loginEmail" placeholder="Email" />
-      <input type="password" id="loginPassword" placeholder="Password" />
-      <button class="submit-auth" onclick="submitLogin()">Log In</button>
-      <p class="text-gray-400 mt-2 text-center">Don't have an account? <a href="javascript:void(0)" class="text-gold underline" onclick="switchToSignup()">Sign Up</a></p>
-    </div>
-  </div>
-
-  <!-- Signup Overlay -->
-  <div id="signupOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
-    <div class="glass auth-container">
-      <button class="close-auth" onclick="closeSignup()">✕</button>
-      <h2>Create an Account</h2>
-      <input type="text" id="signupName" placeholder="Full Name" />
-      <input type="email" id="signupEmail" placeholder="Email" />
-      <input type="password" id="signupPassword" placeholder="Password" />
-      <input type="password" id="signupConfirm" placeholder="Confirm Password" />
-      <button class="submit-auth" onclick="submitSignup()">Sign Up</button>
-      <p class="text-gray-400 mt-2 text-center">Already have an account? <a href="javascript:void(0)" class="text-gold underline" onclick="switchToLogin()">Log In</a></p>
-    </div>
-  </div>
-
   <!-- ReDefined Overlay + Iframe -->
   <div id="redefinedOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
     <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
@@ -151,25 +125,6 @@
       }
     });
 
-    function openLogin() { document.getElementById('loginOverlay').classList.remove('hidden'); }
-    function closeLogin() { document.getElementById('loginOverlay').classList.add('hidden'); }
-    function openSignup() { document.getElementById('signupOverlay').classList.remove('hidden'); }
-    function closeSignup() { document.getElementById('signupOverlay').classList.add('hidden'); }
-    function switchToSignup() { closeLogin(); openSignup(); }
-    function switchToLogin() { closeSignup(); openLogin(); }
-    function submitLogin() {
-      alert('Logging in as ' + document.getElementById('loginEmail').value);
-      closeLogin();
-    }
-    function submitSignup() {
-      if (document.getElementById('signupPassword').value !== document.getElementById('signupConfirm').value) {
-        alert('Passwords do not match');
-        return;
-      }
-      alert('Account created for ' + document.getElementById('signupEmail').value);
-      closeSignup(); openLogin();
-    }
-
     function openRedefined() {
       document.getElementById('redefinedFrame').src = 'https://realredefined.onrender.com';
       document.getElementById('redefinedOverlay').classList.remove('hidden');
@@ -186,6 +141,10 @@
       slidesPerView: 1.2,
       loop: true,
       spaceBetween: 30,
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false
+      },
       pagination: {
         el: ".swiper-pagination",
         clickable: true

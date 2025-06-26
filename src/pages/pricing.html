@@ -4,11 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pricing – RealtySass</title>
-
-  <!-- Tailwind & Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
-
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
@@ -20,19 +17,15 @@
     }
     .gold { background-color: #d4af37; color: #0d0d0d; }
     .tab-active {
-      background-color: #f5f5f5;
-      color: #0d0d0d;
+      background-color: #3a3535;
+      color: #fff;
       font-weight: 600;
     }
-
-    /* Glass Header */
     .glass {
       background-color: rgba(255,255,255,0.1);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
-
-    /* Hero Glow */
     .hero {
       position: relative;
       background-color: #0d0d0d;
@@ -58,8 +51,6 @@
   </style>
 </head>
 <body>
-
-  <!-- Header/Navbar -->
   <header class="glass w-full py-4 fixed z-50">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-white">RealtySass</h1>
@@ -73,7 +64,6 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
   <section class="hero text-center pt-36 pb-20 px-4">
     <div class="max-w-3xl mx-auto">
       <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
@@ -85,21 +75,18 @@
     </div>
   </section>
 
-  <!-- Tab Filters -->
-  <div class="text-center py-4 bg-[#f5f5f5] text-gray-700">
-    <div id="pricingTabs" class="inline-flex gap-4 justify-center text-sm font-medium">
-      <button data-filter="all" class="px-4 py-2 rounded-full tab-active">All</button>
-      <button data-filter="monthly" class="px-4 py-2 rounded-full hover:bg-gray-300">Monthly</button>
-      <button data-filter="annual" class="px-4 py-2 rounded-full hover:bg-gray-300">Annual</button>
-      <button data-filter="enterprise" class="px-4 py-2 rounded-full hover:bg-gray-300">Enterprise</button>
+  <!-- Updated Tab Filters -->
+  <div class="text-center py-6 bg-[#f5f5f5] text-gray-700">
+    <div class="inline-flex justify-center gap-2 rounded-full border border-gray-300 px-2 py-2">
+      <button data-filter="all" class="px-6 py-2 rounded-full tab-active text-sm">All</button>
+      <button data-filter="monthly" class="px-6 py-2 rounded-full hover:bg-gray-100 text-sm">Monthly</button>
+      <button data-filter="annual" class="px-6 py-2 rounded-full hover:bg-gray-100 text-sm">Annual</button>
+      <button data-filter="enterprise" class="px-6 py-2 rounded-full hover:bg-gray-100 text-sm">Enterprise</button>
     </div>
   </div>
 
-  <!-- Pricing Cards Grid -->
   <section class="py-16 bg-[#f5f5f5] text-gray-800">
     <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4">
-
-      <!-- Starter (Monthly & Annual) -->
       <div data-frequency="monthly annual" class="bg-white rounded-xl shadow-lg p-6">
         <h3 class="text-xl font-semibold mb-2">Starter</h3>
         <p class="price text-3xl font-bold mb-2">
@@ -118,7 +105,6 @@
         </ul>
       </div>
 
-      <!-- Pro (Monthly & Annual) -->
       <div data-frequency="monthly annual" class="bg-white rounded-xl shadow-lg p-6 border-2 border-yellow-500">
         <h3 class="text-xl font-semibold mb-2">Pro</h3>
         <p class="price text-3xl font-bold mb-2">
@@ -138,7 +124,6 @@
         </ul>
       </div>
 
-      <!-- Elite (Enterprise Only) -->
       <div data-frequency="enterprise" class="bg-white rounded-xl shadow-lg p-6">
         <h3 class="text-xl font-semibold mb-2">Elite</h3>
         <p class="price text-3xl font-bold mb-2">$499<span class="text-sm font-normal">/mo</span></p>
@@ -152,16 +137,13 @@
           <li>✓ Lead Generation Funnels</li>
         </ul>
       </div>
-
     </div>
   </section>
 
-  <!-- Footer -->
   <footer class="text-center py-10 text-sm text-gray-500 bg-[#0d0d0d]">
     &copy; 2025 RealtySass – Built with sass, style, and strategy.
   </footer>
 
-  <!-- Filtering Script -->
   <script>
     const tabs = document.querySelectorAll('#pricingTabs button');
     const cards = document.querySelectorAll('[data-frequency]');
@@ -187,6 +169,5 @@
       });
     });
   </script>
-
 </body>
 </html>

@@ -80,6 +80,7 @@
       <button data-filter="daily" class="px-6 py-2 rounded-full tab-active text-sm">Daily $7.99</button>
       <button data-filter="monthly" class="px-6 py-2 rounded-full hover:bg-gray-100 text-sm">Monthly $14.99</button>
       <button data-filter="annual" class="px-6 py-2 rounded-full hover:bg-gray-100 text-sm">Annual $24.99</button>
+      <button data-filter="lifetime" class="px-6 py-2 rounded-full hover:bg-gray-100 text-sm">Lifetime $299</button>
     </div>
   </div>
 
@@ -110,7 +111,7 @@
         <div>
           <h4 id="planTitle" class="text-2xl font-bold mb-4"></h4>
           <p id="planDescription" class="text-gray-700 text-sm leading-relaxed">
-            Our AI tools provide daily flexibility, monthly momentum, or annual advantage depending on your real estate hustle. Redefined.ai enhances listings with style. Flip.ai analyzes deals like a pro. WebX.ai builds beautiful websites fast. Each subscription brings daily innovation to your fingertips. Work smarter, not harder.
+            Our AI tools provide daily flexibility, monthly momentum, annual advantage, or lifetime ownership depending on your real estate hustle. Redefined.ai enhances listings with style. Flip.ai analyzes deals like a pro. WebX.ai builds beautiful websites fast. Each subscription brings daily innovation to your fingertips. Work smarter, not harder.
           </p>
         </div>
       </div>
@@ -127,15 +128,15 @@
     const planDetails = {
       redefined: {
         title: "REDefined.ai Subscription",
-        description: "REDefined.ai delivers beautifully styled, AI-crafted property listings daily. At just $7.99 a day, agents can transform ordinary listings into viral showcases. Choose daily, monthly, or annual plans to match your marketing rhythm."
+        description: "REDefined.ai delivers beautifully styled, AI-crafted property listings daily. At just $7.99 a day, agents can transform ordinary listings into viral showcases. Choose daily, monthly, annual or lifetime plans to match your marketing rhythm."
       },
       flip: {
         title: "Flip.ai Subscription",
-        description: "Flip.ai is designed for investors and flippers. Use it to calculate ROI, visualize renovations, and make smart decisions on the fly. At $7.99/day, you’re only paying when you flip."
+        description: "Flip.ai is designed for investors and flippers. Use it to calculate ROI, visualize renovations, and make smart decisions on the fly. At $7.99/day, you’re only paying when you flip — or go lifetime and never worry again."
       },
       webx: {
         title: "WebX.ai Subscription",
-        description: "WebX.ai helps agents build stunning branded websites in seconds. It’s perfect for agents on the go who want a beautiful online presence for just $7.99/day."
+        description: "WebX.ai helps agents build stunning branded websites in seconds. It’s perfect for agents on the go who want a beautiful online presence for just $7.99/day or lifetime access for long-term value."
       }
     };
 
@@ -144,21 +145,14 @@
       const details = document.getElementById('planDetails');
 
       if (currentSelected === card) {
-        allCards.forEach(c => {
-          c.classList.remove('hidden', 'col-span-3');
-          c.classList.add('md:col-span-1');
-        });
+        allCards.forEach(c => c.classList.remove('hidden'));
         details.classList.add('hidden');
         currentSelected = null;
         return;
       }
 
-      allCards.forEach(c => {
-        c.classList.add('hidden');
-      });
-
+      allCards.forEach(c => c.classList.add('hidden'));
       card.classList.remove('hidden');
-      card.classList.add('md:col-span-1');
       document.getElementById('selectedCard').innerHTML = card.outerHTML;
       document.getElementById('planTitle').textContent = planDetails[key].title;
       document.getElementById('planDescription').textContent = planDetails[key].description;
@@ -167,3 +161,4 @@
     }
   </script>
 </body>
+</html>

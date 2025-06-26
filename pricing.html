@@ -48,47 +48,44 @@
       position: relative;
       z-index: 10;
     }
-
     #compareBtn {
       position: fixed;
-      top: 40%;
+      top: 50%;
       right: 0;
-      transform: rotate(-90deg);
-      transform-origin: right top;
+      transform: translateY(-50%);
       background: #d4af37;
-      color: #0d0d0d;
-      padding: 10px 20px;
+      color: #000;
+      padding: 0.75rem 1.5rem;
+      border-top-left-radius: 9999px;
+      border-bottom-left-radius: 9999px;
       font-weight: bold;
-      border-top-right-radius: 8px;
-      border-top-left-radius: 8px;
       cursor: pointer;
-      z-index: 1000;
+      z-index: 50;
     }
-
-    #avatarVideoContainer {
+    #pricingVideo {
       position: fixed;
-      top: 80px;
-      left: -600px;
-      width: 320px;
-      height: auto;
-      z-index: 1000;
-      transition: left 0.6s ease-in-out, opacity 0.5s ease;
-      opacity: 0;
-    }
-
-    #avatarVideoContainer.show {
+      top: 50%;
       left: 20px;
-      opacity: 1;
-    }
-
-    video {
-      width: 100%;
-      border-radius: 1rem;
+      transform: translateY(-50%);
+      max-width: 320px;
+      z-index: 40;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
       box-shadow: 0 0 30px rgba(212,175,55,0.5);
+      border-radius: 1rem;
+    }
+    #pricingVideo.show {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
+  <button id="compareBtn">Compare Plans</button>
+  <video id="pricingVideo" class="rounded-lg" autoplay controls>
+    <source src="avatarpricing.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
   <header class="glass w-full py-4 fixed z-50">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-white">RealtySass</h1>
@@ -140,7 +137,6 @@
         <p class="text-sm text-gray-600 mb-4">Launch branded agent sites instantly.</p>
       </div>
     </div>
-
     <div id="planDetails" class="max-w-6xl mx-auto mt-10 px-6 hidden transition-all">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <div>
@@ -155,14 +151,6 @@
     &copy; 2025 RealtySass – Built with sass, style, and strategy.
   </footer>
 
-  <!-- Floating Compare Button -->
-  <div id="compareBtn" onclick="showAvatarVideo()">Compare Plans</div>
-
-  <!-- Avatar Video Player -->
-  <div id="avatarVideoContainer">
-    <video id="avatarVideo" src="avatarpricing.mp4" autoplay controls></video>
-  </div>
-
   <script>
     let currentSelected = null;
 
@@ -173,7 +161,7 @@
       },
       flip: {
         title: "Flip.ai Subscription",
-        description: "Flip.ai is designed for investors and flippers. Use it to calculate ROI, visualize renovations, and make smart decisions on the fly. At $7.99/day, you’re only paying when you flip. Flexible plans available for monthly, annual, and lifetime use."
+        description: "Flip.ai is designed for investors and flippers. Use it to calculate ROI, visualize renovations, and make smart decisions on the fly. At $7.99/day, you're only paying when you flip. Flexible plans available for monthly, annual, and lifetime use."
       },
       webx: {
         title: "WebX.ai Subscription",
@@ -200,17 +188,18 @@
       currentSelected = card;
     }
 
-    function showAvatarVideo() {
-      const container = document.getElementById("avatarVideoContainer");
-      const video = document.getElementById("avatarVideo");
-      container.classList.add("show");
-      video.currentTime = 0;
-      video.play();
-
-      video.onended = () => {
-        container.classList.remove("show");
-      };
-    }
+    document.getElementById('compareBtn').addEventListener('click', () => {
+      const video = document.getElementById('pricingVideo');
+      if (video.classList.contains('show')) {
+        video.pause();
+        video.classList.remove('show');
+      } else {
+        video.classList.add('show');
+        video.currentTime = 0;
+        video.play();
+        video.onended = () => video.classList.remove('show');
+      }
+    });
   </script>
 </body>
 </html>

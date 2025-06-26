@@ -75,32 +75,43 @@
     </div>
   </section>
 
+  <div class="text-center py-6 bg-[#f5f5f5] text-gray-700">
+    <div class="inline-flex justify-center gap-2 rounded-full border border-gray-300 px-2 py-2">
+      <button data-filter="daily" class="px-6 py-2 rounded-full tab-active text-sm">Daily $7.99</button>
+      <button data-filter="monthly" class="px-6 py-2 rounded-full hover:bg-gray-100 text-sm">Monthly $14.99</button>
+      <button data-filter="annual" class="px-6 py-2 rounded-full hover:bg-gray-100 text-sm">Annual $24.99</button>
+    </div>
+  </div>
+
   <section class="py-16 bg-[#f5f5f5] text-gray-800">
     <div id="pricingGrid" class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4 transition-all duration-500">
-      <div id="introCard" onclick="selectPlan('intro')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
-        <h3 class="text-xl font-semibold mb-2">Intro</h3>
-        <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/mo</span></p>
-        <p class="text-sm text-gray-600 mb-4">Great for beginners ready to get sassy.</p>
+      <div onclick="selectPlan(this, 'redefined')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
+        <h3 class="text-xl font-semibold mb-2">REDefined.ai</h3>
+        <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/day</span></p>
+        <p class="text-sm text-gray-600 mb-4">AI-crafted listings with design flair.</p>
       </div>
 
-      <div id="temptingCard" onclick="selectPlan('tempting')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
-        <h3 class="text-xl font-semibold mb-2">Tempting</h3>
-        <p class="text-3xl font-bold mb-2">$16.99<span class="text-sm font-normal">/mo</span></p>
-        <p class="text-sm text-gray-600 mb-4">For rising stars ready to shine bright.</p>
+      <div onclick="selectPlan(this, 'flip')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
+        <h3 class="text-xl font-semibold mb-2">Flip.ai</h3>
+        <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/day</span></p>
+        <p class="text-sm text-gray-600 mb-4">Investor-focused ROI and design tool.</p>
       </div>
 
-      <div id="zaddyCard" onclick="selectPlan('zaddy')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
-        <h3 class="text-xl font-semibold mb-2">Zaddy & Cougar</h3>
-        <p class="text-3xl font-bold mb-2">$24.99<span class="text-sm font-normal">/mo</span></p>
-        <p class="text-sm text-gray-600 mb-4">Top-tier glam for serious players.</p>
+      <div onclick="selectPlan(this, 'webx')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
+        <h3 class="text-xl font-semibold mb-2">WebX.ai</h3>
+        <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/day</span></p>
+        <p class="text-sm text-gray-600 mb-4">Launch branded agent sites instantly.</p>
       </div>
     </div>
 
-    <div id="planDetails" class="max-w-6xl mx-auto mt-10 px-4 hidden">
-      <div class="flex flex-col md:flex-row items-start gap-6">
-        <div class="w-full md:w-1/2">
+    <div id="planDetails" class="max-w-6xl mx-auto mt-10 px-6 hidden transition-all">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        <div id="selectedCard"></div>
+        <div>
           <h4 id="planTitle" class="text-2xl font-bold mb-4"></h4>
-          <p id="planDescription" class="text-gray-700"></p>
+          <p id="planDescription" class="text-gray-700 text-sm leading-relaxed">
+            Our AI tools provide daily flexibility, monthly momentum, or annual advantage depending on your real estate hustle. Redefined.ai enhances listings with style. Flip.ai analyzes deals like a pro. WebX.ai builds beautiful websites fast. Each subscription brings daily innovation to your fingertips. Work smarter, not harder.
+          </p>
         </div>
       </div>
     </div>
@@ -114,35 +125,45 @@
     let currentSelected = null;
 
     const planDetails = {
-      intro: {
-        title: "Intro Plan",
-        description: "The Intro Plan is perfect for new real estate professionals looking to establish a strong online presence without breaking the bank. With essential tools like a listing page, access to one professionally designed template, and basic customer support, this plan is an excellent starting point. Users will also receive invites to exclusive community events and webinars to help jumpstart their growth. Whether you’re just testing the waters or building a side hustle, the Intro Plan provides all the foundational features needed to stand out in the market."
+      redefined: {
+        title: "REDefined.ai Subscription",
+        description: "REDefined.ai delivers beautifully styled, AI-crafted property listings daily. At just $7.99 a day, agents can transform ordinary listings into viral showcases. Choose daily, monthly, or annual plans to match your marketing rhythm."
       },
-      tempting: {
-        title: "Tempting Plan",
-        description: "The Tempting Plan is ideal for agents looking to step up their game with advanced features and more customization. This tier includes everything in the Intro Plan, plus access to five premium templates, priority AI-driven listing enhancements, and a powerful analytics dashboard to monitor performance. Perfect for growing your brand and boosting visibility across social platforms, this plan ensures your listings not only look great but perform better."
+      flip: {
+        title: "Flip.ai Subscription",
+        description: "Flip.ai is designed for investors and flippers. Use it to calculate ROI, visualize renovations, and make smart decisions on the fly. At $7.99/day, you’re only paying when you flip."
       },
-      zaddy: {
-        title: "Zaddy & Cougar Plan",
-        description: "This elite plan is built for top-tier agents and brokerages that demand maximum customization, branding, and performance. The Zaddy & Cougar Plan includes everything from the lower tiers plus access to the full branding suite, unlimited premium templates, CRM integration, and priority customer service. Tailored for serious players in the luxury and high-volume markets, it positions you to dominate your territory with a touch of style."
+      webx: {
+        title: "WebX.ai Subscription",
+        description: "WebX.ai helps agents build stunning branded websites in seconds. It’s perfect for agents on the go who want a beautiful online presence for just $7.99/day."
       }
     };
 
-    function selectPlan(key) {
+    function selectPlan(card, key) {
+      const allCards = document.querySelectorAll('.plan');
       const details = document.getElementById('planDetails');
-      const title = document.getElementById('planTitle');
-      const desc = document.getElementById('planDescription');
 
-      if (currentSelected === key) {
+      if (currentSelected === card) {
+        allCards.forEach(c => {
+          c.classList.remove('hidden', 'col-span-3');
+          c.classList.add('md:col-span-1');
+        });
         details.classList.add('hidden');
         currentSelected = null;
         return;
       }
 
-      title.textContent = planDetails[key].title;
-      desc.textContent = planDetails[key].description;
+      allCards.forEach(c => {
+        c.classList.add('hidden');
+      });
+
+      card.classList.remove('hidden');
+      card.classList.add('md:col-span-1');
+      document.getElementById('selectedCard').innerHTML = card.outerHTML;
+      document.getElementById('planTitle').textContent = planDetails[key].title;
+      document.getElementById('planDescription').textContent = planDetails[key].description;
       details.classList.remove('hidden');
-      currentSelected = key;
+      currentSelected = card;
     }
   </script>
 </body>

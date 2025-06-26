@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login – RealtySass</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
       background-color: #ffffff;
       color: #1a1a1a;
+      margin: 0;
     }
     h1, h2 {
       font-family: 'Lora', serif;
@@ -25,10 +29,16 @@
 <body class="flex items-center justify-center min-h-screen px-4">
 
   <div class="w-full max-w-md">
+    <!-- Logo -->
     <div class="flex justify-center mb-8">
-      <img src="/src/assets/SaSS.png" alt="RealtySass Logo" class="h-10" />
+      <img
+        src="../assets/SaSS.png"
+        alt="RealtySass Logo"
+        class="h-10"
+      />
     </div>
-    
+
+    <!-- Headline -->
     <div class="text-center mb-6">
       <h1 class="text-2xl font-bold leading-snug">
         Welcome back to <span class="highlight">RealtySass</span>
@@ -36,23 +46,48 @@
       <h2 class="text-sm text-gray-500 mt-2">To get started, please sign in.</h2>
     </div>
 
+    <!-- Form -->
     <form class="space-y-4">
       <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email address</label>
-        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black" />
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+          Email address
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black"
+        />
       </div>
       <div class="relative">
-        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-        <input type="password" id="password" name="password" required class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black" />
-        <button type="button" onclick="togglePassword()" class="absolute right-2 top-[38px] text-gray-600">
+        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+          Password
+        </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          required
+          class="w-full px-4 py-2 pr-10 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-black"
+        />
+        <button
+          type="button"
+          onclick="togglePassword()"
+          class="absolute right-2 top-[38px] text-gray-600"
+        >
           👁️
         </button>
       </div>
-      <button type="submit" class="w-full bg-black text-white py-2 rounded-full font-semibold hover:opacity-90 transition">
+      <button
+        type="submit"
+        class="w-full bg-black text-white py-2 rounded-full font-semibold hover:opacity-90 transition"
+      >
         Continue
       </button>
     </form>
 
+    <!-- Links -->
     <div class="text-center mt-4">
       <a href="#" class="text-sm text-gray-500 hover:underline">Forgot password?</a>
     </div>
@@ -63,9 +98,8 @@
 
   <script>
     function togglePassword() {
-      const passwordInput = document.getElementById("password");
-      const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-      passwordInput.setAttribute("type", type);
+      const pw = document.getElementById("password");
+      pw.type = pw.type === "password" ? "text" : "password";
     }
   </script>
 

@@ -64,48 +64,56 @@
     </div>
   </header>
 
-  <section class="hero text-center pt-36 pb-10 px-4">
+  <section class="hero text-center pt-36 pb-20 px-4">
     <div class="max-w-3xl mx-auto">
       <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
         Transparent Pricing for Agents Who Mean Business
       </h2>
-      <p class="text-gray-300 text-lg mb-4">
+      <p class="text-gray-300 text-lg">
         Choose the plan that fits your brand and growth goals. Built for real estate professionals.
       </p>
-      <button onclick="resetPlans()" class="bg-white text-black px-4 py-2 rounded-full hover:bg-gray-100">Compare Plans</button>
     </div>
   </section>
+
+  <div class="text-center py-6 bg-[#f5f5f5] text-gray-700">
+    <div class="inline-flex justify-center gap-2 rounded-full border border-gray-300 px-2 py-2">
+      <button data-filter="daily" class="px-6 py-2 rounded-full tab-active text-sm">Daily $7.99</button>
+      <button data-filter="monthly" class="px-6 py-2 rounded-full hover:bg-gray-100 text-sm">Monthly $14.99</button>
+      <button data-filter="annual" class="px-6 py-2 rounded-full hover:bg-gray-100 text-sm">Annual $24.99</button>
+    </div>
+  </div>
 
   <section class="py-16 bg-[#f5f5f5] text-gray-800">
     <div id="pricingGrid" class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4 transition-all duration-500">
       <div onclick="selectPlan(this, 'redefined')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
         <h3 class="text-xl font-semibold mb-2">REDefined.ai</h3>
-        <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/daily</span></p>
-        <p class="text-sm text-gray-600 mb-4">Elevate listings with smart enhancements and viral flair.</p>
+        <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/day</span></p>
+        <p class="text-sm text-gray-600 mb-4">AI-crafted listings with design flair.</p>
       </div>
 
       <div onclick="selectPlan(this, 'flip')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
         <h3 class="text-xl font-semibold mb-2">Flip.ai</h3>
-        <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/daily</span></p>
-        <p class="text-sm text-gray-600 mb-4">Smart investor tools for ROI, comps, and exit strategy.</p>
+        <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/day</span></p>
+        <p class="text-sm text-gray-600 mb-4">Investor-focused ROI and design tool.</p>
       </div>
 
       <div onclick="selectPlan(this, 'webx')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
         <h3 class="text-xl font-semibold mb-2">WebX.ai</h3>
-        <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/daily</span></p>
-        <p class="text-sm text-gray-600 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
-      </div>
-
-      <div onclick="selectPlan(this, 'lifetime')" class="plan bg-yellow-100 rounded-xl shadow-lg p-6 cursor-pointer transition-all col-span-3">
-        <h3 class="text-xl font-semibold mb-2">Lifetime Access</h3>
-        <p class="text-3xl font-bold mb-2">$299<span class="text-sm font-normal">/one-time</span></p>
-        <p class="text-sm text-gray-600 mb-4">Get all services for life — including every future feature.</p>
+        <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/day</span></p>
+        <p class="text-sm text-gray-600 mb-4">Launch branded agent sites instantly.</p>
       </div>
     </div>
 
-    <div id="planDetails" class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl hidden transition-all">
-      <h4 id="planTitle" class="text-2xl font-bold mb-4"></h4>
-      <p id="planDescription" class="text-gray-700"></p>
+    <div id="planDetails" class="max-w-6xl mx-auto mt-10 px-6 hidden transition-all">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+        <div id="selectedCard"></div>
+        <div>
+          <h4 id="planTitle" class="text-2xl font-bold mb-4"></h4>
+          <p id="planDescription" class="text-gray-700 text-sm leading-relaxed">
+            Our AI tools provide daily flexibility, monthly momentum, or annual advantage depending on your real estate hustle. Redefined.ai enhances listings with style. Flip.ai analyzes deals like a pro. WebX.ai builds beautiful websites fast. Each subscription brings daily innovation to your fingertips. Work smarter, not harder.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -118,20 +126,16 @@
 
     const planDetails = {
       redefined: {
-        title: "REDefined.ai",
-        description: "REDefined.ai empowers agents to create show-stopping listings using cutting-edge AI. From instantly writing property descriptions to enhancing listing photos and generating SEO-optimized titles, REDefined.ai turns every listing into a digital masterpiece. The tool adapts its style based on target audience and local market data, offering smart suggestions to boost engagement and visibility. Whether you're an independent agent or a large brokerage, REDefined.ai becomes your 24/7 creative partner. It includes story-driven descriptions, taglines, and image refinements all at lightning speed."
+        title: "REDefined.ai Subscription",
+        description: "REDefined.ai delivers beautifully styled, AI-crafted property listings daily. At just $7.99 a day, agents can transform ordinary listings into viral showcases. Choose daily, monthly, or annual plans to match your marketing rhythm."
       },
       flip: {
-        title: "Flip.ai",
-        description: "Flip.ai equips real estate investors with intelligent insights that transform potential deals into strategic decisions. Analyze ROI, determine comps, predict ARV, and select the right rehab design—all through one sleek dashboard. Flip.ai supports various exit strategies (flip, rent, BRRRR), and tailors your loan plan accordingly. Upload property details, get personalized data, and share a polished investment pitch in minutes. It’s the flipper’s secret weapon—powered by data, shaped by you."
+        title: "Flip.ai Subscription",
+        description: "Flip.ai is designed for investors and flippers. Use it to calculate ROI, visualize renovations, and make smart decisions on the fly. At $7.99/day, you’re only paying when you flip."
       },
       webx: {
-        title: "WebX.ai",
-        description: "WebX.ai is the fastest way to build sleek, branded agent websites. Choose your vibe, upload your info, and let the AI do the rest. From layout design to content generation, this tool eliminates tech barriers and speeds up time to market. Websites come mobile-optimized, SEO-ready, and integrated with your listings. Whether you’re building a personal brand or launching a new campaign, WebX.ai has you covered with effortless style and stunning results."
-      },
-      lifetime: {
-        title: "Lifetime Deal",
-        description: "Enjoy unlimited access to all RealtySass AI tools—REDefined.ai, Flip.ai, WebX.ai—plus every future update and feature, all for a one-time payment. This is the ultimate commitment to your digital real estate success."
+        title: "WebX.ai Subscription",
+        description: "WebX.ai helps agents build stunning branded websites in seconds. It’s perfect for agents on the go who want a beautiful online presence for just $7.99/day."
       }
     };
 
@@ -140,34 +144,26 @@
       const details = document.getElementById('planDetails');
 
       if (currentSelected === card) {
-        allCards.forEach(c => c.classList.remove('hidden'));
+        allCards.forEach(c => {
+          c.classList.remove('hidden', 'col-span-3');
+          c.classList.add('md:col-span-1');
+        });
         details.classList.add('hidden');
         currentSelected = null;
         return;
       }
 
-      allCards.forEach(c => c.classList.remove('col-span-3', 'hidden'));
       allCards.forEach(c => {
-        if (c !== card) c.classList.add('hidden');
+        c.classList.add('hidden');
       });
 
       card.classList.remove('hidden');
       card.classList.add('md:col-span-1');
+      document.getElementById('selectedCard').innerHTML = card.outerHTML;
       document.getElementById('planTitle').textContent = planDetails[key].title;
       document.getElementById('planDescription').textContent = planDetails[key].description;
       details.classList.remove('hidden');
       currentSelected = card;
     }
-
-    function resetPlans() {
-      const allCards = document.querySelectorAll('.plan');
-      allCards.forEach(c => {
-        c.classList.remove('hidden', 'col-span-3');
-        c.classList.add('md:col-span-1');
-      });
-      document.getElementById('planDetails').classList.add('hidden');
-      currentSelected = null;
-    }
   </script>
 </body>
-</html>

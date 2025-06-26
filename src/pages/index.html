@@ -8,20 +8,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
-    body { font-family: 'Montserrat', sans-serif; background-color: #0d0d0d; color: #f5f5f5; }
-    h1, h2, h3 { font-family: 'Lora', serif; }
-    .glass { background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-    .gold { --tw-bg-opacity: 1; background-color: rgba(212,175,55,var(--tw-bg-opacity)); }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #0d0d0d;
+      color: #f5f5f5;
+    }
+    h1, h2, h3 {
+      font-family: 'Lora', serif;
+    }
+    .glass {
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .gold {
+      --tw-bg-opacity: 1;
+      background-color: rgba(212,175,55,var(--tw-bg-opacity));
+    }
     video { outline: none; }
-    #heroVideo { box-shadow: 0 0 20px rgba(255,255,255,0.6); }
-    .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
-
-    /* 360° Rotator styles */
-    .rotator { perspective: 1000px; }
-    .rotator img { width: 100%; height: auto; transform-style: preserve-3d; animation: spin 20s linear infinite; }
-    @keyframes spin {
-      from { transform: rotateY(0deg) rotateX(0deg); }
-      to   { transform: rotateY(360deg) rotateX(360deg); }
+    #heroVideo {
+      box-shadow: 0 0 20px rgba(255,255,255,0.6);
     }
 
     /* Hero Glow */
@@ -47,6 +53,26 @@
       position: relative;
       z-index: 10;
     }
+
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .rotator {
+      perspective: 1000px;
+    }
+    .rotator img {
+      width: 100%;
+      height: auto;
+      transform-style: preserve-3d;
+      animation: spin 20s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotateY(0deg) rotateX(0deg); }
+      to   { transform: rotateY(360deg) rotateX(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -65,16 +91,21 @@
     </div>
   </header>
 
-  <!-- Hero Section with Video and Text -->
+  <!-- Hero Section -->
   <section class="hero text-center pt-36 pb-20 px-4">
     <div class="max-w-4xl mx-auto">
-      <video id="heroVideo" class="rounded-md w-full h-auto mb-8" autoplay muted controls playsinline>
-        <source src="introvideo.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <h2 class="text-5xl font-bold mb-4">Put some SaaS in your Realty—Let's do it A.I. Style!</h2>
-      <p class="text-lg mb-6 max-w-2xl mx-auto text-gray-300">Enhance your Sass. Show off your listings. Get more Hot Sales.</p>
-      <a href="#" class="inline-block px-8 py-4 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Try Free Demo</a>
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+        Put some SaaS in your Realty—Let's do it A.I. Style!
+      </h2>
+      <p class="text-gray-300 text-lg mb-8">
+        Enhance your Sass. Show off your listings. Get more Hot Sales.
+      </p>
+      <div class="glass rounded-xl shadow-2xl p-4 max-w-5xl w-full mx-auto">
+        <video id="heroVideo" class="rounded-md w-full h-auto" autoplay muted controls playsinline>
+          <source src="introvideo.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
     </div>
   </section>
 
@@ -116,7 +147,7 @@
     &copy; 2025 RealtySass – Built with sass, style, and strategy.
   </footer>
 
-  <!-- ReDefined Overlay + Iframe -->
+  <!-- ReDefined Overlay -->
   <div id="redefinedOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
     <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
       <button onclick="closeRedefined()" class="absolute top-2 right-2 text-white text-xl">✕</button>
@@ -124,7 +155,7 @@
     </div>
   </div>
 
-  <!-- Swiper & Scripts -->
+  <!-- Swiper + Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
     const heroVideo = document.getElementById('heroVideo');
@@ -135,6 +166,7 @@
         heroVideo.play();
       }
     });
+
     function openRedefined() {
       document.getElementById('redefinedFrame').src = 'https://realredefined.onrender.com';
       document.getElementById('redefinedOverlay').classList.remove('hidden');

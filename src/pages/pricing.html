@@ -96,9 +96,14 @@
       </div>
     </div>
 
-    <div id="planDetails" class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl hidden transition-all">
-      <h4 id="planTitle" class="text-2xl font-bold mb-4"></h4>
-      <p id="planDescription" class="text-gray-700"></p>
+    <div id="planDetailsWrapper" class="max-w-6xl mx-auto px-4 mt-10 hidden transition-all">
+      <div class="flex flex-col md:flex-row gap-8">
+        <div id="selectedPlanCard" class="w-full md:w-1/2"></div>
+        <div id="planDetails" class="w-full md:w-1/2">
+          <h4 id="planTitle" class="text-2xl font-bold mb-4"></h4>
+          <p id="planDescription" class="text-gray-700">This is a placeholder for a 200-word summary about the selected plan. It should describe key benefits, included features, and use cases in a friendly, persuasive tone tailored to real estate professionals looking to boost their brand presence and results. Add more if needed to meet aesthetic needs.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -112,41 +117,41 @@
     const planDetails = {
       intro: {
         title: "Intro Plan",
-        description: "Includes: Listing page, 1 template, basic support, and access to community events."
+        description: "The Intro plan is your entry point into the RealtySass world. At just $7.99/month, it provides all the essentials: one polished template, a listing page, basic email support, and access to our online real estate community. It's ideal for agents starting out who want to establish their digital presence quickly, easily, and affordably."
       },
       tempting: {
         title: "Tempting Plan",
-        description: "Includes: All Intro features + 5 templates, priority AI boosts, and analytics dashboard."
+        description: "Tempting is where things heat up. For $16.99/month, you'll unlock five customizable templates, access to advanced AI listing boosters, analytics dashboard insights, and premium design support. Ideal for realtors scaling their business with tools that make an impression."
       },
       zaddy: {
         title: "Zaddy & Cougar Plan",
-        description: "Includes: Everything above + full branding suite, premium templates, and CRM integration."
+        description: "Our top-tier option at $24.99/month, this plan is tailored for serious players. It includes all features from other plans plus a full branding suite, CRM integrations, concierge setup, and premium content design kits. Built to dominate your market, this plan oozes sophistication and savvy."
       }
     };
 
     function selectPlan(card, key) {
       const allCards = document.querySelectorAll('.plan');
-      const details = document.getElementById('planDetails');
+      const wrapper = document.getElementById('planDetailsWrapper');
+      const selectedCardContainer = document.getElementById('selectedPlanCard');
 
       if (currentSelected === card) {
         allCards.forEach(c => {
           c.classList.remove('hidden', 'col-span-3');
           c.classList.add('md:col-span-1');
         });
-        details.classList.add('hidden');
+        wrapper.classList.add('hidden');
         currentSelected = null;
         return;
       }
 
-      allCards.forEach(c => {
-        c.classList.add('hidden');
-      });
-
+      allCards.forEach(c => c.classList.add('hidden'));
       card.classList.remove('hidden');
-      card.classList.add('col-span-3');
+      card.classList.add('w-full');
+      selectedCardContainer.innerHTML = card.outerHTML;
+
       document.getElementById('planTitle').textContent = planDetails[key].title;
       document.getElementById('planDescription').textContent = planDetails[key].description;
-      details.classList.remove('hidden');
+      wrapper.classList.remove('hidden');
       currentSelected = card;
     }
   </script>

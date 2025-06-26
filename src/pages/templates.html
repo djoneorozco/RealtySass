@@ -13,14 +13,29 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
+    /* Global Styles */
     body { font-family: 'Montserrat', sans-serif; background-color: #0d0d0d; margin: 0; color: #333; }
     h1,h2,h3 { font-family: 'Lora', serif; }
-    .text-gold { color: #d4af37; }
-    .bg-gold { background-color: #d4af37; }
-    .hero { background-color: #0d0d0d; color: #fff; }
+    a.btn { display: inline-block; padding: 0.75rem 1.5rem; background-color: #d4af37; color: #0d0d0d; font-weight: 600; border-radius: 0.375rem; }
+
+    /* Glass header */
+    .glass { background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
+    /* Hero Section */
+    .hero { position: relative; background-color: #0d0d0d; color: #fff; overflow: hidden; }
+    .hero::before {
+      content: ''; position: absolute; bottom: 0; left: 50%;
+      width: 100%; height: 300px;
+      transform: translateX(-50%);
+      background: radial-gradient(circle at top center, rgba(212,175,55,0.3), transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Showcase Section */
     .showcase { background-color: #fbf9f3; }
     .showcase .domain { font-size: 0.85rem; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; }
-    a.btn { display: inline-block; padding: 0.75rem 1.5rem; background-color: #d4af37; color: #0d0d0d; font-weight: 600; border-radius: 0.375rem; }
+
+    /* Swiper */
     .swiper { width: 100%; padding: 2rem 0; }
     .swiper-slide { border-radius: 0.5rem; overflow: hidden; background: #fff; }
     .swiper-slide img { width: 100%; height: auto; display: block; }
@@ -29,7 +44,7 @@
 <body>
 
   <!-- Navbar -->
-  <header class="hero fixed w-full z-50">
+  <header class="glass fixed w-full z-50">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-white">RealtySass</h1>
       <nav class="hidden md:flex space-x-6 text-gray-200">
@@ -47,8 +62,8 @@
     <!-- Hero Section -->
     <section class="hero text-center py-20 px-4">
       <div class="max-w-4xl mx-auto">
-        <h1 class="text-5xl font-bold mb-4">Award‑winning real estate website designs</h1>
-        <p class="text-lg mb-12">With over 1,500 five‑star reviews and numerous RealTrends awards, RealtySass is the leading provider of beautiful, effective real estate websites for agents, teams, and brokers. Check out our portfolio of our most recent designs.</p>
+        <h1 class="text-5xl font-bold mb-4">There's a reason why over 30% of the WSJ's Top 100 trust us</h1>
+        <p class="text-lg mb-6">See for yourself how we can help you grow your business with expert-led marketing campaigns.</p>
       </div>
     </section>
 
@@ -61,11 +76,11 @@
           <div>
             <div class="domain">kumarawilcoxon.com</div>
             <h2 class="text-3xl font-semibold mb-4">Clean Cut</h2>
-            <p class="mb-6">With over $3.1B in sales, Kumara Wilcoxon's site reflects high‑end real estate with subtle brand animations, warm color palettes, and rich visuals.</p>
+            <p class="mb-6">With over $3.1B in sales, Kumara Wilcoxon's site reflects high-end real estate with subtle brand animations, warm color palettes, and rich visuals.</p>
             <a href="#" class="btn">Show More</a>
           </div>
           <div>
-            <img src="/src/assets/kumara.jpg" alt="Kumara Wilcoxon Website">
+            <img src="images/kumara.jpg" alt="Kumara Wilcoxon Website" />
           </div>
         </div>
 
@@ -78,7 +93,7 @@
             <a href="#" class="btn">Show More</a>
           </div>
           <div class="md:order-1">
-            <img src="/src/assets/carolwood.jpg" alt="Carolwood Partners Website">
+            <img src="images/carolwood.jpg" alt="Carolwood Partners Website" />
           </div>
         </div>
 
@@ -87,11 +102,11 @@
           <div>
             <div class="domain">gingermartinco.com</div>
             <h2 class="text-3xl font-semibold mb-4">Zaddy</h2>
-            <p class="mb-6">Interactive menus, subtle scroll animations, and refined typography bring the GingerMartin + Co brand to life.</p>
+            <p class="mb-6">Interactive menus, subtle scroll animations, and refined typography bring the GingerMartin + Co brand to life.</p>
             <a href="#" class="btn">Show More</a>
           </div>
           <div>
-            <img src="/src/assets/ginger.jpg" alt="GingerMartin + Co Website">
+            <img src="images/ginger.jpg" alt="GingerMartin + Co Website" />
           </div>
         </div>
 
@@ -103,10 +118,10 @@
       <h3 class="text-3xl font-bold mb-6 text-gray-900">Browse More Templates</h3>
       <div class="swiper mySwiper max-w-6xl mx-auto">
         <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="images/template1.png" alt="Clean Cut template preview"></div>
-          <div class="swiper-slide"><img src="images/template2.png" alt="Modern & Techy template preview"></div>
-          <div class="swiper-slide"><img src="images/template3.png" alt="Zaddy template preview"></div>
-          <div class="swiper-slide"><img src="images/template4.png" alt="Additional template preview"></div>
+          <div class="swiper-slide"><img src="images/template1.png" alt="Clean Cut template preview" /></div>
+          <div class="swiper-slide"><img src="images/template2.png" alt="Modern & Techy template preview" /></div>
+          <div class="swiper-slide"><img src="images/template3.png" alt="Zaddy template preview" /></div>
+          <div class="swiper-slide"><img src="images/template4.png" alt="Additional template preview" /></div>
         </div>
         <div class="swiper-pagination mt-4"></div>
         <div class="swiper-button-next text-gray-900"></div>
@@ -116,7 +131,7 @@
 
     <!-- Footer -->
     <footer class="text-center py-10 text-sm text-gray-400">
-      &copy; 2025 RealtySass – Built with sass, style, and strategy.
+      &copy; 2025 RealtySass – Built with sass, style, and strategy.
     </footer>
   </main>
 

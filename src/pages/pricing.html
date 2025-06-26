@@ -77,29 +77,28 @@
 
   <section class="py-16 bg-[#f5f5f5] text-gray-800">
     <div id="pricingGrid" class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4 transition-all duration-500">
-      <div id="introCard" onclick="selectPlan(this, 'intro')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
+      <div id="introCard" onclick="selectPlan('intro')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
         <h3 class="text-xl font-semibold mb-2">Intro</h3>
         <p class="text-3xl font-bold mb-2">$7.99<span class="text-sm font-normal">/mo</span></p>
         <p class="text-sm text-gray-600 mb-4">Great for beginners ready to get sassy.</p>
       </div>
 
-      <div id="temptingCard" onclick="selectPlan(this, 'tempting')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
+      <div id="temptingCard" onclick="selectPlan('tempting')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
         <h3 class="text-xl font-semibold mb-2">Tempting</h3>
         <p class="text-3xl font-bold mb-2">$16.99<span class="text-sm font-normal">/mo</span></p>
         <p class="text-sm text-gray-600 mb-4">For rising stars ready to shine bright.</p>
       </div>
 
-      <div id="zaddyCard" onclick="selectPlan(this, 'zaddy')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
+      <div id="zaddyCard" onclick="selectPlan('zaddy')" class="plan bg-white rounded-xl shadow-lg p-6 cursor-pointer transition-all">
         <h3 class="text-xl font-semibold mb-2">Zaddy & Cougar</h3>
         <p class="text-3xl font-bold mb-2">$24.99<span class="text-sm font-normal">/mo</span></p>
         <p class="text-sm text-gray-600 mb-4">Top-tier glam for serious players.</p>
       </div>
     </div>
 
-    <div id="planDetails" class="max-w-6xl mx-auto mt-10 px-4 hidden transition-all">
-      <div class="grid md:grid-cols-2 gap-8">
-        <div id="activeCardContainer"></div>
-        <div>
+    <div id="planDetails" class="max-w-6xl mx-auto mt-10 px-4 hidden">
+      <div class="flex flex-col md:flex-row items-start gap-6">
+        <div class="w-full md:w-1/2">
           <h4 id="planTitle" class="text-2xl font-bold mb-4"></h4>
           <p id="planDescription" class="text-gray-700"></p>
         </div>
@@ -117,40 +116,33 @@
     const planDetails = {
       intro: {
         title: "Intro Plan",
-        description: "This entry-level plan is designed for agents who are just stepping into the world of real estate marketing. Get a stylish listing page, access to one premium template, basic email support, and entry into community events designed to boost your confidence and visibility. Perfect for those getting started with sass and style."
+        description: "The Intro Plan is perfect for new real estate professionals looking to establish a strong online presence without breaking the bank. With essential tools like a listing page, access to one professionally designed template, and basic customer support, this plan is an excellent starting point. Users will also receive invites to exclusive community events and webinars to help jumpstart their growth. Whether you’re just testing the waters or building a side hustle, the Intro Plan provides all the foundational features needed to stand out in the market."
       },
       tempting: {
         title: "Tempting Plan",
-        description: "The Tempting plan adds extra sparkle. You'll enjoy five beautiful templates to rotate through, priority access to AI listing enhancements, and a personalized analytics dashboard to track your growing success. This plan is for agents who are building a brand and want to attract more attention."
+        description: "The Tempting Plan is ideal for agents looking to step up their game with advanced features and more customization. This tier includes everything in the Intro Plan, plus access to five premium templates, priority AI-driven listing enhancements, and a powerful analytics dashboard to monitor performance. Perfect for growing your brand and boosting visibility across social platforms, this plan ensures your listings not only look great but perform better."
       },
       zaddy: {
         title: "Zaddy & Cougar Plan",
-        description: "For the high-rollers of real estate. This package includes everything from previous plans plus a full branding suite, premium design templates, custom CRM integration, and a concierge onboarding experience. The Zaddy & Cougar plan is where glam meets power."
+        description: "This elite plan is built for top-tier agents and brokerages that demand maximum customization, branding, and performance. The Zaddy & Cougar Plan includes everything from the lower tiers plus access to the full branding suite, unlimited premium templates, CRM integration, and priority customer service. Tailored for serious players in the luxury and high-volume markets, it positions you to dominate your territory with a touch of style."
       }
     };
 
-    function selectPlan(card, key) {
-      const allCards = document.querySelectorAll('.plan');
+    function selectPlan(key) {
       const details = document.getElementById('planDetails');
-      const activeCardContainer = document.getElementById('activeCardContainer');
+      const title = document.getElementById('planTitle');
+      const desc = document.getElementById('planDescription');
 
-      if (currentSelected === card) {
-        allCards.forEach(c => c.classList.remove('hidden'));
-        activeCardContainer.innerHTML = '';
+      if (currentSelected === key) {
         details.classList.add('hidden');
         currentSelected = null;
         return;
       }
 
-      allCards.forEach(c => c.classList.add('hidden'));
-
-      activeCardContainer.innerHTML = '';
-      activeCardContainer.appendChild(card);
-
-      document.getElementById('planTitle').textContent = planDetails[key].title;
-      document.getElementById('planDescription').textContent = planDetails[key].description;
+      title.textContent = planDetails[key].title;
+      desc.textContent = planDetails[key].description;
       details.classList.remove('hidden');
-      currentSelected = card;
+      currentSelected = key;
     }
   </script>
 </body>

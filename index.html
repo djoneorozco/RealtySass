@@ -16,7 +16,6 @@
     h1, h2, h3 {
       font-family: 'Lora', serif;
     }
-
     .glass {
       background-color: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(14px);
@@ -25,12 +24,10 @@
       border-radius: 1rem;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
-
     .gold {
       --tw-bg-opacity: 1;
       background-color: rgba(212,175,55,var(--tw-bg-opacity));
     }
-
     .hero {
       position: relative;
       background-color: #252422;
@@ -49,17 +46,10 @@
       opacity: 0.9;
       z-index: 0;
     }
-    .hero > div {
-      position: relative;
-      z-index: 10;
-    }
-
+    .hero > div { position: relative; z-index: 10; }
     .swiper-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width: 100%; height: 100%; object-fit: cover;
     }
-
     .rotator {
       perspective: 1000px;
     }
@@ -77,7 +67,7 @@
 </head>
 <body>
 
-  <!-- Header/Navbar -->
+  <!-- //#1 HEADER/Navbar -->
   <header class="w-full py-4 fixed z-50 glass">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-white">RealtySass</h1>
@@ -91,20 +81,19 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- //#2 HERO Section -->
   <section class="hero text-center pt-36 pb-20 px-4">
     <div class="max-w-4xl mx-auto">
       <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
         Put some SaaS in your Realty—Let's do it A.I. Style!
       </h2>
-      <!-- //#1 Hero subtext -->
       <p class="text-gray-300 text-lg mb-8">
         Enhance your Sass. Show off your listings. Get more Hot Sales.
       </p>
     </div>
   </section>
 
-  <!-- Hero Video Section -->
+  <!-- //#3 HERO Video -->
   <section class="flex justify-start items-center bg-black pb-20 px-6">
     <video id="heroVideo" class="max-w-xs h-auto" autoplay controls playsinline>
       <source src="introvideo.mp4" type="video/mp4" />
@@ -112,36 +101,32 @@
     </video>
   </section>
 
-  <!-- Choose Your Vibe -->
+  <!-- //#4 Choose Your Vibe -->
   <section id="vibe" class="py-20 px-4">
     <div class="max-w-6xl mx-auto text-center mb-10">
       <h3 class="text-3xl font-bold">Choose Your SaaS</h3>
-      <!-- //#2 Vibe subtext -->
       <p class="text-gray-400 mt-2">Your real estate identity starts here. Pick your platform:</p>
     </div>
     <div class="grid md:grid-cols-3 gap-8 px-6">
       <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
-        <!-- //#3 ReDefined.AI box description -->
         <p class="text-gray-200 mb-4">AI-crafted listings with design flair and viral potential.</p>
         <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
       <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
-        <!-- //#4 Flip.AI box description -->
         <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
         <a href="flip.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
       </div>
       <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
-        <!-- //#5 WebX.AI box description -->
         <p class="text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
         <a href="webx.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
       </div>
     </div>
   </section>
 
-  <!-- Rotating Photo Section -->
+  <!-- //#5 Rotator -->
   <section class="py-20 px-4 text-center">
     <h3 class="text-3xl font-bold mb-6">Experience Every Angle</h3>
     <div class="rotator max-w-6xl mx-auto">
@@ -149,12 +134,12 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- //#6 Footer -->
   <footer class="text-center py-10 text-sm text-gray-500">
     &copy; 2025 RealtySass – Built with SaaS, Style, and Strategy.
   </footer>
 
-  <!-- Redefined Overlay -->
+  <!-- //#7 Redefined Overlay -->
   <div id="redefinedOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
     <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
       <button onclick="closeRedefined()" class="absolute top-2 right-2 text-white text-xl">✕</button>
@@ -162,7 +147,7 @@
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- //#8 Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
     const heroVideo = document.getElementById('heroVideo');
@@ -175,7 +160,7 @@
     });
 
     function openRedefined() {
-      document.getElementById('redefinedFrame').src = 'https://realredefined.onrender.com';
+      document.getElementById('redefinedFrame').src = 'https://YOUR-REDEFINED-URL.onrender.com';
       document.getElementById('redefinedOverlay').classList.remove('hidden');
     }
 
@@ -186,4 +171,4 @@
   </script>
 
 </body>
-</html
+</html>

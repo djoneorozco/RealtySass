@@ -125,7 +125,7 @@
       <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
         <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
-        <a href="https://flip-ai.netlify.app" target="_blank" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
+        <button onclick="openFlip()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
       <!-- WebX.AI -->
       <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
@@ -157,6 +157,14 @@
     </div>
   </div>
 
+  <!-- #8.5 FLIP OVERLAY -->
+  <div id="flipOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
+    <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
+      <button onclick="closeFlip()" class="absolute top-2 right-2 text-white text-xl">✕</button>
+      <iframe id="flipFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
+    </div>
+  </div>
+
   <!-- #9 SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
@@ -180,6 +188,18 @@
     function closeRedefined() {
       document.getElementById('redefinedOverlay').classList.add('hidden');
       document.getElementById('redefinedFrame').src = '';
+    }
+
+    //#9.4 Open Flip.AI overlay with correct URL
+    function openFlip() {
+      document.getElementById('flipFrame').src = 'https://flip-ai.netlify.app';
+      document.getElementById('flipOverlay').classList.remove('hidden');
+    }
+
+    //#9.5 Close Flip.AI overlay
+    function closeFlip() {
+      document.getElementById('flipOverlay').classList.add('hidden');
+      document.getElementById('flipFrame').src = '';
     }
   </script>
 </body>

@@ -17,7 +17,6 @@
     h1, h2, h3 {
       font-family: 'Lora', serif;
     }
-
     .glass {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(12px);
@@ -30,19 +29,16 @@
       align-items: center;
       text-align: center;
     }
-
     .gold {
       --tw-bg-opacity: 1;
       background-color: rgba(212,175,55,var(--tw-bg-opacity));
     }
-
     .hero {
       position: relative;
       background-color: #252422;
       color: #fff;
       overflow: hidden;
     }
-
     .hero::before {
       content: '';
       position: absolute;
@@ -55,41 +51,27 @@
       opacity: 0.9;
       z-index: 0;
     }
-
     .hero > div {
       position: relative;
       z-index: 10;
     }
-
     .swiper-slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
-
     .rotator {
       perspective: 1000px;
     }
-
     .rotator img {
       width: 100%;
       height: auto;
       transform-style: preserve-3d;
       animation: spin 20s linear infinite;
     }
-
     @keyframes spin {
       from { transform: rotateY(0deg) rotateX(0deg); }
       to   { transform: rotateY(360deg) rotateX(360deg); }
-    }
-
-    .join-btn {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .join-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(212,175,55,0.4);
     }
   </style>
 </head>
@@ -104,7 +86,7 @@
         <a href="templates.html" class="text-gray-200 hover:text-gold">Templates</a>
         <a href="pricing.html" class="text-gray-200 hover:text-gold">Pricing</a>
         <a href="login.html" class="text-gray-200 hover:text-gold">Login</a>
-        <a href="joinus.html" class="px-4 py-2 gold text-gray-900 rounded-full join-btn">Join Us</a>
+        <a href="joinus.html" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Join Us</a>
       </nav>
     </div>
   </header>
@@ -210,7 +192,7 @@
     }
 
     function openFlip() {
-      document.getElementById('flipFrame').src = 'https://flip-ai.onrender.com';
+      document.getElementById('flipFrame').src = 'https://flip-ai.netlify.app';
       document.getElementById('flipOverlay').classList.remove('hidden');
     }
 

@@ -18,21 +18,12 @@
       font-family: 'Lora', serif;
     }
     .glass {
-      background-color: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 2px solid rgba(255, 255, 255, 0.25);
       border-radius: 1rem;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    }
-    .frosted-glass {
-      /* transparent frosted glass effect */
-      background-color: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(24px) saturate(150%);
-      -webkit-backdrop-filter: blur(24px) saturate(150%);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: 1rem;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -85,6 +76,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- #2 HEADER/NAV -->
   <header class="w-full py-4 fixed z-50 glass">
@@ -103,8 +95,12 @@
   <!-- #3 HERO SECTION -->
   <section class="hero text-center pt-36 pb-20 px-4">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">Put some SaaS in your Realty—Let's do it A.I. Style!</h2>
-      <p class="text-gray-300 text-lg mb-8">Enhance your Sass. Show off your listings. Get more Hot Sales.</p>
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+        Put some SaaS in your Realty—Let's do it A.I. Style!
+      </h2>
+      <p class="text-gray-300 text-lg mb-8">
+        Enhance your Sass. Show off your listings. Get more Hot Sales.
+      </p>
     </div>
   </section>
 
@@ -122,47 +118,25 @@
       <h3 class="text-3xl font-bold">Choose Your SaaS</h3>
       <p class="text-gray-400 mt-2">Your real estate identity starts here. Pick your platform:</p>
     </div>
-    <div class="grid md:grid-cols-3 gap-8 px-6">  
-      <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
-        <img src="RE.png" alt="ReDefined.AI Logo" class="mx-auto mb-4 w-48 h-48">
+    <div class="grid md:grid-cols-3 gap-8 px-6">
+      <!-- ReDefined.AI -->
+      <div class="glass p-8 shadow-lg hover:shadow-xl transition">
+        <img src="RE.png" alt="ReDefined.AI Logo" class="mb-4 w-48 h-48">
         <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
         <p class="text-gray-200 mb-4">AI-crafted listings with design flair and viral potential.</p>
         <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
-      <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
+      <!-- Flip.AI -->
+      <div class="glass p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
         <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
         <button onclick="openFlip()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
-      <div class="glass rounded-2xl p-8 shadow-lg hover:shadow-xl transition">
+      <!-- WebX.AI -->
+      <div class="glass p-8 shadow-lg hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
         <p class="text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
         <a href="webx.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- #5.5 TEST FROSTED GLASS SECTION -->
-  <section id="vibe-glass-test" class="py-20 px-4">
-    <div class="max-w-6xl mx-auto text-center mb-10">
-      <h3 class="text-3xl font-bold">Test Frosted Glass</h3>
-      <p class="text-gray-400 mt-2">These should appear below your original boxes with a stronger transparent effect:</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-8 px-6">
-      <div class="frosted-glass p-8 shadow-lg hover:shadow-xl transition">
-        <h4 class="text-2xl font-semibold mb-3">Glass One</h4>
-        <p class="text-gray-200 mb-4">This box is pure frosted glass for testing.</p>
-        <button class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Check</button>
-      </div>
-      <div class="frosted-glass p-8 shadow-lg hover:shadow-xl transition">
-        <h4 class="text-2xl font-semibold mb-3">Glass Two</h4>
-        <p class="text-gray-200 mb-4">Same size, just more transparent blur effect.</p>
-        <button class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Check</button>
-      </div>
-      <div class="frosted-glass p-8 shadow-lg hover:shadow-xl transition">
-        <h4 class="text-2xl font-semibold mb-3">Glass Three</h4>
-        <p class="text-gray-200 mb-4">Compare this to your current boxes above.</p>
-        <button class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Check</button>
       </div>
     </div>
   </section>
@@ -182,4 +156,56 @@
 
   <!-- #8 REDEFINED OVERLAY -->
   <div id="redefinedOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
-    <div class="frame-container glass p-0 relative w-4/5 h-4/5
+    <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
+      <button onclick="closeRedefined()" class="absolute top-2 right-2 text-white text-xl">✕</button>
+      <iframe id="redefinedFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
+    </div>
+  </div>
+
+  <!-- #8.5 FLIP OVERLAY -->
+  <div id="flipOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
+    <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
+      <button onclick="closeFlip()" class="absolute top-2 right-2 text-white text-xl">✕</button>
+      <iframe id="flipFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
+    </div>
+  </div>
+
+  <!-- #9 SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    //#9.1 Autoplay hero video
+    const heroVideo = document.getElementById('heroVideo');
+    heroVideo.play().catch(() => {});
+    document.addEventListener('click', () => {
+      if (heroVideo.muted) {
+        heroVideo.muted = false;
+        heroVideo.play();
+      }
+    });
+
+    //#9.2 Open ReDefined.AI overlay with correct URL
+    function openRedefined() {
+      document.getElementById('redefinedFrame').src = 'https://realredefined-1.onrender.com';
+      document.getElementById('redefinedOverlay').classList.remove('hidden');
+    }
+
+    //#9.3 Close overlay
+    function closeRedefined() {
+      document.getElementById('redefinedOverlay').classList.add('hidden');
+      document.getElementById('redefinedFrame').src = '';
+    }
+
+    //#9.4 Open Flip.AI overlay with correct URL
+    function openFlip() {
+      document.getElementById('flipFrame').src = 'https://flip-ai.netlify.app';
+      document.getElementById('flipOverlay').classList.remove('hidden');
+    }
+
+    //#9.5 Close Flip.AI overlay
+    function closeFlip() {
+      document.getElementById('flipOverlay').classList.add('hidden');
+      document.getElementById('flipFrame').src = '';
+    }
+  </script>
+</body>
+</html>

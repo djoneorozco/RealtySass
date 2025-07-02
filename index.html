@@ -16,28 +16,27 @@
     h1, h2, h3 {
       font-family: 'Lora', serif;
     }
-    .frosted-glass {
-      background: rgba(255, 255, 255, 0.10);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border: 2px solid rgba(255, 255, 255, 0.3);
+
+    /* ✅ True frosted glass effect */
+    .glass-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 1rem;
-      box-shadow: 0 8px 40px rgba(255, 255, 255, 0.1), 0 4px 20px rgba(0, 0, 0, 0.2);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-    .frosted-glass:hover {
+
+    .glass-box:hover {
       transform: translateY(-4px);
-      box-shadow: 0 12px 50px rgba(255, 255, 255, 0.15), 0 8px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 12px 50px rgba(31, 38, 135, 0.3);
     }
+
     .gold {
-      --tw-bg-opacity: 1;
-      background-color: rgba(212,175,55,var(--tw-bg-opacity));
+      background-color: rgba(212, 175, 55, 1);
     }
+
     .hero {
       position: relative;
       background-color: #252422;
@@ -65,7 +64,7 @@
 
 <body>
   <!-- #2 HEADER/NAV -->
-  <header class="w-full py-4 fixed z-50 frosted-glass">
+  <header class="w-full py-4 fixed z-50 glass-box">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold text-white">RealtySass</h1>
       <nav class="hidden md:flex space-x-6">
@@ -106,20 +105,20 @@
     </div>
     <div class="grid md:grid-cols-3 gap-8 px-6">
       <!-- ReDefined.AI -->
-      <div class="frosted-glass p-8 shadow-lg hover:shadow-xl transition">
+      <div class="glass-box p-8">
         <img src="RE.png" alt="ReDefined.AI Logo" class="mx-auto mb-4 w-48 h-48">
         <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
         <p class="text-gray-200 mb-4">AI-crafted listings with design flair and viral potential.</p>
         <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
       <!-- Flip.AI -->
-      <div class="frosted-glass p-8 shadow-lg hover:shadow-xl transition">
+      <div class="glass-box p-8">
         <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
         <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
         <button onclick="openFlip()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
       <!-- WebX.AI -->
-      <div class="frosted-glass p-8 shadow-lg hover:shadow-xl transition">
+      <div class="glass-box p-8">
         <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
         <p class="text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
         <a href="webx.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
@@ -127,51 +126,26 @@
     </div>
   </section>
 
-  <!-- #6 TEST FROSTED GLASS SECTION (optional test blocks) -->
-  <section class="py-20 px-4 text-center">
-    <h3 class="text-3xl font-bold mb-2">Test Frosted Glass</h3>
-    <p class="text-gray-400 mb-10">These should appear below your original boxes with a stronger transparent effect:</p>
-    <div class="grid md:grid-cols-3 gap-8 px-6">
-      <div class="frosted-glass p-8">
-        <h4 class="text-xl font-semibold mb-3">Glass One</h4>
-        <p class="mb-4">This box is pure frosted glass for testing.</p>
-        <button class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Check</button>
-      </div>
-      <div class="frosted-glass p-8">
-        <h4 class="text-xl font-semibold mb-3">Glass Two</h4>
-        <p class="mb-4">Same size, just more transparent blur effect.</p>
-        <button class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Check</button>
-      </div>
-      <div class="frosted-glass p-8">
-        <h4 class="text-xl font-semibold mb-3">Glass Three</h4>
-        <p class="mb-4">Compare this to your current boxes above.</p>
-        <button class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Check</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- #7 FOOTER -->
+  <!-- #6 FOOTER -->
   <footer class="text-center py-10 text-sm text-gray-500">
     &copy; 2025 RealtySass – Built with SaaS, Style, and Strategy.
   </footer>
 
-  <!-- #8 REDEFINED OVERLAY -->
+  <!-- #7 OVERLAYS -->
   <div id="redefinedOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
-    <div class="frame-container frosted-glass p-0 relative w-4/5 h-4/5 rounded-lg">
+    <div class="frame-container glass-box p-0 relative w-4/5 h-4/5 rounded-lg">
       <button onclick="closeRedefined()" class="absolute top-2 right-2 text-white text-xl">✕</button>
       <iframe id="redefinedFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
     </div>
   </div>
-
-  <!-- #8.5 FLIP OVERLAY -->
   <div id="flipOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
-    <div class="frame-container frosted-glass p-0 relative w-4/5 h-4/5 rounded-lg">
+    <div class="frame-container glass-box p-0 relative w-4/5 h-4/5 rounded-lg">
       <button onclick="closeFlip()" class="absolute top-2 right-2 text-white text-xl">✕</button>
       <iframe id="flipFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
     </div>
   </div>
 
-  <!-- #9 SCRIPTS -->
+  <!-- #8 SCRIPT -->
   <script>
     const heroVideo = document.getElementById('heroVideo');
     heroVideo.play().catch(() => {});
@@ -181,7 +155,6 @@
         heroVideo.play();
       }
     });
-
     function openRedefined() {
       document.getElementById('redefinedFrame').src = 'https://realredefined-1.onrender.com';
       document.getElementById('redefinedOverlay').classList.remove('hidden');

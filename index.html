@@ -18,7 +18,6 @@
       font-family: 'Lora', serif;
     }
 
-    /* #2 Frosted glass look (matching REDEFINED) */
     .glass {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(12px);
@@ -83,6 +82,15 @@
       from { transform: rotateY(0deg) rotateX(0deg); }
       to   { transform: rotateY(360deg) rotateX(360deg); }
     }
+
+    .join-btn {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .join-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(212,175,55,0.4);
+    }
   </style>
 </head>
 
@@ -96,7 +104,7 @@
         <a href="templates.html" class="text-gray-200 hover:text-gold">Templates</a>
         <a href="pricing.html" class="text-gray-200 hover:text-gold">Pricing</a>
         <a href="login.html" class="text-gray-200 hover:text-gold">Login</a>
-        <a href="joinus.html" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Join Us</a>
+        <a href="joinus.html" class="px-4 py-2 gold text-gray-900 rounded-full join-btn">Join Us</a>
       </nav>
     </div>
   </header>

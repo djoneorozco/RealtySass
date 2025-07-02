@@ -17,17 +17,14 @@
     h1, h2, h3 {
       font-family: 'Lora', serif;
     }
+    /* EXACT SAME GLASS STYLE FROM REDEFINED */
     .glass {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 2px solid rgba(255, 255, 255, 0.25);
-      border-radius: 1rem;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
       text-align: center;
     }
     .gold {
@@ -120,20 +117,20 @@
     </div>
     <div class="grid md:grid-cols-3 gap-8 px-6">
       <!-- ReDefined.AI -->
-      <div class="glass p-8 shadow-lg hover:shadow-xl transition">
+      <div class="glass p-8">
         <img src="RE.png" alt="ReDefined.AI Logo" class="mb-4 w-48 h-48">
         <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
         <p class="text-gray-200 mb-4">AI-crafted listings with design flair and viral potential.</p>
         <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
       <!-- Flip.AI -->
-      <div class="glass p-8 shadow-lg hover:shadow-xl transition">
+      <div class="glass p-8">
         <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
         <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
         <button onclick="openFlip()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
       <!-- WebX.AI -->
-      <div class="glass p-8 shadow-lg hover:shadow-xl transition">
+      <div class="glass p-8">
         <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
         <p class="text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
         <a href="webx.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
@@ -173,7 +170,6 @@
   <!-- #9 SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    //#9.1 Autoplay hero video
     const heroVideo = document.getElementById('heroVideo');
     heroVideo.play().catch(() => {});
     document.addEventListener('click', () => {
@@ -183,25 +179,18 @@
       }
     });
 
-    //#9.2 Open ReDefined.AI overlay with correct URL
     function openRedefined() {
       document.getElementById('redefinedFrame').src = 'https://realredefined-1.onrender.com';
       document.getElementById('redefinedOverlay').classList.remove('hidden');
     }
-
-    //#9.3 Close overlay
     function closeRedefined() {
       document.getElementById('redefinedOverlay').classList.add('hidden');
       document.getElementById('redefinedFrame').src = '';
     }
-
-    //#9.4 Open Flip.AI overlay with correct URL
     function openFlip() {
       document.getElementById('flipFrame').src = 'https://flip-ai.netlify.app';
       document.getElementById('flipOverlay').classList.remove('hidden');
     }
-
-    //#9.5 Close Flip.AI overlay
     function closeFlip() {
       document.getElementById('flipOverlay').classList.add('hidden');
       document.getElementById('flipFrame').src = '';

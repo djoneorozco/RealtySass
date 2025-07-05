@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RealtySass – Your Real Estate Social Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     body {
@@ -15,131 +15,103 @@
       background: radial-gradient(circle at right, #7b5e3d, #000000);
       color: #f5f5f5;
     }
-    h1, h2, h3, h4 {
+    h1, h2, h3, h4, h5 {
       font-family: 'Lora', serif;
     }
     .glass {
-      background: rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.06);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
-    .instagram-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-      transition: transform 0.3s ease;
+    .gold {
+      background-color: #d4af37;
     }
-    .instagram-card:hover {
-      transform: scale(1.02);
+    .instagram-card {
+      background: transparent;
     }
   </style>
 </head>
 
 <body class="min-h-screen">
-  <!-- #2 HEADER -->
+  <!-- #2 HEADER - Frosted Glass Nav -->
   <header class="w-full py-4 fixed z-50 glass">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <a href="RealtySass.html" class="text-2xl font-bold text-white hover:text-[#d4af37]">RealtySass</a>
+      <a href="RealtySass.html" class="text-2xl font-bold text-white hover:text-gold">RealtySass</a>
       <nav class="hidden md:flex space-x-6">
-        <a href="products.html" class="text-white hover:text-[#d4af37]">Products</a>
-        <a href="templates.html" class="text-white hover:text-[#d4af37]">Templates</a>
-        <a href="pricing.html" class="text-white hover:text-[#d4af37]">Pricing</a>
-        <a href="login.html" class="text-white hover:text-[#d4af37]">Login</a>
-        <a href="joinus.html" class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full hover:opacity-90">Join Us</a>
+        <a href="products.html" class="text-white hover:text-gold">Products</a>
+        <a href="templates.html" class="text-white hover:text-gold">Templates</a>
+        <a href="pricing.html" class="text-white hover:text-gold">Pricing</a>
+        <a href="login.html" class="text-white hover:text-gold">Login</a>
+        <a href="joinus.html" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Join Us</a>
       </nav>
     </div>
   </header>
 
-  <!-- #3 MAIN GRID -->
+  <!-- #3 MAIN CONTENT GRID -->
   <main class="max-w-7xl mx-auto pt-32 pb-20 px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-
-    <!-- ✅ LEFT SIDEBAR -->
-    <aside class="col-span-1 space-y-6">
-      <!-- Profile Card -->
-      <div class="glass p-6 text-center">
-        <img src="profile.jpg" alt="Profile Picture" class="rounded-full w-28 h-28 mx-auto mb-4 border-4 border-white shadow-md">
-        <h3 class="text-2xl font-bold mb-1 tracking-tight">Juan J. Orozco</h3>
-        <p class="text-sm text-gray-200 mb-1">Business Ops | PM | Scrum Master</p>
-        <p class="text-xs text-gray-400 mb-1">Penn State, JHU, Duke Fuqua</p>
-        <p class="text-xs text-gray-400">15+ Years Experience</p>
-      </div>
-      <!-- Promo Box 1 -->
-      <div class="glass p-4">
-        <h4 class="text-lg font-semibold mb-2">Power Tools for Realtors</h4>
-        <p class="text-sm text-gray-200 mb-2">Boost your listings with REDefined, Flip.ai, and RETurns.</p>
-        <a href="#" class="text-[#d4af37] underline">Explore Tools →</a>
-      </div>
-      <!-- Promo Box 2 -->
-      <div class="glass p-4">
-        <h4 class="text-lg font-semibold mb-2">Grow Your Business</h4>
-        <p class="text-sm text-gray-200 mb-2">Amplify your brand presence online with RealtySass.</p>
-        <a href="#" class="text-[#d4af37] underline">Learn More →</a>
-      </div>
-      <!-- Quick Access -->
-      <div class="glass p-4">
-        <h4 class="text-lg font-semibold mb-2">Quick Access</h4>
-        <ul class="space-y-2 text-sm text-gray-200">
-          <li><a href="#" class="hover:underline">Messages</a></li>
-          <li><a href="#" class="hover:underline">Events</a></li>
-          <li><a href="#" class="hover:underline">Settings</a></li>
-        </ul>
-      </div>
+    <!-- Left: Profile Card -->
+    <aside class="col-span-1 glass p-6 text-center">
+      <img src="profile.jpg" alt="Profile Picture" class="rounded-full w-24 h-24 mx-auto mb-4 shadow-lg">
+      <h3 class="text-xl font-bold mb-1">Juan J. Orozco</h3>
+      <p class="text-sm text-gray-300 mb-2">Business Ops | PM | Scrum Master</p>
+      <p class="text-xs text-gray-400 mb-1">Penn State, JHU, Duke Fuqua</p>
+      <p class="text-xs text-gray-400">15+ Years Experience</p>
     </aside>
 
-    <!-- ✅ MAIN FEED -->
+    <!-- Middle: Post a Listing + Feed -->
     <section class="col-span-1 md:col-span-2 space-y-8">
-      <!-- Post Box -->
+      <!-- ✅ Redesigned Post Box: Modern LinkedIn style -->
       <div class="glass p-6">
-        <div class="flex items-center space-x-4 mb-4">
-          <img src="profile.jpg" alt="Profile" class="rounded-full w-12 h-12 border-2 border-white shadow">
-          <input type="text" placeholder="What's on your mind?" class="flex-1 px-4 py-3 rounded-full bg-black/20 text-white focus:outline-none">
+        <div class="flex items-start space-x-4 mb-4">
+          <img src="profile.jpg" alt="Profile" class="rounded-full w-12 h-12 shadow-md">
+          <input type="text" placeholder="Start a post..." class="flex-1 px-4 py-3 rounded-full bg-black/30 text-white border border-gray-700 focus:outline-none">
         </div>
         <div class="flex justify-around mt-2">
-          <button class="text-sm px-4 py-2 rounded hover:bg-black/20 transition text-[#d4af37]">Article</button>
-          <button class="text-sm px-4 py-2 rounded hover:bg-black/20 transition text-[#d4af37]">Video</button>
-          <button class="text-sm px-4 py-2 rounded hover:bg-black/20 transition text-[#d4af37]">Photo</button>
-          <button class="text-sm px-4 py-2 rounded hover:bg-black/20 transition text-[#d4af37]">REDefined</button>
-          <button class="text-sm px-4 py-2 rounded hover:bg-black/20 transition text-[#d4af37]">Flip</button>
+          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
+            <span class="text-[#d4af37] font-bold">Article</span>
+          </button>
+          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
+            <span class="text-[#d4af37] font-bold">Video</span>
+          </button>
+          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
+            <span class="text-[#d4af37] font-bold">Photo</span>
+          </button>
+          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
+            <span class="text-[#d4af37] font-bold">REDefined</span>
+          </button>
+          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
+            <span class="text-[#d4af37] font-bold">Flip</span>
+          </button>
         </div>
       </div>
 
-      <!-- Listings Feed -->
-      <div class="space-y-6">
+      <!-- Listings Feed: Instagram Style -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="instagram-card">
-          <img src="listing1.jpg" alt="Listing 1" class="w-full">
-          <div class="p-4">
-            <p class="text-sm text-gray-200">Modern 3 Bed, 2 Bath in South Texas</p>
-          </div>
+          <img src="introvideo.mp4" alt="Listing 1" class="w-full rounded-lg mb-2 shadow-lg">
+          <p class="text-sm text-gray-200 px-2">Modern 3 Bed, 2 Bath in South Texas</p>
         </div>
         <div class="instagram-card">
-          <img src="listing2.jpg" alt="Listing 2" class="w-full">
-          <div class="p-4">
-            <p class="text-sm text-gray-200">Charming Bungalow for Rent – Great Location!</p>
-          </div>
+          <img src="SaSS.png" alt="Listing 2" class="w-full rounded-lg mb-2 shadow-lg">
+          <p class="text-sm text-gray-200 px-2">Charming Bungalow for Rent – Great Location!</p>
         </div>
         <div class="instagram-card">
-          <img src="listing3.jpg" alt="Listing 3" class="w-full">
-          <div class="p-4">
-            <p class="text-sm text-gray-200">Fully Remodeled Flip with ROI Potential</p>
-          </div>
+          <img src="RE.png" alt="Listing 3" class="w-full rounded-lg mb-2 shadow-lg">
+          <p class="text-sm text-gray-200 px-2">Fully Remodeled Flip with ROI Potential</p>
         </div>
         <div class="instagram-card">
-          <img src="listing4.jpg" alt="Listing 4" class="w-full">
-          <div class="p-4">
-            <p class="text-sm text-gray-200">Investor Special – Rent or BRRRR Ready</p>
-          </div>
+          <img src="orozcorealty.png" alt="Listing 4" class="w-full rounded-lg mb-2 shadow-lg">
+          <p class="text-sm text-gray-200 px-2">Investor Special – Rent or BRRRR Ready</p>
         </div>
       </div>
     </section>
 
-    <!-- ✅ RIGHT COLUMN RESERVED -->
+    <!-- Right: Optional Widgets -->
     <aside class="col-span-1 hidden md:block">
-      <!-- Future Ads, recommendations, or Realtor Spotlight -->
+      <!-- Future: Ads, Recommendations, Realtor Highlights -->
     </aside>
   </main>
 </body>

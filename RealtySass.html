@@ -12,17 +12,17 @@
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      background: radial-gradient(circle at right, #7b5e3d, #000000);
+      background: #1c1c1e; /* Charcoal background */
       color: #f5f5f5;
     }
     h1, h2, h3, h4, h5 {
       font-family: 'Lora', serif;
     }
     .glass {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
@@ -62,7 +62,7 @@
     </div>
   </header>
 
-  <!-- #3 MAIN CONTENT GRID -->
+  <!-- #3 MAIN GRID -->
   <main class="max-w-7xl mx-auto pt-32 pb-20 px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
     <!-- ✅ Profile Sidebar -->
     <aside class="col-span-1 glass p-4 text-center h-[250px]">
@@ -91,9 +91,8 @@
 
       <!-- ✅ Listings: Instagram Style -->
       <div class="space-y-8">
-        <!-- Example Listing -->
+        <!-- Listing 1 -->
         <div class="instagram-card">
-          <!-- Top -->
           <div class="flex items-center px-4 py-3">
             <img src="profile.jpg" alt="Profile" class="w-10 h-10 rounded-lg mr-3 object-cover">
             <div>
@@ -101,21 +100,59 @@
               <p class="text-xs text-gray-500">TX 78250</p>
             </div>
           </div>
-          <!-- Image -->
           <img src="SaSS.png" alt="Listing 1" class="w-full">
-          <!-- Icons -->
           <div class="icon-bar">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"/></svg>
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M21 11.5a8.38 8.38 0 01-1.91.79A6.44 6.44 0 0021 8.5v-1a4 4 0 00-4-4h-1a6.5 6.5 0 00-6.5 6.5v1A6.5 6.5 0 0010 18.5h1a8.5 8.5 0 008.5-8.5v-1h1v1z"/></svg>
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 4v16l16-8L4 4z"/></svg>
           </div>
-          <!-- Description -->
           <div class="px-4 pb-4">
             <p class="text-sm italic">Elegant Modern Home</p>
             <p class="text-xs text-gray-700">Fully staged with premium finishes, ready for move-in.</p>
           </div>
         </div>
-        <!-- Copy more listings exactly like above -->
+
+        <!-- Listing 2 -->
+        <div class="instagram-card">
+          <div class="flex items-center px-4 py-3">
+            <img src="profile.jpg" alt="Profile" class="w-10 h-10 rounded-lg mr-3 object-cover">
+            <div>
+              <p class="text-sm font-bold">Juan J. Orozco</p>
+              <p class="text-xs text-gray-500">TX 78250</p>
+            </div>
+          </div>
+          <img src="RE.png" alt="Listing 2" class="w-full">
+          <div class="icon-bar">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"/></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M21 11.5a8.38 8.38 0 01-1.91.79A6.44 6.44 0 0021 8.5v-1a4 4 0 00-4-4h-1a6.5 6.5 0 00-6.5 6.5v1A6.5 6.5 0 0010 18.5h1a8.5 8.5 0 008.5-8.5v-1h1v1z"/></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 4v16l16-8L4 4z"/></svg>
+          </div>
+          <div class="px-4 pb-4">
+            <p class="text-sm italic">Stunning Ranch-Style Flip</p>
+            <p class="text-xs text-gray-700">Updated interiors with ROI potential.</p>
+          </div>
+        </div>
+
+        <!-- Listing 3: Video -->
+        <div class="instagram-card">
+          <div class="flex items-center px-4 py-3">
+            <img src="profile.jpg" alt="Profile" class="w-10 h-10 rounded-lg mr-3 object-cover">
+            <div>
+              <p class="text-sm font-bold">Juan J. Orozco</p>
+              <p class="text-xs text-gray-500">TX 78250</p>
+            </div>
+          </div>
+          <video src="introvideo.mp4" controls class="w-full"></video>
+          <div class="icon-bar">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"/></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M21 11.5a8.38 8.38 0 01-1.91.79A6.44 6.44 0 0021 8.5v-1a4 4 0 00-4-4h-1a6.5 6.5 0 00-6.5 6.5v1A6.5 6.5 0 0010 18.5h1a8.5 8.5 0 008.5-8.5v-1h1v1z"/></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 4v16l16-8L4 4z"/></svg>
+          </div>
+          <div class="px-4 pb-4">
+            <p class="text-sm italic">Brand Intro Video</p>
+            <p class="text-xs text-gray-700">Learn more about RealtySass mission.</p>
+          </div>
+        </div>
       </div>
     </section>
 

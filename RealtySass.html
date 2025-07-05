@@ -1,9 +1,10 @@
+<!-- 🏡 RealtySass.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- #1 META & TITLE -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>RealtySass – Your Real Estate Social Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
@@ -62,21 +63,35 @@
 
     <!-- Middle: Post a Listing + Feed -->
     <section class="col-span-1 md:col-span-2 space-y-8">
-      <!-- Post Box -->
-      <div class="card p-6">
-        <h4 class="text-lg font-semibold mb-4">Post a Listing</h4>
-        <div class="flex flex-wrap gap-4 mb-4">
-          <button class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full">Article</button>
-          <button class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full">Video</button>
-          <button class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full">Photo</button>
-          <button class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full">REDefined</button>
-          <button class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full">Flip</button>
+      <!-- ✅ Redesigned Post Box: Modern LinkedIn style -->
+      <div class="glass p-6 rounded-lg">
+        <div class="flex items-start space-x-4 mb-4">
+          <img src="profile.jpg" alt="Profile" class="rounded-full w-12 h-12">
+          <input type="text" placeholder="Start a post..." class="flex-1 px-4 py-3 rounded-full bg-black/20 text-white border border-gray-700 focus:outline-none">
         </div>
-        <textarea placeholder="Share something about your listing..." class="w-full p-4 rounded bg-black/30 border-none text-white"></textarea>
-        <button class="mt-4 px-6 py-2 bg-[#d4af37] text-gray-900 rounded-full hover:opacity-90">Post</button>
+        <div class="flex justify-around mt-2">
+          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-[#d4af37]" fill="currentColor" viewBox="0 0 24 24"><path d="M19 2H5c-1.1 0-2 .9-2 2v16l4-4h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+            <span>Article</span>
+          </button>
+          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-[#d4af37]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <span>Video</span>
+          </button>
+          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-[#d4af37]" fill="currentColor" viewBox="0 0 24 24"><path d="M21 19V5H3v14h18zm0-16c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V5c0-1.1.9-2 2-2h18z"/></svg>
+            <span>Photo</span>
+          </button>
+          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
+            <span class="text-[#d4af37] font-bold">RE</span><span>Defined</span>
+          </button>
+          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
+            <span class="text-[#d4af37] font-bold">Flip</span>
+          </button>
+        </div>
       </div>
 
-      <!-- Listings Feed -->
+      <!-- Listings Feed (unchanged) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="card p-4">
           <img src="listing1.jpg" alt="Listing 1" class="rounded mb-2">

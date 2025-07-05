@@ -53,11 +53,11 @@
   </header>
 
   <!-- #3 HERO SPLIT -->
-  <section class="flex flex-col md:flex-row items-center justify-between pt-40 pb-20 px-6 bg-[#252422] text-white">
-    <video id="heroVideo" class="w-full md:w-1/2 rounded-lg shadow-lg mb-8 md:mb-0" autoplay controls playsinline muted loop>
+  <section class="flex flex-col md:flex-row items-center justify-between pt-40 pb-20 px-6 bg-black text-white">
+    <video id="heroVideo" style="width:400px;" class="rounded-lg shadow-lg mb-8 md:mb-0" autoplay controls playsinline muted loop>
       <source src="introvideo.mp4" type="video/mp4" />
     </video>
-    <div class="md:w-1/3 md:pl-12">
+    <div class="md:w-1/2 md:pl-12">
       <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
         The AI-powered platform to grow your real estate business
       </h2>
@@ -208,7 +208,7 @@
     </div>
   </footer>
 
-  <!-- #10 OVERLAYS -->
+  <!-- #10 OVERLAYS & SCRIPTS stay the same -->
   <div id="redefinedOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
     <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
       <button onclick="closeRedefined()" class="absolute top-2 right-2 text-white text-xl">✕</button>
@@ -223,7 +223,6 @@
     </div>
   </div>
 
-  <!-- #11 SCRIPTS -->
   <script>
     const heroVideo = document.getElementById('heroVideo');
     heroVideo.play().catch(() => {});

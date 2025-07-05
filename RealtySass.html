@@ -1,22 +1,21 @@
-<!-- 🏡 RealtySass.html -->
+<!-- 🏡 index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- #1 META & TITLE -->
+  <!-- #1 META + TITLE -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RealtySass – Your Real Estate Social Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RealtySass – Put some SaaS in your Realty</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      /* 👇 DEFAULT background: Charcoal for luxury mockup */
-      background: #1c1c1e;
+      background: radial-gradient(circle at right, #7b5e3d, #000000);
       color: #f5f5f5;
     }
-    h1, h2, h3, h4, h5 {
+    h1, h2, h3 {
       font-family: 'Lora', serif;
     }
     .glass {
@@ -24,166 +23,220 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transition: box-shadow 0.3s ease;
     }
-    .instagram-card {
-      background: #fff;
-      color: #1a1a1a;
-      border-radius: 12px;
-      overflow: hidden;
-      max-width: 500px;
-      margin: 0 auto;
+    .glass:hover {
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
     }
-    .icon-bar {
-      display: flex;
-      gap: 16px;
-      padding: 12px 16px;
+    .gold {
+      --tw-bg-opacity: 1;
+      background-color: rgba(212,175,55,var(--tw-bg-opacity));
     }
-    .icon-bar svg {
-      width: 24px;
-      height: 24px;
-      cursor: pointer;
-    }
-    .switcher {
-      position: fixed;
-      top: 80px;
-      right: 20px;
-      z-index: 50;
-    }
-    .switcher button {
-      margin-left: 8px;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      background: #333;
+    .hero {
+      position: relative;
+      background-color: #252422;
       color: #fff;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120%;
+      height: 300px;
+      background: radial-gradient(ellipse at center, rgba(212,175,55,0.35) 0%, rgba(0,0,0,0.1) 70%);
+      opacity: 0.9;
+      z-index: 0;
+    }
+    .hero > div {
+      position: relative;
+      z-index: 10;
+    }
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .rotator {
+      perspective: 1000px;
+    }
+    .rotator img {
+      width: 100%;
+      height: auto;
+      transform-style: preserve-3d;
+      animation: spin 20s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotateY(0deg) rotateX(0deg); }
+      to   { transform: rotateY(360deg) rotateX(360deg); }
     }
   </style>
 </head>
 
-<body class="min-h-screen">
-  <!-- 👇 Background Switcher -->
-  <div class="switcher">
-    <button onclick="document.body.style.background='#1c1c1e'; document.body.style.color='#f5f5f5'">Charcoal</button>
-    <button onclick="document.body.style.background='#f5f5f5'; document.body.style.color='#1a1a1a'">Neutral Light</button>
-    <button onclick="document.body.style.background='radial-gradient(circle at right, #7b5e3d, #000000)'; document.body.style.color='#f5f5f5'">Warm Gradient</button>
-  </div>
-
-  <!-- #2 HEADER -->
+<body>
+  <!-- #2 HEADER/NAV -->
   <header class="w-full py-4 fixed z-50 glass">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <a href="RealtySass.html" class="text-2xl font-bold text-white hover:text-[#d4af37]">RealtySass</a>
+      <h1 class="text-2xl font-bold text-white mr-auto">RealtySass</h1>
       <nav class="hidden md:flex space-x-6">
-        <a href="products.html" class="text-white hover:text-[#d4af37]">Products</a>
-        <a href="templates.html" class="text-white hover:text-[#d4af37]">Templates</a>
-        <a href="pricing.html" class="text-white hover:text-[#d4af37]">Pricing</a>
-        <a href="login.html" class="text-white hover:text-[#d4af37]">Login</a>
-        <a href="joinus.html" class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full hover:opacity-90">Join Us</a>
+        <a href="products.html" class="text-gray-200 hover:text-gold">Products</a>
+        <a href="templates.html" class="text-gray-200 hover:text-gold">Templates</a>
+        <a href="pricing.html" class="text-gray-200 hover:text-gold">Pricing</a>
+        <a href="login.html" class="text-gray-200 hover:text-gold">Login</a>
+        <a href="joinus.html" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Join Us</a>
       </nav>
     </div>
   </header>
 
-  <!-- #3 MAIN GRID -->
-  <main class="max-w-7xl mx-auto pt-32 pb-20 px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-    <!-- ✅ Profile Sidebar with BIGGER image -->
-    <aside class="col-span-1 glass p-4 text-center h-[250px]">
-      <img src="profile.png" alt="Profile Picture" class="rounded-lg w-[300px] h-[300px] mx-auto mb-2 shadow-lg object-cover">
-      <h3 class="text-xl font-bold mb-1">Juan J. Orozco</h3>
-      <p class="text-sm text-gray-300 mb-1">Business Ops | PM | Scrum Master</p>
-      <p class="text-xs text-gray-400">Penn State, JHU, Duke Fuqua</p>
-    </aside>
+  <!-- #3 HERO SECTION -->
+  <section class="hero text-center pt-36 pb-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+        Put some SaaS in your Realty—Let's do it A.I. Style!
+      </h2>
+      <p class="text-gray-300 text-lg mb-8">
+        Enhance your Sass. Show off your listings. Get more Hot Sales.
+      </p>
+    </div>
+  </section>
 
-    <!-- ✅ Middle: Post Box + Feed -->
-    <section class="col-span-1 md:col-span-2 space-y-8">
-      <!-- Post Box -->
-      <div class="glass p-6">
-        <div class="flex items-start space-x-4 mb-4">
-          <img src="profile.png" alt="Profile" class="rounded-full w-12 h-12 shadow-md">
-          <input type="text" placeholder="Start a post..." class="flex-1 px-4 py-3 rounded-full bg-black/30 text-white border border-gray-700 focus:outline-none">
+  <!-- #4 HERO VIDEO SECTION -->
+  <section class="flex justify-start items-center bg-black pb-0 px-0">
+    <video id="heroVideo" class="max-w-xs h-auto" autoplay controls playsinline>
+      <source src="introvideo.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </section>
+
+  <!-- #5 CHOOSE YOUR VIBE -->
+  <section id="vibe" class="py-20 px-4">
+    <div class="max-w-6xl mx-auto text-center mb-10">
+      <h3 class="text-3xl font-bold">Choose Your SaaS</h3>
+      <p class="text-gray-400 mt-2">Your real estate identity starts here. Pick your platform:</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8 px-6">
+      <div class="glass hover:shadow-xl transition">
+        <img src="RE.png" alt="ReDefined.AI Logo" class="mb-4 w-48 h-48">
+        <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
+        <p class="text-gray-200 mb-4">AI-crafted listings with design flair and viral potential.</p>
+        <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
+      </div>
+      <div class="glass hover:shadow-xl transition">
+        <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
+        <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
+        <button onclick="openFlip()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
+      </div>
+      <div class="glass hover:shadow-xl transition">
+        <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
+        <p class="text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
+        <a href="webx.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- #6 ROTATOR PHOTO SECTION -->
+  <section class="py-20 px-4 text-center">
+    <h3 class="text-3xl font-bold mb-6">Experience Every Angle</h3>
+    <div class="rotator max-w-6xl mx-auto">
+      <img src="SaSS.png" alt="360° Property View">
+    </div>
+  </section>
+
+  <!-- #7 LUXURYPRESENCE STYLE FOOTER -->
+  <footer class="bg-[#111] text-gray-400 pt-20 pb-10 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="bg-gray-800 bg-opacity-20 p-8 rounded-lg text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold mb-4 text-white">Grow your real estate business with RealtySass</h3>
+        <a href="joinus.html" class="inline-block px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Get Started</a>
+      </div>
+      <div class="grid md:grid-cols-4 gap-8 text-sm">
+        <div>
+          <h4 class="text-white font-semibold mb-3">Products</h4>
+          <p>Website Platform</p>
+          <p>AI-Powered SEO</p>
+          <p>Lead Generation</p>
+          <p>Lead Management</p>
+          <p>Home Search Portal</p>
+          <p>Mobile Apps</p>
+          <p>Private Listings Hub</p>
         </div>
-        <div class="flex justify-around mt-2">
-          <button class="flex items-center text-sm px-4 py-2 rounded hover:bg-black/20 transition"><span class="text-[#d4af37] font-bold">Article</span></button>
-          <button class="flex items-center text-sm px-4 py-2 rounded hover:bg-black/20 transition"><span class="text-[#d4af37] font-bold">Video</span></button>
-          <button class="flex items-center text-sm px-4 py-2 rounded hover:bg-black/20 transition"><span class="text-[#d4af37] font-bold">Photo</span></button>
-          <button class="flex items-center text-sm px-4 py-2 rounded hover:bg-black/20 transition"><span class="text-[#d4af37] font-bold">REDefined</span></button>
-          <button class="flex items-center text-sm px-4 py-2 rounded hover:bg-black/20 transition"><span class="text-[#d4af37] font-bold">Flip</span></button>
+        <div>
+          <h4 class="text-white font-semibold mb-3">Solutions</h4>
+          <p>For Solo Agents</p>
+          <p>For Celebrity Agents</p>
+          <p>For Growing Teams</p>
+          <p>For Brokerages</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">Company</h4>
+          <p>Case Studies</p>
+          <p>Design Portfolio</p>
+          <p>Reviews</p>
+          <p>Careers</p>
+          <p>Referral Program</p>
+          <p>Corporate Philanthropy</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">Resources</h4>
+          <p>Blog</p>
+          <p>Podcasts</p>
+          <p>ROI Calculator</p>
+          <p>Help Center</p>
         </div>
       </div>
-
-      <!-- ✅ Listings: Instagram Style -->
-      <div class="space-y-8">
-        <!-- Listing 1 -->
-        <div class="instagram-card">
-          <div class="flex items-center px-4 py-3">
-            <img src="profile.png" alt="Profile" class="w-10 h-10 rounded-lg mr-3 object-cover">
-            <div>
-              <p class="text-sm font-bold">Juan J. Orozco</p>
-              <p class="text-xs text-gray-500">TX 78250</p>
-            </div>
-          </div>
-          <img src="SaSS.png" alt="Listing 1" class="w-full">
-          <div class="icon-bar">
-            <!-- Icons -->
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"/></svg>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M21 11.5a8.38 8.38 0 01-1.91.79A6.44 6.44 0 0021 8.5v-1a4 4 0 00-4-4h-1a6.5 6.5 0 00-6.5 6.5v1A6.5 6.5 0 0010 18.5h1a8.5 8.5 0 008.5-8.5v-1h1v1z"/></svg>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 4v16l16-8L4 4z"/></svg>
-          </div>
-          <div class="px-4 pb-4">
-            <p class="text-sm italic">Elegant Modern Home</p>
-            <p class="text-xs text-gray-700">Fully staged with premium finishes, ready for move-in.</p>
-          </div>
-        </div>
-
-        <!-- Listing 2 -->
-        <div class="instagram-card">
-          <div class="flex items-center px-4 py-3">
-            <img src="profile.png" alt="Profile" class="w-10 h-10 rounded-lg mr-3 object-cover">
-            <div>
-              <p class="text-sm font-bold">Juan J. Orozco</p>
-              <p class="text-xs text-gray-500">TX 78250</p>
-            </div>
-          </div>
-          <img src="RE.png" alt="Listing 2" class="w-full">
-          <div class="icon-bar">
-            <!-- Icons -->
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"/></svg>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M21 11.5a8.38 8.38 0 01-1.91.79A6.44 6.44 0 0021 8.5v-1a4 4 0 00-4-4h-1a6.5 6.5 0 00-6.5 6.5v1A6.5 6.5 0 0010 18.5h1a8.5 8.5 0 008.5-8.5v-1h1v1z"/></svg>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 4v16l16-8L4 4z"/></svg>
-          </div>
-          <div class="px-4 pb-4">
-            <p class="text-sm italic">Stunning Ranch-Style Flip</p>
-            <p class="text-xs text-gray-700">Updated interiors with ROI potential.</p>
-          </div>
-        </div>
-
-        <!-- Listing 3: Video -->
-        <div class="instagram-card">
-          <div class="flex items-center px-4 py-3">
-            <img src="profile.png" alt="Profile" class="w-10 h-10 rounded-lg mr-3 object-cover">
-            <div>
-              <p class="text-sm font-bold">Juan J. Orozco</p>
-              <p class="text-xs text-gray-500">TX 78250</p>
-            </div>
-          </div>
-          <video src="introvideo.mp4" controls class="w-full"></video>
-          <div class="icon-bar">
-            <!-- Icons -->
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"/></svg>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M21 11.5a8.38 8.38 0 01-1.91.79A6.44 6.44 0 0021 8.5v-1a4 4 0 00-4-4h-1a6.5 6.5 0 00-6.5 6.5v1A6.5 6.5 0 0010 18.5h1a8.5 8.5 0 008.5-8.5v-1h1v1z"/></svg>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 4v16l16-8L4 4z"/></svg>
-          </div>
-          <div class="px-4 pb-4">
-            <p class="text-sm italic">Brand Intro Video</p>
-            <p class="text-xs text-gray-700">Learn more about RealtySass mission.</p>
-          </div>
-        </div>
+      <div class="mt-12 text-center text-gray-500 text-xs">
+        &copy; 2025 RealtySass – All rights reserved.
       </div>
-    </section>
+    </div>
+  </footer>
 
-    <!-- ✅ Right Reserved -->
-    <aside class="col-span-1 hidden md:block"></aside>
-  </main>
+  <!-- #8 REDEFINED OVERLAY -->
+  <div id="redefinedOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
+    <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
+      <button onclick="closeRedefined()" class="absolute top-2 right-2 text-white text-xl">✕</button>
+      <iframe id="redefinedFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
+    </div>
+  </div>
+
+  <!-- #8.5 FLIP OVERLAY -->
+  <div id="flipOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
+    <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
+      <button onclick="closeFlip()" class="absolute top-2 right-2 text-white text-xl">✕</button>
+      <iframe id="flipFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
+    </div>
+  </div>
+
+  <!-- #9 SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const heroVideo = document.getElementById('heroVideo');
+    heroVideo.play().catch(() => {});
+    document.addEventListener('click', () => {
+      if (heroVideo.muted) {
+        heroVideo.muted = false;
+        heroVideo.play();
+      }
+    });
+    function openRedefined() {
+      document.getElementById('redefinedFrame').src = 'https://realredefined-1.onrender.com';
+      document.getElementById('redefinedOverlay').classList.remove('hidden');
+    }
+    function closeRedefined() {
+      document.getElementById('redefinedOverlay').classList.add('hidden');
+      document.getElementById('redefinedFrame').src = '';
+    }
+    function openFlip() {
+      document.getElementById('flipFrame').src = 'https://flip-ai.netlify.app';
+      document.getElementById('flipOverlay').classList.remove('hidden');
+    }
+    function closeFlip() {
+      document.getElementById('flipOverlay').classList.add('hidden');
+      document.getElementById('flipFrame').src = '';
+    }
+  </script>
 </body>
 </html>

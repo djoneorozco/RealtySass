@@ -1,3 +1,4 @@
+<!-- 🏡 index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +18,6 @@
     h1, h2, h3 {
       font-family: 'Lora', serif;
     }
-    /* UPDATED GLASS */
     .glass {
       background: rgba(234, 235, 241, 0.05);
       backdrop-filter: blur(15px);
@@ -124,20 +124,17 @@
       <p class="text-gray-400 mt-2">Your real estate identity starts here. Pick your platform:</p>
     </div>
     <div class="grid md:grid-cols-3 gap-8 px-6">
-      <!-- ReDefined.AI -->
       <div class="glass hover:shadow-xl transition">
         <img src="RE.png" alt="ReDefined.AI Logo" class="mb-4 w-48 h-48">
         <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
         <p class="text-gray-200 mb-4">AI-crafted listings with design flair and viral potential.</p>
         <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
-      <!-- Flip.AI -->
       <div class="glass hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
         <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
         <button onclick="openFlip()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
-      <!-- WebX.AI -->
       <div class="glass hover:shadow-xl transition">
         <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
         <p class="text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
@@ -154,9 +151,52 @@
     </div>
   </section>
 
-  <!-- #7 FOOTER -->
-  <footer class="text-center py-10 text-sm text-gray-500">
-    &copy; 2025 RealtySass – Built with SaaS, Style, and Strategy.
+  <!-- #7 LUXURYPRESENCE STYLE FOOTER -->
+  <footer class="bg-[#111] text-gray-400 pt-20 pb-10 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="bg-gray-800 bg-opacity-20 p-8 rounded-lg text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold mb-4 text-white">Grow your real estate business with RealtySass</h3>
+        <a href="joinus.html" class="inline-block px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Get Started</a>
+      </div>
+      <div class="grid md:grid-cols-4 gap-8 text-sm">
+        <div>
+          <h4 class="text-white font-semibold mb-3">Products</h4>
+          <p>Website Platform</p>
+          <p>AI-Powered SEO</p>
+          <p>Lead Generation</p>
+          <p>Lead Management</p>
+          <p>Home Search Portal</p>
+          <p>Mobile Apps</p>
+          <p>Private Listings Hub</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">Solutions</h4>
+          <p>For Solo Agents</p>
+          <p>For Celebrity Agents</p>
+          <p>For Growing Teams</p>
+          <p>For Brokerages</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">Company</h4>
+          <p>Case Studies</p>
+          <p>Design Portfolio</p>
+          <p>Reviews</p>
+          <p>Careers</p>
+          <p>Referral Program</p>
+          <p>Corporate Philanthropy</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">Resources</h4>
+          <p>Blog</p>
+          <p>Podcasts</p>
+          <p>ROI Calculator</p>
+          <p>Help Center</p>
+        </div>
+      </div>
+      <div class="mt-12 text-center text-gray-500 text-xs">
+        &copy; 2025 RealtySass – All rights reserved.
+      </div>
+    </div>
   </footer>
 
   <!-- #8 REDEFINED OVERLAY -->
@@ -186,22 +226,18 @@
         heroVideo.play();
       }
     });
-
     function openRedefined() {
       document.getElementById('redefinedFrame').src = 'https://realredefined-1.onrender.com';
       document.getElementById('redefinedOverlay').classList.remove('hidden');
     }
-
     function closeRedefined() {
       document.getElementById('redefinedOverlay').classList.add('hidden');
       document.getElementById('redefinedFrame').src = '';
     }
-
     function openFlip() {
       document.getElementById('flipFrame').src = 'https://flip-ai.netlify.app';
       document.getElementById('flipOverlay').classList.remove('hidden');
     }
-
     function closeFlip() {
       document.getElementById('flipOverlay').classList.add('hidden');
       document.getElementById('flipFrame').src = '';

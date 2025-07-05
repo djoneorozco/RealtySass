@@ -1,219 +1,151 @@
+<!-- 🏡 RealtySass.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <!-- #1 META & TITLE -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RealtySass – Put some SaaS in your Realty</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RealtySass – Your Real Estate Social Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      background-color: rgb(204, 192, 175); /* Warm beige site background */
-      color: #222;
+      background: radial-gradient(circle at right, #7b5e3d, #000000);
+      color: #1a1a1a;
     }
-    h1, h2, h3, h4, h5 {
+    h1, h2, h3, h4 {
       font-family: 'Lora', serif;
     }
     .glass {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-    .gold {
-      background-color: #d4af37;
+    .listing-card {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
     }
-    .card {
-      transition: all 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    }
-    /* ✅ SaaS Boxes: All same warm beige – update here if needed */
-    .saas-box {
-      background-color: rgb(204, 192, 175);
+    .listing-card:hover {
+      transform: scale(1.02);
     }
   </style>
 </head>
 
-<body>
+<body class="min-h-screen">
   <!-- #2 HEADER -->
   <header class="w-full py-4 fixed z-50 glass">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-white">
-        <a href="RealtySass.html" class="hover:text-gold">RealtySass</a>
-      </h1>
+      <a href="RealtySass.html" class="text-2xl font-bold text-white hover:text-[#d4af37]">RealtySass</a>
       <nav class="hidden md:flex space-x-6">
-        <a href="products.html" class="text-white hover:text-gold">Products</a>
-        <a href="templates.html" class="text-white hover:text-gold">Templates</a>
-        <a href="pricing.html" class="text-white hover:text-gold">Pricing</a>
-        <a href="login.html" class="text-white hover:text-gold">Login</a>
-        <a href="joinus.html" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Join Us</a>
+        <a href="products.html" class="text-white hover:text-[#d4af37]">Products</a>
+        <a href="templates.html" class="text-white hover:text-[#d4af37]">Templates</a>
+        <a href="pricing.html" class="text-white hover:text-[#d4af37]">Pricing</a>
+        <a href="login.html" class="text-white hover:text-[#d4af37]">Login</a>
+        <a href="joinus.html" class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full hover:opacity-90">Join Us</a>
       </nav>
     </div>
   </header>
 
-  <!-- #3 HERO SPLIT -->
-  <section class="flex flex-col md:flex-row items-center justify-between pt-40 pb-0 px-0 bg-black text-white">
-    <video id="heroVideo" style="width:400px;" class="rounded-lg shadow-lg mb-8 md:mb-0" autoplay controls playsinline loop>
-      <source src="introvideo.mp4" type="video/mp4" />
-    </video>
-    <div class="md:w-1/2 md:pl-12">
-      <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-        The AI-powered platform to grow your real estate business
-      </h2>
-      <p class="text-lg md:text-xl text-gray-200 mb-8">Launch stunning websites, attract more leads, and turn prospects into lifelong clients.</p>
-      <div class="flex gap-6 flex-wrap">
-        <a href="joinus.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Get Started</a>
-        <a href="products.html" class="px-6 py-3 border border-white text-white font-semibold rounded-full hover:bg-white hover:text-gray-900 transition">Tour Our Platform</a>
-      </div>
-    </div>
-  </section>
+  <!-- #3 MAIN GRID -->
+  <main class="max-w-7xl mx-auto pt-32 pb-20 px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
 
-  <!-- #4 TRUSTED BY STRIP -->
-  <section class="text-center py-12">
-    <p class="text-gray-500">Used by 30%+ of WSJ’s Top-Ranked Agents & Teams</p>
-    <div class="flex flex-wrap justify-center gap-8 mt-4">
-      <img src="images/brand1.svg" class="h-8" alt="Brand 1">
-      <img src="images/brand2.svg" class="h-8" alt="Brand 2">
-      <img src="images/brand3.svg" class="h-8" alt="Brand 3">
-    </div>
-  </section>
-
-  <!-- #5 CLIENT QUOTE -->
-  <section class="py-20 px-4 bg-[#f5f5f5]">
-    <div class="max-w-4xl mx-auto text-center">
-      <p class="text-xl italic mb-6">“RealtySass helped us launch a stunning site and generate 3x more qualified leads within the first month.”</p>
-      <p class="font-semibold">— John Doe, Top Producer</p>
-    </div>
-  </section>
-
-  <!-- #6 SHOWCASE GRID -->
-  <section class="py-20 px-6">
-    <div class="max-w-7xl mx-auto text-center mb-12">
-      <h3 class="text-4xl font-bold">A brand new digital storefront</h3>
-      <p class="text-gray-500 mt-4">Stunning websites designed to convert visitors into clients.</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="card overflow-hidden rounded-lg shadow-lg">
-        <img src="images/showcase1.jpg" alt="Example Site">
+    <!-- ✅ LEFT SIDEBAR -->
+    <aside class="col-span-1 space-y-6">
+      <!-- Profile Card -->
+      <div class="glass p-6 text-center">
+        <img src="profile.jpg" alt="Profile Picture" class="rounded-full w-32 h-32 mx-auto mb-4 border-4 border-white shadow-md">
+        <h3 class="text-2xl font-bold mb-1 tracking-tight">Juan J. Orozco</h3>
+        <p class="text-sm text-gray-800 mb-1">Business Ops | PM | Scrum Master</p>
+        <p class="text-xs text-gray-600 mb-1">Penn State, JHU, Duke Fuqua</p>
+        <p class="text-xs text-gray-600">15+ Years Experience</p>
       </div>
-      <div class="card overflow-hidden rounded-lg shadow-lg">
-        <img src="images/showcase2.jpg" alt="Example Site">
+      <!-- Promo Box 1 -->
+      <div class="glass p-4">
+        <h4 class="text-lg font-semibold mb-2">Power Tools for Realtors</h4>
+        <p class="text-sm text-gray-800 mb-2">Boost listings with REDefined, Flip.ai, RETurns.</p>
+        <a href="#" class="text-[#d4af37] underline">Explore Tools →</a>
       </div>
-      <div class="card overflow-hidden rounded-lg shadow-lg">
-        <img src="images/showcase3.jpg" alt="Example Site">
+      <!-- Promo Box 2 -->
+      <div class="glass p-4">
+        <h4 class="text-lg font-semibold mb-2">Grow Your Business</h4>
+        <p class="text-sm text-gray-800 mb-2">Amplify your online presence with RealtySass.</p>
+        <a href="#" class="text-[#d4af37] underline">Learn More →</a>
       </div>
-    </div>
-  </section>
-
-  <!-- #7 SAAS PICK -->
-  <section class="py-20 px-4 bg-[#fbf9f3]">
-    <div class="max-w-6xl mx-auto text-center mb-10">
-      <h3 class="text-3xl font-bold">Choose Your SaaS</h3>
-      <p class="text-gray-500 mt-2">Start with the tools that match your real estate identity.</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-8 px-6">
-      <!-- ✅ SaaS Box 1 -->
-      <div class="glass card saas-box p-8 text-center">
-        <img src="RE.png" alt="ReDefined.AI Logo" class="mb-4 w-32 mx-auto">
-        <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
-        <p class="text-gray-700 mb-4">AI-crafted listings with design flair and viral potential.</p>
-        <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
-      </div>
-      <!-- ✅ SaaS Box 2 -->
-      <div class="glass card saas-box p-8 text-center">
-        <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
-        <p class="text-gray-700 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
-        <button onclick="openFlip()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
-      </div>
-      <!-- ✅ SaaS Box 3 -->
-      <div class="glass card saas-box p-8 text-center">
-        <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
-        <p class="text-gray-700 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
-        <a href="webx.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- #8 CTA STRIP -->
-  <section class="text-center py-20 bg-[#252422] text-white">
-    <h3 class="text-4xl font-bold mb-4">Ready to launch?</h3>
-    <p class="text-lg mb-6">Start your journey with RealtySass today — it’s easier than you think.</p>
-    <a href="joinus.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Get Started</a>
-  </section>
-
-  <!-- #9 LUXURY FOOTER ✅ FULL FOOTER BACK -->
-  <footer class="bg-[#0d0d0d] text-gray-300 px-6 py-20">
-    <!-- Frosted CTA Banner -->
-    <div class="max-w-7xl mx-auto mb-12">
-      <div class="bg-white/5 backdrop-blur-sm rounded-lg flex flex-col md:flex-row justify-between items-center p-8">
-        <h4 class="text-2xl font-semibold mb-4 md:mb-0">Grow your real estate business with RealtySass</h4>
-        <a href="joinus.html" class="px-6 py-3 bg-yellow-400 text-black font-semibold rounded hover:opacity-90">Get Started</a>
-      </div>
-    </div>
-    <!-- Contact & Book Demo -->
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center mb-12">
-      <p class="mb-4 md:mb-0">Call us:<br><strong>(310) 955-1077</strong></p>
-      <a href="contact.html" class="px-6 py-3 border border-yellow-400 text-yellow-400 rounded hover:bg-yellow-400 hover:text-black transition">Book a Demo</a>
-    </div>
-    <!-- Link Columns -->
-    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
-      <div>
-        <h5 class="font-bold mb-4">PRODUCTS</h5>
-        <ul class="space-y-2">
-          <li><a href="#" class="hover:underline">Website Platform</a></li>
-          <li><a href="#" class="hover:underline">AI-Powered SEO</a></li>
-          <li><a href="#" class="hover:underline">Lead Generation</a></li>
-          <li><a href="#" class="hover:underline">Lead Management</a></li>
-          <li><a href="#" class="hover:underline">Home Search Portal</a></li>
-          <li><a href="#" class="hover:underline">Presentations & CMAs</a></li>
-          <li><a href="#" class="hover:underline">Mobile Apps</a></li>
+      <!-- Quick Access -->
+      <div class="glass p-4">
+        <h4 class="text-lg font-semibold mb-2">Quick Access</h4>
+        <ul class="space-y-2 text-sm text-gray-800">
+          <li><a href="#" class="hover:underline">Messages</a></li>
+          <li><a href="#" class="hover:underline">Events</a></li>
+          <li><a href="#" class="hover:underline">Settings</a></li>
         </ul>
       </div>
-      <div>
-        <h5 class="font-bold mb-4">SOLUTIONS</h5>
-        <ul class="space-y-2">
-          <li><a href="#" class="hover:underline">For Solo Agents</a></li>
-          <li><a href="#" class="hover:underline">For Celebrity Agents</a></li>
-          <li><a href="#" class="hover:underline">For Growing Teams</a></li>
-          <li><a href="#" class="hover:underline">For Brokerages</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="font-bold mb-4">COMPANY</h5>
-        <ul class="space-y-2">
-          <li><a href="#" class="hover:underline">Case Studies</a></li>
-          <li><a href="#" class="hover:underline">Design Portfolio</a></li>
-          <li><a href="#" class="hover:underline">Reviews</a></li>
-          <li><a href="#" class="hover:underline">Careers</a></li>
-          <li><a href="#" class="hover:underline">News & Press</a></li>
-          <li><a href="#" class="hover:underline">Referral Program</a></li>
-          <li><a href="#" class="hover:underline">Corporate Philanthropy</a></li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="font-bold mb-4">RESOURCES</h5>
-        <ul class="space-y-2">
-          <li><a href="#" class="hover:underline">Blog</a></li>
-          <li><a href="#" class="hover:underline">Podcasts</a></li>
-          <li><a href="#" class="hover:underline">Collective by RealtySass</a></li>
-          <li><a href="#" class="hover:underline">ROI Calculator</a></li>
-          <li><a href="#" class="hover:underline">Help Center</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="mt-12 text-center text-xs text-gray-500">
-      &copy; 2025 RealtySass — Built with Sass, Style, and Strategy.
-    </div>
-  </footer>
+    </aside>
 
-  <!-- #10 OVERLAYS & SCRIPTS -->
-  <!-- (Keep your overlays and scripts same as before) -->
+    <!-- ✅ MAIN FEED -->
+    <section class="col-span-1 md:col-span-2 space-y-8">
+      <!-- Post Box -->
+      <div class="glass p-6">
+        <div class="flex items-center space-x-4 mb-4">
+          <img src="profile.jpg" alt="Profile" class="rounded-full w-12 h-12 border-2 border-white shadow">
+          <input type="text" placeholder="What's on your mind?" class="flex-1 px-4 py-3 rounded-full bg-white/40 text-black placeholder-gray-600 focus:outline-none">
+        </div>
+        <div class="flex justify-around mt-2">
+          <button class="text-sm px-4 py-2 rounded hover:bg-black/20 transition text-[#d4af37]">Article</button>
+          <button class="text-sm px-4 py-2 rounded hover:bg-black/20 transition text-[#d4af37]">Video</button>
+          <button class="text-sm px-4 py-2 rounded hover:bg-black/20 transition text-[#d4af37]">Photo</button>
+          <button class="text-sm px-4 py-2 rounded hover:bg-black/20 transition text-[#d4af37]">REDefined</button>
+          <button class="text-sm px-4 py-2 rounded hover:bg-black/20 transition text-[#d4af37]">Flip</button>
+        </div>
+      </div>
+
+      <!-- Listings Feed -->
+      <div class="space-y-6">
+        <div class="listing-card">
+          <img src="RE.png" alt="RE Defined" class="w-full">
+          <div class="p-4">
+            <p class="text-sm text-gray-800">AI-crafted listings with ReDefined.AI</p>
+          </div>
+        </div>
+        <div class="listing-card">
+          <img src="SaSS.png" alt="SaSS Tools" class="w-full">
+          <div class="p-4">
+            <p class="text-sm text-gray-800">SaaS tools to grow your real estate business</p>
+          </div>
+        </div>
+        <div class="listing-card">
+          <img src="orozcorealty.png" alt="Orozco Realty" class="w-full">
+          <div class="p-4">
+            <p class="text-sm text-gray-800">Orozco Realty – A Trusted Name in Texas</p>
+          </div>
+        </div>
+        <div class="listing-card">
+          <video src="introvideo.mp4" controls class="w-full rounded"></video>
+          <div class="p-4">
+            <p class="text-sm text-gray-800">Intro Video – Discover RealtySass</p>
+          </div>
+        </div>
+        <div class="listing-card">
+          <video src="avatarpricing.mp4" controls class="w-full rounded"></video>
+          <div class="p-4">
+            <p class="text-sm text-gray-800">Avatar & Pricing Overview</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ✅ RIGHT COLUMN RESERVED -->
+    <aside class="col-span-1 hidden md:block">
+      <!-- Reserved for future Ads, Realtor Spotlights, or Recommendations -->
+    </aside>
+  </main>
 </body>
-</html>

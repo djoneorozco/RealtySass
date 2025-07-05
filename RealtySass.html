@@ -26,11 +26,23 @@
       border-radius: 16px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
-    .gold {
-      background-color: #d4af37;
-    }
     .instagram-card {
-      background: transparent;
+      background: #fff;
+      color: #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .icon-bar {
+      display: flex;
+      gap: 16px;
+      padding: 12px 16px;
+    }
+    .icon-bar svg {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -39,80 +51,76 @@
   <!-- #2 HEADER - Frosted Glass Nav -->
   <header class="w-full py-4 fixed z-50 glass">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <a href="RealtySass.html" class="text-2xl font-bold text-white hover:text-gold">RealtySass</a>
+      <a href="RealtySass.html" class="text-2xl font-bold text-white hover:text-[#d4af37]">RealtySass</a>
       <nav class="hidden md:flex space-x-6">
-        <a href="products.html" class="text-white hover:text-gold">Products</a>
-        <a href="templates.html" class="text-white hover:text-gold">Templates</a>
-        <a href="pricing.html" class="text-white hover:text-gold">Pricing</a>
-        <a href="login.html" class="text-white hover:text-gold">Login</a>
-        <a href="joinus.html" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Join Us</a>
+        <a href="products.html" class="text-white hover:text-[#d4af37]">Products</a>
+        <a href="templates.html" class="text-white hover:text-[#d4af37]">Templates</a>
+        <a href="pricing.html" class="text-white hover:text-[#d4af37]">Pricing</a>
+        <a href="login.html" class="text-white hover:text-[#d4af37]">Login</a>
+        <a href="joinus.html" class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full hover:opacity-90">Join Us</a>
       </nav>
     </div>
   </header>
 
   <!-- #3 MAIN CONTENT GRID -->
   <main class="max-w-7xl mx-auto pt-32 pb-20 px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-    <!-- Left: Profile Card -->
-    <aside class="col-span-1 glass p-6 text-center">
-      <img src="profile.jpg" alt="Profile Picture" class="rounded-full w-24 h-24 mx-auto mb-4 shadow-lg">
+    <!-- ✅ Profile Sidebar -->
+    <aside class="col-span-1 glass p-4 text-center h-[250px]">
+      <img src="profile.jpg" alt="Profile Picture" class="rounded-lg w-24 h-24 mx-auto mb-2 shadow-lg object-cover">
       <h3 class="text-xl font-bold mb-1">Juan J. Orozco</h3>
-      <p class="text-sm text-gray-300 mb-2">Business Ops | PM | Scrum Master</p>
-      <p class="text-xs text-gray-400 mb-1">Penn State, JHU, Duke Fuqua</p>
-      <p class="text-xs text-gray-400">15+ Years Experience</p>
+      <p class="text-sm text-gray-300 mb-1">Business Ops | PM | Scrum Master</p>
+      <p class="text-xs text-gray-400">Penn State, JHU, Duke Fuqua</p>
     </aside>
 
-    <!-- Middle: Post a Listing + Feed -->
+    <!-- ✅ Middle: Post Box + Feed -->
     <section class="col-span-1 md:col-span-2 space-y-8">
-      <!-- ✅ Redesigned Post Box: Modern LinkedIn style -->
+      <!-- Post Box -->
       <div class="glass p-6">
         <div class="flex items-start space-x-4 mb-4">
           <img src="profile.jpg" alt="Profile" class="rounded-full w-12 h-12 shadow-md">
           <input type="text" placeholder="Start a post..." class="flex-1 px-4 py-3 rounded-full bg-black/30 text-white border border-gray-700 focus:outline-none">
         </div>
         <div class="flex justify-around mt-2">
-          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
-            <span class="text-[#d4af37] font-bold">Article</span>
-          </button>
-          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
-            <span class="text-[#d4af37] font-bold">Video</span>
-          </button>
-          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
-            <span class="text-[#d4af37] font-bold">Photo</span>
-          </button>
-          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
-            <span class="text-[#d4af37] font-bold">REDefined</span>
-          </button>
-          <button class="flex items-center space-x-2 text-sm px-4 py-2 rounded hover:bg-black/20 transition">
-            <span class="text-[#d4af37] font-bold">Flip</span>
-          </button>
+          <button class="flex items-center text-sm px-4 py-2 rounded hover:bg-black/20 transition"><span class="text-[#d4af37] font-bold">Article</span></button>
+          <button class="flex items-center text-sm px-4 py-2 rounded hover:bg-black/20 transition"><span class="text-[#d4af37] font-bold">Video</span></button>
+          <button class="flex items-center text-sm px-4 py-2 rounded hover:bg-black/20 transition"><span class="text-[#d4af37] font-bold">Photo</span></button>
+          <button class="flex items-center text-sm px-4 py-2 rounded hover:bg-black/20 transition"><span class="text-[#d4af37] font-bold">REDefined</span></button>
+          <button class="flex items-center text-sm px-4 py-2 rounded hover:bg-black/20 transition"><span class="text-[#d4af37] font-bold">Flip</span></button>
         </div>
       </div>
 
-      <!-- Listings Feed: Instagram Style -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- ✅ Listings: Instagram Style -->
+      <div class="space-y-8">
+        <!-- Example Listing -->
         <div class="instagram-card">
-          <img src="introvideo.mp4" alt="Listing 1" class="w-full rounded-lg mb-2 shadow-lg">
-          <p class="text-sm text-gray-200 px-2">Modern 3 Bed, 2 Bath in South Texas</p>
+          <!-- Top -->
+          <div class="flex items-center px-4 py-3">
+            <img src="profile.jpg" alt="Profile" class="w-10 h-10 rounded-lg mr-3 object-cover">
+            <div>
+              <p class="text-sm font-bold">Juan J. Orozco</p>
+              <p class="text-xs text-gray-500">TX 78250</p>
+            </div>
+          </div>
+          <!-- Image -->
+          <img src="SaSS.png" alt="Listing 1" class="w-full">
+          <!-- Icons -->
+          <div class="icon-bar">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4.318 6.318a4.5 4.5 0 016.364 0L12 7.636l1.318-1.318a4.5 4.5 0 016.364 6.364L12 20.364l-7.682-7.682a4.5 4.5 0 010-6.364z"/></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M21 11.5a8.38 8.38 0 01-1.91.79A6.44 6.44 0 0021 8.5v-1a4 4 0 00-4-4h-1a6.5 6.5 0 00-6.5 6.5v1A6.5 6.5 0 0010 18.5h1a8.5 8.5 0 008.5-8.5v-1h1v1z"/></svg>
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="2" d="M4 4v16l16-8L4 4z"/></svg>
+          </div>
+          <!-- Description -->
+          <div class="px-4 pb-4">
+            <p class="text-sm italic">Elegant Modern Home</p>
+            <p class="text-xs text-gray-700">Fully staged with premium finishes, ready for move-in.</p>
+          </div>
         </div>
-        <div class="instagram-card">
-          <img src="SaSS.png" alt="Listing 2" class="w-full rounded-lg mb-2 shadow-lg">
-          <p class="text-sm text-gray-200 px-2">Charming Bungalow for Rent – Great Location!</p>
-        </div>
-        <div class="instagram-card">
-          <img src="RE.png" alt="Listing 3" class="w-full rounded-lg mb-2 shadow-lg">
-          <p class="text-sm text-gray-200 px-2">Fully Remodeled Flip with ROI Potential</p>
-        </div>
-        <div class="instagram-card">
-          <img src="orozcorealty.png" alt="Listing 4" class="w-full rounded-lg mb-2 shadow-lg">
-          <p class="text-sm text-gray-200 px-2">Investor Special – Rent or BRRRR Ready</p>
-        </div>
+        <!-- Copy more listings exactly like above -->
       </div>
     </section>
 
-    <!-- Right: Optional Widgets -->
-    <aside class="col-span-1 hidden md:block">
-      <!-- Future: Ads, Recommendations, Realtor Highlights -->
-    </aside>
+    <!-- ✅ Right Reserved -->
+    <aside class="col-span-1 hidden md:block"></aside>
   </main>
 </body>
 </html>

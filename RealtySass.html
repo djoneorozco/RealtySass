@@ -1,42 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- META & TITLE -->
+  <!-- #1 META & TITLE -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RealtySass Social – Browse, Connect, Trust</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RealtySass – Your Real Estate Social Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      background-color: rgb(204, 192, 175); /* Warm beige */
-      color: #222;
+      background: radial-gradient(circle at right, #7b5e3d, #000000);
+      color: #f5f5f5;
     }
-    h1,h2,h3,h4,h5 {
+    h1, h2, h3, h4, h5 {
       font-family: 'Lora', serif;
     }
     .glass {
       background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 20px;
     }
     .gold {
       background-color: #d4af37;
     }
+    .card {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+    }
   </style>
 </head>
 
-<body>
-  <!-- #1 HEADER -->
+<body class="min-h-screen">
+  <!-- #2 HEADER - Frosted Glass Nav -->
   <header class="w-full py-4 fixed z-50 glass">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-white">RealtySass</h1>
+      <a href="RealtySass.html" class="text-2xl font-bold text-white hover:text-gold">RealtySass</a>
       <nav class="hidden md:flex space-x-6">
-        <a href="index.html" class="text-white hover:text-gold">Home</a>
-        <a href="RealtySass.html" class="text-white hover:text-gold">Social</a>
+        <a href="products.html" class="text-white hover:text-gold">Products</a>
+        <a href="templates.html" class="text-white hover:text-gold">Templates</a>
         <a href="pricing.html" class="text-white hover:text-gold">Pricing</a>
         <a href="login.html" class="text-white hover:text-gold">Login</a>
         <a href="joinus.html" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Join Us</a>
@@ -44,63 +49,58 @@
     </div>
   </header>
 
-  <!-- #2 MAIN GRID -->
-  <main class="pt-40 pb-20 px-6 max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
-    <!-- #2A PROPERTY FEED -->
-    <section class="md:col-span-2 space-y-8">
-      <h2 class="text-3xl font-bold mb-4">Latest Listings</h2>
+  <!-- #3 MAIN CONTENT GRID -->
+  <main class="max-w-7xl mx-auto pt-32 pb-20 px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <!-- Left: Profile Card -->
+    <aside class="col-span-1 card p-6 text-center">
+      <img src="profile.jpg" alt="Profile Picture" class="rounded-full w-24 h-24 mx-auto mb-4">
+      <h3 class="text-xl font-bold mb-1">Juan J. Orozco</h3>
+      <p class="text-sm text-gray-300 mb-2">Business Ops | PM | Scrum Master</p>
+      <p class="text-xs text-gray-400 mb-1">Penn State, JHU, Duke Fuqua</p>
+      <p class="text-xs text-gray-400">15+ Years Experience</p>
+    </aside>
 
-      <!-- PROPERTY CARD -->
-      <div class="glass p-6 rounded-lg shadow-lg">
-        <img src="images/property1.jpg" alt="Property Image" class="w-full rounded mb-4">
-        <h3 class="text-2xl font-semibold mb-2">$750,000</h3>
-        <p class="mb-2">123 Luxury Lane, Beverly Hills, CA</p>
-        <p class="text-sm text-gray-600 mb-4">Beautiful modern 4-bedroom with pool and panoramic views.</p>
-        <div class="flex items-center space-x-4">
-          <img src="images/agent1.jpg" alt="Agent" class="w-12 h-12 rounded-full">
-          <div>
-            <p class="font-semibold">Jane Realtor</p>
-            <p class="text-xs text-gray-500">Top 1% Agent | Trusted</p>
-          </div>
+    <!-- Middle: Post a Listing + Feed -->
+    <section class="col-span-1 md:col-span-2 space-y-8">
+      <!-- Post Box -->
+      <div class="card p-6">
+        <h4 class="text-lg font-semibold mb-4">Post a Listing</h4>
+        <div class="flex flex-wrap gap-4 mb-4">
+          <button class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full">Article</button>
+          <button class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full">Video</button>
+          <button class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full">Photo</button>
+          <button class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full">REDefined</button>
+          <button class="px-4 py-2 bg-[#d4af37] text-gray-900 rounded-full">Flip</button>
         </div>
+        <textarea placeholder="Share something about your listing..." class="w-full p-4 rounded bg-black/30 border-none text-white"></textarea>
+        <button class="mt-4 px-6 py-2 bg-[#d4af37] text-gray-900 rounded-full hover:opacity-90">Post</button>
       </div>
 
-      <!-- Add more cards below as needed -->
-      <div class="glass p-6 rounded-lg shadow-lg">
-        <img src="images/property2.jpg" alt="Property Image" class="w-full rounded mb-4">
-        <h3 class="text-2xl font-semibold mb-2">$1,250,000</h3>
-        <p class="mb-2">456 Sunset Blvd, Los Angeles, CA</p>
-        <p class="text-sm text-gray-600 mb-4">Contemporary estate with guest house and outdoor kitchen.</p>
-        <div class="flex items-center space-x-4">
-          <img src="images/agent2.jpg" alt="Agent" class="w-12 h-12 rounded-full">
-          <div>
-            <p class="font-semibold">John Broker</p>
-            <p class="text-xs text-gray-500">Top Producer | Verified</p>
-          </div>
+      <!-- Listings Feed -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="card p-4">
+          <img src="listing1.jpg" alt="Listing 1" class="rounded mb-2">
+          <p class="text-sm text-gray-300">Modern 3 Bed, 2 Bath in South Texas</p>
+        </div>
+        <div class="card p-4">
+          <img src="listing2.jpg" alt="Listing 2" class="rounded mb-2">
+          <p class="text-sm text-gray-300">Charming Bungalow for Rent – Great Location!</p>
+        </div>
+        <div class="card p-4">
+          <img src="listing3.jpg" alt="Listing 3" class="rounded mb-2">
+          <p class="text-sm text-gray-300">Fully Remodeled Flip with ROI Potential</p>
+        </div>
+        <div class="card p-4">
+          <img src="listing4.jpg" alt="Listing 4" class="rounded mb-2">
+          <p class="text-sm text-gray-300">Investor Special – Rent or BRRRR Ready</p>
         </div>
       </div>
-
     </section>
 
-    <!-- #2B REALTOR PROFILE -->
-    <aside class="space-y-6">
-      <h2 class="text-3xl font-bold mb-4">Your Realtor</h2>
-      <div class="glass p-6 rounded-lg shadow-lg text-center">
-        <img src="images/youragent.jpg" alt="Agent Photo" class="w-32 h-32 mx-auto rounded-full mb-4">
-        <h3 class="text-2xl font-semibold mb-2">Alex Johnson</h3>
-        <p class="text-sm text-gray-600 mb-4">Luxury Real Estate Expert with 10+ years serving the LA area. Trusted by top producers and celebrity clients.</p>
-        <p class="text-sm text-gray-500 mb-2">DRE License #1234567</p>
-        <a href="mailto:alex@realtysass.com" class="block mt-4 px-4 py-2 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Contact</a>
-      </div>
+    <!-- Right: Optional Widgets -->
+    <aside class="col-span-1 hidden md:block">
+      <!-- Future: Ads, Recommendations, Realtor Highlights -->
     </aside>
   </main>
-
-  <!-- #3 FOOTER -->
-  <footer class="bg-[#0d0d0d] text-gray-300 px-6 py-20 mt-20">
-    <div class="max-w-7xl mx-auto text-center">
-      <p class="text-sm">&copy; 2025 RealtySass — Luxury Listings, Trusted Realtors, Smarter Social.</p>
-    </div>
-  </footer>
-
 </body>
 </html>

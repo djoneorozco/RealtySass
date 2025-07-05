@@ -35,15 +35,9 @@
       box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     }
 
-    /* ✅ SaaS Boxes: Custom warm colors – update here if needed */
-    .saas-box-1 {
+    /* ✅ SaaS Boxes: All use same warm color – update here if needed */
+    .saas-box {
       background-color: rgb(204, 192, 175);
-    }
-    .saas-box-2 {
-      background-color: rgb(179, 162, 143);
-    }
-    .saas-box-3 {
-      background-color: rgb(115, 96, 69);
     }
   </style>
 </head>
@@ -125,20 +119,20 @@
     </div>
     <div class="grid md:grid-cols-3 gap-8 px-6">
       <!-- ✅ SaaS Box 1 -->
-      <div class="glass card saas-box-1 p-8 text-center">
+      <div class="glass card saas-box p-8 text-center">
         <img src="RE.png" alt="ReDefined.AI Logo" class="mb-4 w-32 mx-auto">
         <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
         <p class="text-gray-700 mb-4">AI-crafted listings with design flair and viral potential.</p>
         <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
       <!-- ✅ SaaS Box 2 -->
-      <div class="glass card saas-box-2 p-8 text-center">
+      <div class="glass card saas-box p-8 text-center">
         <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
         <p class="text-gray-700 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
         <button onclick="openFlip()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
       </div>
       <!-- ✅ SaaS Box 3 -->
-      <div class="glass card saas-box-3 p-8 text-center">
+      <div class="glass card saas-box p-8 text-center">
         <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
         <p class="text-gray-700 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
         <a href="webx.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
@@ -157,6 +151,5 @@
   <!-- (Your footer stays unchanged) -->
 
   <!-- #10 OVERLAYS & SCRIPTS stay the same -->
-  <!-- (No changes needed here) -->
 </body>
 </html>

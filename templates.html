@@ -15,21 +15,21 @@
 
   <!-- #4 Custom Styles -->
   <style>
-    body { 
-      font-family: 'Montserrat', sans-serif; 
-      background-color: #e6e1dc; 
-      margin: 0; 
-      color: #333; 
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #e6e1dc;
+      margin: 0;
+      color: #333;
     }
     h1,h2,h3 { font-family: 'Lora', serif; }
-    a.btn { 
-      display: inline-block; 
-      padding: 0.75rem 1.5rem; 
-      background-color: #d4af37; 
-      color: #0d0d0d; 
-      font-weight: 600; 
-      border-radius: 0.375rem; 
-      transition: all 0.3s ease-in-out; 
+    a.btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: #d4af37;
+      color: #0d0d0d;
+      font-weight: 600;
+      border-radius: 0.375rem;
+      transition: all 0.3s ease-in-out;
     }
     a.btn:hover {
       transform: scale(1.05);
@@ -58,10 +58,7 @@
       opacity: 0.9;
       z-index: 0;
     }
-    .hero > div {
-      position: relative;
-      z-index: 10;
-    }
+    .hero > div { position: relative; z-index: 10; }
     .filter-btn {
       padding: 0.75rem 1.5rem;
       font-size: 0.875rem;
@@ -72,17 +69,15 @@
       background-color: #333;
       color: #fff;
     }
-    .filter-btn:active {
-      transform: scale(0.98);
-    }
+    .filter-btn:active { transform: scale(0.98); }
     .showcase { background-color: #d9d0c7; }
     .showcase .domain { font-size: 0.85rem; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; }
     .swiper { width: 100%; padding: 2rem 0; }
-    .swiper-slide { 
-      border-radius: 0.5rem; 
-      overflow: hidden; 
-      background: #fff; 
-      transition: transform 0.3s ease; 
+    .swiper-slide {
+      border-radius: 0.5rem;
+      overflow: hidden;
+      background: #fff;
+      transition: transform 0.3s ease;
     }
     .swiper-slide:hover { transform: scale(1.02); }
     .swiper-slide img { width: 100%; height: auto; display: block; }
@@ -121,7 +116,7 @@
       <div class="max-w-6xl mx-auto">
         <div class="flex justify-between border border-gray-300 rounded-full overflow-hidden">
           <button class="filter-btn">All</button>
-          <button class="filter-btn">Luxury</button>
+          <button class="filter-btn" onclick="window.location.href='luxury.html'">Luxury</button>
           <button class="filter-btn">Modern</button>
           <button class="filter-btn">Open House</button>
           <button class="filter-btn">Bundles</button>
@@ -134,12 +129,12 @@
     <section class="showcase py-20 px-4">
       <div class="max-w-6xl mx-auto space-y-28">
 
-        <!-- Template 1 -->
+        <!-- Template: Luxury Modern Real Estate -->
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <div class="domain">RealtySaSS.com</div>
             <h2 class="text-4xl font-semibold mb-4">Luxury Modern Real Estate</h2>
-            <p class="mb-6 max-w-2xl">Elegant, high-end open house flyer. Fully editable in Canva — perfect for luxury listings.</p>
+            <p class="mb-6 max-w-2xl">Elegant, high-end flyer. Fully editable in Canva — perfect for luxury listings.</p>
             <a href="#" class="btn">Get This Template</a>
           </div>
           <div class="transition-all duration-500 hover:scale-105">
@@ -147,38 +142,64 @@
           </div>
         </div>
 
-        <!-- Template 2 -->
+        <!-- Template: Modern Home -->
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div class="md:order-2">
             <div class="domain">RealtySaSS.com</div>
-            <h2 class="text-4xl font-semibold mb-4">Modern Real Estate</h2>
-            <p class="mb-6 max-w-2xl">Clean, modern listing flyer for any agent who wants simple, stylish marketing.</p>
+            <h2 class="text-4xl font-semibold mb-4">Modern Home</h2>
+            <p class="mb-6 max-w-2xl">Premium modern home flyer for upscale listings and open houses.</p>
             <a href="#" class="btn">Get This Template</a>
           </div>
           <div class="md:order-1 transition-all duration-500 hover:scale-105">
+            <img src="images/Modern Home.png" alt="Modern Home Flyer" class="rounded-lg shadow-lg w-full max-w-md mx-auto" />
+          </div>
+        </div>
+
+        <!-- Template: Modern Real Estate -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="domain">RealtySaSS.com</div>
+            <h2 class="text-4xl font-semibold mb-4">Modern Real Estate</h2>
+            <p class="mb-6 max-w-2xl">Clean, stylish modern flyer for any property marketing.</p>
+            <a href="#" class="btn">Get This Template</a>
+          </div>
+          <div class="transition-all duration-500 hover:scale-105">
             <img src="images/Modern Real Estate.png" alt="Modern Real Estate Flyer" class="rounded-lg shadow-lg w-full max-w-md mx-auto" />
           </div>
         </div>
 
-        <!-- Template 3 -->
+        <!-- Template: Open House -->
         <div class="grid md:grid-cols-2 gap-12 items-center">
-          <div>
+          <div class="md:order-2">
             <div class="domain">RealtySaSS.com</div>
-            <h2 class="text-4xl font-semibold mb-4">Open House Flyer</h2>
+            <h2 class="text-4xl font-semibold mb-4">Open House</h2>
             <p class="mb-6 max-w-2xl">Classic open house flyer — edit & reuse for any property showing.</p>
             <a href="#" class="btn">Get This Template</a>
           </div>
-          <div class="transition-all duration-500 hover:scale-105">
+          <div class="md:order-1 transition-all duration-500 hover:scale-105">
             <img src="images/OpenHouse.png" alt="Open House Flyer" class="rounded-lg shadow-lg w-full max-w-md mx-auto" />
           </div>
         </div>
 
-        <!-- Template 4 -->
+        <!-- Template: Property for Sale -->
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="domain">RealtySaSS.com</div>
+            <h2 class="text-4xl font-semibold mb-4">Property for Sale</h2>
+            <p class="mb-6 max-w-2xl">Modern, clean real estate flyer to highlight top listings.</p>
+            <a href="#" class="btn">Get This Template</a>
+          </div>
+          <div class="transition-all duration-500 hover:scale-105">
+            <img src="images/Property for Sale.png" alt="Property for Sale Flyer" class="rounded-lg shadow-lg w-full max-w-md mx-auto" />
+          </div>
+        </div>
+
+        <!-- Template: Realty Open House -->
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div class="md:order-2">
             <div class="domain">RealtySaSS.com</div>
             <h2 class="text-4xl font-semibold mb-4">Realty Open House</h2>
-            <p class="mb-6 max-w-2xl">Modern, clean real estate flyer with warm luxury branding.</p>
+            <p class="mb-6 max-w-2xl">Warm, sophisticated flyer style for showings & listings.</p>
             <a href="#" class="btn">Get This Template</a>
           </div>
           <div class="md:order-1 transition-all duration-500 hover:scale-105">
@@ -189,25 +210,9 @@
       </div>
     </section>
 
-    <!-- Slider Section -->
-    <section class="py-20 px-4 bg-white/5 text-center">
-      <h3 class="text-3xl font-bold mb-6 text-gray-900">Browse More Templates</h3>
-      <div class="swiper mySwiper max-w-6xl mx-auto">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="images/Luxury Modern Real Estate.png" alt="Luxury Modern Real Estate" /></div>
-          <div class="swiper-slide"><img src="images/Modern Home.png" alt="Modern Real Estate" /></div>
-          <div class="swiper-slide"><img src="images/OpenHouse.png" alt="Open House" /></div>
-          <div class="swiper-slide"><img src="images/Realty Open House.png" alt="Realty Open House" /></div>
-        </div>
-        <div class="swiper-pagination mt-4"></div>
-        <div class="swiper-button-next text-gray-900"></div>
-        <div class="swiper-button-prev text-gray-900"></div>
-      </div>
-    </section>
-
     <!-- Footer -->
     <footer class="text-center py-10 text-sm text-gray-400">
-      &copy; 2025 RealtySaSS – Built with sass, style, and strategy.
+      &copy; 2025 RealtySaSS – Heritage Raised, Prestige Bound.
     </footer>
   </main>
 

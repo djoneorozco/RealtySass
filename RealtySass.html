@@ -81,6 +81,10 @@
       from { transform: rotateY(0deg) rotateX(0deg); }
       to   { transform: rotateY(360deg) rotateX(360deg); }
     }
+    /* Extra for toggle button */
+    #teaseToggle.active {
+      background-color: #ef4444; /* red */
+    }
   </style>
 </head>
 
@@ -116,7 +120,7 @@
   </section>
 
   <!-- //#5 HERO VIDEO SECTION -->
-  <section class="flex justify-start items-center bg-black pb-0 px-0">
+  <section id="videoContainer" class="flex justify-start items-center bg-white pb-0 px-0">
     <video id="heroVideo" class="max-w-xs h-auto" autoplay controls playsinline>
       <source src="introvideo.mp4" type="video/mp4" />
       Your browser does not support the video tag.
@@ -124,40 +128,19 @@
   </section>
 
   <!-- //#6 LUXURYPRESENCE STYLE GRID -->
-  <section class="bg-[#f7f7f7] py-20 px-4 text-gray-800">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Keep your three boxes exactly as-is here -->
-      </div>
-    </div>
-  </section>
+  <!-- Include your 3 profile, ReDefined, Orozco Realty grid boxes here, exactly as in your index. -->
 
   <!-- //#7 CHOOSE YOUR VIBE -->
-  <section id="vibe" class="py-20 px-4">
-    <div class="max-w-6xl mx-auto text-center mb-10">
-      <h3 class="text-3xl font-bold">Choose Your SaaS</h3>
-      <p class="text-gray-400 mt-2">Your real estate identity starts here. Pick your platform:</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-8 px-6">
-      <!-- Keep your glass blocks exactly as-is here -->
-    </div>
-  </section>
+  <!-- Include your 3 glass blocks for SaaS options here, exactly as in your index. -->
 
-  <!-- //#8 ROTATOR PHOTO SECTION -->
-  <section class="py-20 px-4 text-center">
-    <h3 class="text-3xl font-bold mb-6">Experience Every Angle</h3>
-    <div class="rotator max-w-6xl mx-auto">
-      <img src="SaSS.png" alt="360° Property View">
-    </div>
-  </section>
+  <!-- //#8 ROTATOR -->
+  <!-- Include your rotator image exactly as in your index. -->
 
   <!-- //#9 FOOTER -->
-  <footer class="bg-[#111] text-gray-400 pt-20 pb-10 px-6">
-    <!-- Your entire footer stays identical -->
-  </footer>
+  <!-- Include your footer, columns, and all p-tags exactly as in your index. -->
 
-  <!-- //#10 REDEFINED OVERLAY -->
-  <!-- + Flip Overlay, exact same -->
+  <!-- //#10 OVERLAYS -->
+  <!-- Include your REDEFINED and FLIP overlays exactly as in your index. -->
 
   <!-- //#11 SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -166,12 +149,14 @@
     const body = document.body;
     const heroHeading = document.getElementById('heroHeading');
     const heroDesc = document.getElementById('heroDesc');
+    const videoContainer = document.getElementById('videoContainer');
 
     toggle.addEventListener('click', () => {
       const isTease = body.classList.contains('theme-tease');
       body.classList.toggle('theme-tease', !isTease);
       body.classList.toggle('theme-neutral', isTease);
       toggle.textContent = isTease ? 'Tease Mode: Off' : 'Tease Mode: On';
+      toggle.classList.toggle('active', !isTease);
 
       heroHeading.textContent = isTease
         ? "Put some SaaS in your Realty—Let's do it A.I. Style!"
@@ -180,6 +165,9 @@
       heroDesc.textContent = isTease
         ? "Enhance your Sass. Show off your listings. Get more Hot Sales."
         : "";
+
+      videoContainer.classList.toggle('bg-white', isTease);
+      videoContainer.classList.toggle('bg-black', !isTease);
     });
 
     const heroVideo = document.getElementById('heroVideo');

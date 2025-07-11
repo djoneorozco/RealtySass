@@ -1,57 +1,78 @@
+<!-- 🏡 RealtySass.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- META + TITLE -->
+  <!-- //# 1: META + TITLE -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RealtySass – Neutral Mode</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RealtySass – Put some SaaS in your Realty</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  <style>
-    body { font-family: 'Montserrat', sans-serif; transition: all 0.5s ease; }
-    h1, h2, h3 { font-family: 'Lora', serif; }
-    .glass { backdrop-filter: blur(20px); border-radius: 20px; transition: all 0.5s ease; }
-    .gold { background-color: rgba(212,175,55,1); }
-    .hero { position: relative; overflow: hidden; }
-    .hero::before {
-      content: ''; position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%);
-      width: 120%; height: 300px;
-      background: radial-gradient(ellipse at center, rgba(212,175,55,0.35) 0%, rgba(0,0,0,0.1) 70%);
-      opacity: 0.9; z-index: 0;
-    }
-    .hero > div { position: relative; z-index: 10; }
-    .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
-    .rotator { perspective: 1000px; }
-    .rotator img { width: 100%; height: auto; transform-style: preserve-3d; animation: spin 20s linear infinite; }
-    @keyframes spin { from { transform: rotateY(0deg) rotateX(0deg); } to { transform: rotateY(360deg) rotateX(360deg); } }
 
-    body.theme-neutral { background: #f7f7f7; color: #333; }
-    body.theme-neutral .glass { background: rgba(255,255,255,0.8); border: 1px solid #ddd; }
-    body.theme-neutral .hero { background-color: #ffffff; }
-    body.theme-tease { background: radial-gradient(circle at right, #7b5e3d, #000000); color: #f5f5f5; }
-    body.theme-tease .glass { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
-    body.theme-tease .hero { background-color: #252422; }
-    .text-swirl { transition: color 0.5s ease; }
-    body.theme-neutral .text-swirl { color: #333; }
-    body.theme-tease .text-swirl { color: #f5f5f5; }
-    .video-box { transition: background 0.5s ease; }
-    body.theme-neutral .video-box { background: #fff; padding: 1rem; border-radius: 0.5rem; }
-    body.theme-tease .video-box { background: #000; padding: 1rem; border-radius: 0.5rem; }
+  <!-- //# 2: STYLE -->
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      transition: background 0.5s ease, color 0.5s ease;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Lora', serif;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .glass:hover {
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+    }
+
+    .gold {
+      background-color: rgba(212,175,55,1);
+    }
+
+    .video-box {
+      transition: background 0.5s ease;
+    }
+
+    body.theme-neutral {
+      background: #f7f7f7;
+      color: #111;
+    }
+
+    body.theme-tease {
+      background: radial-gradient(circle at right, #7b5e3d, #000000);
+      color: #f5f5f5;
+    }
+
+    body.theme-neutral .video-box {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 0.5rem;
+    }
+
+    body.theme-tease .video-box {
+      background: #000; /* updated to black for tease mode */
+      padding: 1rem;
+      border-radius: 0.5rem;
+    }
   </style>
 </head>
 
 <body class="theme-neutral">
-  <!-- HEADER -->
+  <!-- //# 3: HEADER/NAV -->
   <header class="w-full py-4 fixed z-50 glass">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <div class="flex items-center space-x-4">
-        <h1 class="text-2xl font-bold text-swirl">RealtySass</h1>
-        <button id="teaseToggle" onclick="toggleTeaseMode()" class="px-3 py-1 rounded-full border border-gray-600 text-gray-800 text-xs">
-          Tease Mode: Off
-        </button>
-      </div>
-      <nav class="hidden md:flex space-x-6 items-center">
+      <h1 class="text-2xl font-bold mr-auto">RealtySass</h1>
+      <button id="teaseToggle" class="px-4 py-2 border border-gray-400 rounded-full text-xs">Tease Mode: Off</button>
+      <nav class="hidden md:flex space-x-6 ml-6">
         <a href="products.html" class="hover:text-gold">Products</a>
         <a href="templates.html" class="hover:text-gold">Templates</a>
         <a href="pricing.html" class="hover:text-gold">Pricing</a>
@@ -61,29 +82,30 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero text-center pt-36 pb-10 px-4">
+  <!-- //# 4: HERO SECTION -->
+  <section id="hero" class="text-center pt-36 pb-20 px-4">
     <div class="max-w-4xl mx-auto">
-      <h2 id="heroTitle" class="text-4xl md:text-5xl font-bold mb-4 leading-tight text-swirl">
+      <h2 id="heroHeading" class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
         Your Realty, Professionally Defined.
       </h2>
-      <p id="heroDesc" class="text-lg mb-8 text-swirl">
+      <p id="heroSub" class="text-gray-600 text-lg mb-8">
         Premium. High quality. Built for trust and performance.
       </p>
     </div>
   </section>
 
-  <!-- HERO VIDEO LEFT -->
+  <!-- //# 5: HERO VIDEO SECTION -->
   <section class="flex justify-start items-center pb-0 px-0">
     <div class="video-box ml-6">
-      <video id="heroVideo" class="max-w-xs h-auto" autoplay muted controls playsinline>
+      <video id="heroVideo" class="max-w-xs h-auto" autoplay controls playsinline>
         <source src="introvideo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
       </video>
     </div>
   </section>
 
-  <!-- GRID BLOCKS -->
-  <section class="bg-[#f7f7f7] py-20 px-4 text-gray-800">
+  <!-- //# 6: GRID SHOWCASE -->
+  <section id="grid" class="py-20 px-4">
     <div class="max-w-7xl mx-auto">
       <div class="grid md:grid-cols-3 gap-8">
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -114,99 +136,41 @@
     </div>
   </section>
 
-  <!-- VIBE SECTION -->
-  <section id="vibe" class="py-20 px-4">
-    <div class="max-w-6xl mx-auto text-center mb-10">
-      <h3 class="text-3xl font-bold">Choose Your SaaS</h3>
-      <p class="text-gray-400 mt-2">Your real estate identity starts here. Pick your platform:</p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-8 px-6">
-      <div class="glass hover:shadow-xl transition">
-        <img src="RE.png" alt="ReDefined.AI Logo" class="mb-4 w-48 h-48">
-        <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
-        <p class="text-gray-200 mb-4">AI-crafted listings with design flair and viral potential.</p>
-        <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
-      </div>
-      <div class="glass hover:shadow-xl transition">
-        <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
-        <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
-        <button onclick="openFlip()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
-      </div>
-      <div class="glass hover:shadow-xl transition">
-        <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
-        <p class="text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
-        <a href="webx.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ROTATOR -->
-  <section class="py-20 px-4 text-center">
-    <h3 class="text-3xl font-bold mb-6">Experience Every Angle</h3>
-    <div class="rotator max-w-6xl mx-auto">
-      <img src="SaSS.png" alt="360° Property View">
-    </div>
-  </section>
-
-  <!-- FOOTER -->
+  <!-- //# 7: FOOTER -->
   <footer class="bg-[#111] text-gray-400 pt-20 pb-10 px-6">
     <div class="max-w-7xl mx-auto">
       <div class="bg-gray-800 bg-opacity-20 p-8 rounded-lg text-center mb-12">
         <h3 class="text-3xl md:text-4xl font-bold mb-4 text-white">Grow your real estate business with RealtySass</h3>
         <a href="joinus.html" class="inline-block px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Get Started</a>
       </div>
-      <div class="grid md:grid-cols-4 gap-8 text-sm"> <!-- Keep your footer grid the same --> </div>
-      <div class="mt-12 text-center text-gray-500 text-xs">&copy; 2025 RealtySass – All rights reserved.</div>
+    </div>
+    <div class="mt-12 text-center text-gray-500 text-xs">
+      &copy; 2025 RealtySass – All rights reserved.
     </div>
   </footer>
 
-  <!-- OVERLAYS -->
-  <div id="redefinedOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
-    <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
-      <button onclick="closeRedefined()" class="absolute top-2 right-2 text-white text-xl">✕</button>
-      <iframe id="redefinedFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
-    </div>
-  </div>
-
-  <div id="flipOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
-    <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
-      <button onclick="closeFlip()" class="absolute top-2 right-2 text-white text-xl">✕</button>
-      <iframe id="flipFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
-    </div>
-  </div>
-
-  <!-- SCRIPTS -->
+  <!-- //# 8: SCRIPT -->
   <script>
-    function toggleTeaseMode() {
-      const body = document.body;
-      const btn = document.getElementById('teaseToggle');
-      const heroTitle = document.getElementById('heroTitle');
-      const heroDesc = document.getElementById('heroDesc');
-      const heroVideoSrc = document.getElementById('heroVideo').children[0];
+    const toggle = document.getElementById('teaseToggle');
+    const body = document.body;
+    const heroHeading = document.getElementById('heroHeading');
+    const heroSub = document.getElementById('heroSub');
 
-      if (body.classList.contains('theme-tease')) {
-        body.classList.remove('theme-tease');
-        body.classList.add('theme-neutral');
-        document.title = "RealtySass – Neutral Mode";
-        heroTitle.innerHTML = "Your Realty, Professionally Defined.";
-        heroDesc.innerHTML = "Premium. High quality. Built for trust and performance.";
-        heroVideoSrc.src = "introvideo.mp4";
-        btn.textContent = "Tease Mode: Off";
-        btn.classList.remove('bg-red-600', 'text-white');
-        btn.classList.add('border', 'border-gray-600', 'text-gray-800');
-      } else {
-        body.classList.remove('theme-neutral');
-        body.classList.add('theme-tease');
-        document.title = "RealtySass – Tease Mode";
-        heroTitle.innerHTML = "You like what you see… Go ahead Grab them";
-        heroDesc.innerHTML = "";
-        heroVideoSrc.src = "introvideo.mp4";
-        btn.textContent = "Tease Mode: On";
-        btn.classList.remove('border', 'border-gray-600', 'text-gray-800');
-        btn.classList.add('bg-red-600', 'text-white');
-      }
-      document.getElementById('heroVideo').load();
-    }
+    toggle.addEventListener('click', () => {
+      const isTease = body.classList.contains('theme-tease');
+      body.classList.toggle('theme-tease', !isTease);
+      body.classList.toggle('theme-neutral', isTease);
+      toggle.textContent = isTease ? 'Tease Mode: Off' : 'Tease Mode: On';
+      toggle.classList.toggle('bg-red-600', !isTease);
+
+      heroHeading.textContent = isTease
+        ? 'Your Realty, Professionally Defined.'
+        : 'You like what you see... Go ahead Grab them';
+
+      heroSub.textContent = isTease
+        ? 'Premium. High quality. Built for trust and performance.'
+        : '';
+    });
   </script>
 </body>
 </html>

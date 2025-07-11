@@ -2,22 +2,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- //#1 META + TITLE -->
+  <!-- #1 META + TITLE -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RealtySass – Put some SaaS in your Realty</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-  <!-- //#2 STYLES -->
   <style>
-    body.theme-neutral {
-      font-family: 'Montserrat', sans-serif;
-      background: radial-gradient(circle at right, #7b5e3d, #000000);
-      color: #f5f5f5;
-    }
-    body.theme-tease {
+    body {
       font-family: 'Montserrat', sans-serif;
       background: radial-gradient(circle at right, #7b5e3d, #000000);
       color: #f5f5f5;
@@ -84,14 +77,11 @@
   </style>
 </head>
 
-<body class="theme-neutral">
-  <!-- //#3 HEADER/NAV -->
+<body>
+  <!-- #2 HEADER/NAV -->
   <header class="w-full py-4 fixed z-50 glass">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <div class="flex items-center space-x-4">
-        <h1 class="text-2xl font-bold text-white mr-auto">RealtySass</h1>
-        <button id="teaseToggle" class="px-3 py-1 border border-gray-500 rounded-full text-xs text-white">Tease Mode: Off</button>
-      </div>
+      <h1 class="text-2xl font-bold text-white mr-auto">RealtySass</h1>
       <nav class="hidden md:flex space-x-6">
         <a href="products.html" class="text-gray-200 hover:text-gold">Products</a>
         <a href="templates.html" class="text-gray-200 hover:text-gold">Templates</a>
@@ -103,19 +93,19 @@
     </div>
   </header>
 
-  <!-- //#4 HERO SECTION -->
+  <!-- #3 HERO SECTION -->
   <section class="hero text-center pt-36 pb-20 px-4">
     <div class="max-w-4xl mx-auto">
-      <h2 id="heroHeading" class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
         Put some SaaS in your Realty—Let's do it A.I. Style!
       </h2>
-      <p id="heroDesc" class="text-gray-300 text-lg mb-8">
+      <p class="text-gray-300 text-lg mb-8">
         Enhance your Sass. Show off your listings. Get more Hot Sales.
       </p>
     </div>
   </section>
 
-  <!-- //#5 HERO VIDEO SECTION -->
+  <!-- #4 HERO VIDEO SECTION -->
   <section class="flex justify-start items-center bg-black pb-0 px-0">
     <video id="heroVideo" class="max-w-xs h-auto" autoplay controls playsinline>
       <source src="introvideo.mp4" type="video/mp4" />
@@ -123,27 +113,65 @@
     </video>
   </section>
 
-  <!-- //#6 LUXURYPRESENCE STYLE GRID -->
+  <!-- #4.5 LUXURYPRESENCE STYLE GRID -->
   <section class="bg-[#f7f7f7] py-20 px-4 text-gray-800">
     <div class="max-w-7xl mx-auto">
       <div class="grid md:grid-cols-3 gap-8">
-        <!-- Keep your three boxes exactly as-is here -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img src="profile.png" alt="Profile" class="w-full h-60 object-cover">
+          <div class="p-6">
+            <h3 class="text-lg font-semibold mb-2">How Our Profile Stands Out</h3>
+            <p class="text-sm mb-4">Learn how our agent profile design and presence gets results for every listing and brand.</p>
+            <a href="#" class="inline-block px-4 py-2 bg-gray-900 text-white text-xs rounded">See Case Study</a>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img src="RE.png" alt="ReDefined.AI" class="w-full h-60 object-cover">
+          <div class="p-6">
+            <h3 class="text-lg font-semibold mb-2">ReDefined.AI: AI Staging Example</h3>
+            <p class="text-sm mb-4">Discover how our AI visuals help elevate your listings with next-level presentation tools.</p>
+            <a href="#" class="inline-block px-4 py-2 bg-gray-900 text-white text-xs rounded">See Case Study</a>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <img src="orozcorealty.png" alt="Orozco Realty" class="w-full h-60 object-cover">
+          <div class="p-6">
+            <h3 class="text-lg font-semibold mb-2">Orozco Realty Flip Success</h3>
+            <p class="text-sm mb-4">See how we maximize ROI with unique real estate tech for flips and rentals.</p>
+            <a href="#" class="inline-block px-4 py-2 bg-gray-900 text-white text-xs rounded">See Case Study</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- //#7 CHOOSE YOUR VIBE -->
+  <!-- #5 CHOOSE YOUR VIBE -->
   <section id="vibe" class="py-20 px-4">
     <div class="max-w-6xl mx-auto text-center mb-10">
       <h3 class="text-3xl font-bold">Choose Your SaaS</h3>
       <p class="text-gray-400 mt-2">Your real estate identity starts here. Pick your platform:</p>
     </div>
     <div class="grid md:grid-cols-3 gap-8 px-6">
-      <!-- Keep your glass blocks exactly as-is here -->
+      <div class="glass hover:shadow-xl transition">
+        <img src="RE.png" alt="ReDefined.AI Logo" class="mb-4 w-48 h-48">
+        <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
+        <p class="text-gray-200 mb-4">AI-crafted listings with design flair and viral potential.</p>
+        <button onclick="openRedefined()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
+      </div>
+      <div class="glass hover:shadow-xl transition">
+        <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
+        <p class="text-gray-200 mb-4">Investor-focused tool for ROI, comps, and design ideas.</p>
+        <button onclick="openFlip()" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
+      </div>
+      <div class="glass hover:shadow-xl transition">
+        <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
+        <p class="text-gray-200 mb-4">Launch ultra-fast branded agent websites in seconds.</p>
+        <a href="webx.html" class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</a>
+      </div>
     </div>
   </section>
 
-  <!-- //#8 ROTATOR PHOTO SECTION -->
+  <!-- #6 ROTATOR PHOTO SECTION -->
   <section class="py-20 px-4 text-center">
     <h3 class="text-3xl font-bold mb-6">Experience Every Angle</h3>
     <div class="rotator max-w-6xl mx-auto">
@@ -151,37 +179,73 @@
     </div>
   </section>
 
-  <!-- //#9 FOOTER -->
+  <!-- #7 LUXURYPRESENCE STYLE FOOTER -->
   <footer class="bg-[#111] text-gray-400 pt-20 pb-10 px-6">
-    <!-- Your entire footer stays identical -->
+    <div class="max-w-7xl mx-auto">
+      <div class="bg-gray-800 bg-opacity-20 p-8 rounded-lg text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold mb-4 text-white">Grow your real estate business with RealtySass</h3>
+        <a href="joinus.html" class="inline-block px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Get Started</a>
+      </div>
+      <div class="grid md:grid-cols-4 gap-8 text-sm">
+        <div>
+          <h4 class="text-white font-semibold mb-3">Products</h4>
+          <p>Website Platform</p>
+          <p>AI-Powered SEO</p>
+          <p>Lead Generation</p>
+          <p>Lead Management</p>
+          <p>Home Search Portal</p>
+          <p>Mobile Apps</p>
+          <p>Private Listings Hub</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">Solutions</h4>
+          <p>For Solo Agents</p>
+          <p>For Celebrity Agents</p>
+          <p>For Growing Teams</p>
+          <p>For Brokerages</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">Company</h4>
+          <p>Case Studies</p>
+          <p>Design Portfolio</p>
+          <p>Reviews</p>
+          <p>Careers</p>
+          <p>Referral Program</p>
+          <p>Corporate Philanthropy</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-3">Resources</h4>
+          <p>Blog</p>
+          <p>Podcasts</p>
+          <p>ROI Calculator</p>
+          <p>Help Center</p>
+        </div>
+      </div>
+      <div class="mt-12 text-center text-gray-500 text-xs">
+        &copy; 2025 RealtySass – All rights reserved.
+      </div>
+    </div>
   </footer>
 
-  <!-- //#10 REDEFINED OVERLAY -->
-  <!-- + Flip Overlay, exact same -->
+  <!-- #8 REDEFINED OVERLAY -->
+  <div id="redefinedOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
+    <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
+      <button onclick="closeRedefined()" class="absolute top-2 right-2 text-white text-xl">✕</button>
+      <iframe id="redefinedFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
+    </div>
+  </div>
 
-  <!-- //#11 SCRIPTS -->
+  <!-- #8.5 FLIP OVERLAY -->
+  <div id="flipOverlay" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50 hidden">
+    <div class="frame-container glass p-0 relative w-4/5 h-4/5 rounded-lg">
+      <button onclick="closeFlip()" class="absolute top-2 right-2 text-white text-xl">✕</button>
+      <iframe id="flipFrame" src="" class="w-full h-full rounded-lg border-none"></iframe>
+    </div>
+  </div>
+
+  <!-- #9 SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script>
-    const toggle = document.getElementById('teaseToggle');
-    const body = document.body;
-    const heroHeading = document.getElementById('heroHeading');
-    const heroDesc = document.getElementById('heroDesc');
-
-    toggle.addEventListener('click', () => {
-      const isTease = body.classList.contains('theme-tease');
-      body.classList.toggle('theme-tease', !isTease);
-      body.classList.toggle('theme-neutral', isTease);
-      toggle.textContent = isTease ? 'Tease Mode: Off' : 'Tease Mode: On';
-
-      heroHeading.textContent = isTease
-        ? "Put some SaaS in your Realty—Let's do it A.I. Style!"
-        : "You like what you see... Go ahead Grab them";
-
-      heroDesc.textContent = isTease
-        ? "Enhance your Sass. Show off your listings. Get more Hot Sales."
-        : "";
-    });
-
     const heroVideo = document.getElementById('heroVideo');
     heroVideo.play().catch(() => {});
     document.addEventListener('click', () => {

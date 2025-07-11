@@ -18,20 +18,15 @@
     .glass {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      transition: box-shadow 0.3s ease;
-    }
-    .glass:hover {
-      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+      transition: all 0.5s ease;
     }
     .gold {
       background-color: rgba(212,175,55,1);
     }
 
-    /* Neutral theme */
+    /* NEUTRAL */
     body.theme-neutral {
       background: #f7f7f7;
       color: #333;
@@ -41,7 +36,7 @@
       border: 1px solid #ddd;
     }
 
-    /* Tease Mode */
+    /* TEASE MODE */
     body.theme-tease {
       background: radial-gradient(circle at right, #7b5e3d, #000000);
       color: #f5f5f5;
@@ -81,7 +76,7 @@
 </head>
 
 <body class="theme-neutral">
-  <!-- HEADER/NAV WITH TOGGLE -->
+  <!-- HEADER -->
   <header class="w-full py-4 fixed z-50 glass">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
       <h1 class="text-2xl font-bold mr-auto">RealtySass</h1>
@@ -98,8 +93,8 @@
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero text-center pt-36 pb-20 px-4">
+  <!-- HERO + VIDEO -->
+  <section class="hero text-center pt-36 pb-10 px-4">
     <div class="max-w-4xl mx-auto">
       <h2 id="heroTitle" class="text-4xl md:text-5xl font-bold mb-4 leading-tight">
         Your Realty, Professionally Defined.
@@ -107,10 +102,13 @@
       <p id="heroDesc" class="text-lg mb-8">
         Premium. High quality. Built for trust and performance.
       </p>
+      <video id="heroVideo" class="max-w-xs mx-auto" autoplay controls muted playsinline>
+        <source src="introvideo.mp4" type="video/mp4" />
+      </video>
     </div>
   </section>
 
-  <!-- CONTENT BLOCKS -->
+  <!-- FEATURE BLOCKS -->
   <section class="py-20 px-4">
     <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
       <div class="glass p-6">
@@ -119,7 +117,7 @@
       </div>
       <div class="glass p-6">
         <h3 id="block2Title" class="text-xl font-semibold mb-4">Proven Quality</h3>
-        <p id="block2Desc">Our templates help you stand out while staying classy and polished.</p>
+        <p id="block2Desc">Stand out while staying classy and polished.</p>
       </div>
       <div class="glass p-6">
         <h3 id="block3Title" class="text-xl font-semibold mb-4">Ready for More?</h3>
@@ -128,16 +126,37 @@
     </div>
   </section>
 
-  <!-- CTA BLOCK -->
-  <section class="text-center py-20">
-    <h3 id="ctaTitle" class="text-3xl font-bold mb-4">Join RealtySass Today</h3>
-    <p id="ctaDesc" class="mb-6">Stay professional, stay premium — or spice it up anytime.</p>
-    <a href="#" class="inline-block px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Get Started</a>
+  <!-- CHOOSE YOUR SAAS GRID -->
+  <section id="vibe" class="py-20 px-4">
+    <div class="max-w-6xl mx-auto text-center mb-10">
+      <h3 id="vibeTitle" class="text-3xl font-bold">Choose Your SaaS</h3>
+      <p id="vibeDesc" class="mt-2">Start with premium tools, add swirl when you’re ready.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8 px-6">
+      <div class="glass hover:shadow-xl transition p-6">
+        <h4 class="text-2xl font-semibold mb-3">ReDefined.AI</h4>
+        <p>AI-crafted listings with design flair and viral potential.</p>
+        <button class="mt-4 px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
+      </div>
+      <div class="glass hover:shadow-xl transition p-6">
+        <h4 class="text-2xl font-semibold mb-3">Flip.AI</h4>
+        <p>Investor-focused tool for ROI, comps, and design ideas.</p>
+        <button class="mt-4 px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
+      </div>
+      <div class="glass hover:shadow-xl transition p-6">
+        <h4 class="text-2xl font-semibold mb-3">WebX.AI</h4>
+        <p>Launch ultra-fast branded agent websites in seconds.</p>
+        <button class="mt-4 px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Explore</button>
+      </div>
+    </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- FOOTER CTA -->
   <footer class="text-center py-10">
-    <p id="footerCopy" class="text-sm">&copy; 2025 RealtySass — Premium & Professional Real Estate Marketing</p>
+    <h3 id="ctaTitle" class="text-3xl font-bold mb-4">Join RealtySass Today</h3>
+    <p id="ctaDesc" class="mb-6">Stay professional, premium — or swirl it up anytime.</p>
+    <button class="px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Get Started</button>
+    <p id="footerCopy" class="mt-6 text-sm">&copy; 2025 RealtySass — Premium & Professional Real Estate Marketing</p>
   </footer>
 
   <!-- SCRIPT -->
@@ -146,43 +165,37 @@
       const body = document.body;
       const btn = document.getElementById('teaseToggle');
 
-      // HERO
       const heroTitle = document.getElementById('heroTitle');
       const heroDesc = document.getElementById('heroDesc');
-
-      // BLOCKS
       const block1Title = document.getElementById('block1Title');
       const block1Desc = document.getElementById('block1Desc');
       const block2Title = document.getElementById('block2Title');
       const block2Desc = document.getElementById('block2Desc');
       const block3Title = document.getElementById('block3Title');
       const block3Desc = document.getElementById('block3Desc');
-
-      // CTA + Footer
+      const vibeTitle = document.getElementById('vibeTitle');
+      const vibeDesc = document.getElementById('vibeDesc');
       const ctaTitle = document.getElementById('ctaTitle');
       const ctaDesc = document.getElementById('ctaDesc');
       const footerCopy = document.getElementById('footerCopy');
 
       if (body.classList.contains('theme-tease')) {
-        // Back to Neutral
         body.classList.remove('theme-tease');
         body.classList.add('theme-neutral');
         document.title = "RealtySass – Neutral Mode";
 
         heroTitle.innerHTML = "Your Realty, Professionally Defined.";
         heroDesc.innerHTML = "Premium. High quality. Built for trust and performance.";
-
         block1Title.innerHTML = "Your Brand, Elevated";
         block1Desc.innerHTML = "Professional visuals that position you as a trusted expert.";
-
         block2Title.innerHTML = "Proven Quality";
-        block2Desc.innerHTML = "Our templates help you stand out while staying classy and polished.";
-
+        block2Desc.innerHTML = "Stand out while staying classy and polished.";
         block3Title.innerHTML = "Ready for More?";
         block3Desc.innerHTML = "Flip the switch when you want to bring out the playful side.";
-
+        vibeTitle.innerHTML = "Choose Your SaaS";
+        vibeDesc.innerHTML = "Start with premium tools, add swirl when you’re ready.";
         ctaTitle.innerHTML = "Join RealtySass Today";
-        ctaDesc.innerHTML = "Stay professional, stay premium — or spice it up anytime.";
+        ctaDesc.innerHTML = "Stay professional, premium — or swirl it up anytime.";
         footerCopy.innerHTML = "&copy; 2025 RealtySass — Premium & Professional Real Estate Marketing";
 
         btn.classList.remove('bg-red-600', 'text-white');
@@ -190,23 +203,20 @@
         btn.textContent = 'Tease Mode: Off';
 
       } else {
-        // Switch to Tease
         body.classList.remove('theme-neutral');
         body.classList.add('theme-tease');
         document.title = "You like what you see? Go ahead Grab 'em";
 
         heroTitle.innerHTML = "Put some SaaS in your Realty—Let's do it A.I. Style!";
         heroDesc.innerHTML = "Go ahead… grab ’em — the templates, the tools, the sass. You know you want to.";
-
         block1Title.innerHTML = "Your Brand, Unbuttoned";
         block1Desc.innerHTML = "Flirty visuals that get them leaning closer for more.";
-
         block2Title.innerHTML = "Supreme Quality, Spicy Edge";
         block2Desc.innerHTML = "Same premium templates — now with that 2.99 swirl.";
-
         block3Title.innerHTML = "Turning Heads, Closing Deals";
         block3Desc.innerHTML = "Add that wink, drop that hook — let the competition watch.";
-
+        vibeTitle.innerHTML = "Choose Your SaaS — SaSSier";
+        vibeDesc.innerHTML = "Put some swirl on it — premium tools that tease.";
         ctaTitle.innerHTML = "Ready to Grab 'Em?";
         ctaDesc.innerHTML = "One click and you’re in Tease Mode — high-end, flirty, unstoppable.";
         footerCopy.innerHTML = "&copy; 2025 RealtySass — Professional. Flirty. Always Supreme.";

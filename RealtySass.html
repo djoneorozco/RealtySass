@@ -1,178 +1,764 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- META + TITLE -->
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RealtySaSS – Neutral Mode</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lora:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Montserrat', sans-serif; transition: all 0.5s ease; }
-    h1, h2, h3 { font-family: 'Lora', serif; }
-    .glass { backdrop-filter: blur(20px); border-radius: 20px; transition: all 0.5s ease; }
-    .gold { background-color: rgba(212,175,55,1); }
-    .hero { position: relative; overflow: hidden; }
-    .hero::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      background: url('swirl-banner.jpg') center/cover no-repeat;
-      opacity: 0.2; z-index: 0;
-    }
-    .hero > div { position: relative; z-index: 10; }
-    .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
-
-    .rotator { position: relative; }
-    .rotator img {
-      width: 100%; height: auto;
-      animation: shimmer 3s infinite;
-    }
-    @keyframes shimmer {
-      0% { opacity: 0.9; }
-      50% { opacity: 1; filter: brightness(1.1); }
-      100% { opacity: 0.9; }
-    }
-
-    body.theme-neutral { background: #f7f7f7; color: #333; }
-    body.theme-neutral .glass { background: rgba(255,255,255,0.8); border: 1px solid #ddd; }
-    body.theme-tease { background: radial-gradient(circle at right, #7b5e3d, #000000); color: #f5f5f5; }
-    body.theme-tease .glass { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
-    .text-swirl { transition: color 0.5s ease; }
-    body.theme-neutral .text-swirl { color: #333; }
-    body.theme-tease .text-swirl { color: #f5f5f5; }
-
-    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 20px 30px rgba(0,0,0,0.2); }
-
-    #teaseToggle { position: fixed; bottom: 20px; right: 20px; z-index: 50; }
-
-  </style>
-</head>
-
-<body class="theme-neutral">
-  <!-- HEADER -->
-  <header class="w-full py-4 fixed z-50 glass">
-    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <div class="flex items-center space-x-4">
-        <h1 class="text-2xl font-bold text-swirl">RealtySaSS</h1>
+<body>
+  <div class="nav">
+    <div data-duration="400" data-animation="default" data-easing2="ease" data-easing="ease" data-collapse="medium" role="banner" data-no-scroll="1" class="nav_container w-nav">
+      <div class="nav_left">
+        <a href="#" class="nav_logo w-inline-block">
+          <div class="nav_logo-icon"><svg width="100%" height="100%" viewbox="0 0 33 33" preserveaspectratio="xMidYMid meet">
+              <path d="M28,0H5C2.24,0,0,2.24,0,5v23c0,2.76,2.24,5,5,5h23c2.76,0,5-2.24,5-5V5c0-2.76-2.24-5-5-5ZM29,17c-6.63,0-12,5.37-12,12h-1c0-6.63-5.37-12-12-12v-1c6.63,0,12-5.37,12-12h1c0,6.63,5.37,12,12,12v1Z" fill="currentColor"></path>
+            </svg></div>
+          <div class="paragraph_large margin-bottom_none">Dataway</div>
+        </a>
       </div>
-      <nav class="hidden md:flex space-x-6 items-center">
-        <a href="#" class="hover:text-gold">Products</a>
-        <a href="#" class="hover:text-gold">Templates</a>
-        <a href="#" class="hover:text-gold">Pricing</a>
-        <a href="#" class="hover:text-gold">Login</a>
-        <a href="#" class="px-4 py-2 gold text-gray-900 rounded-full hover:opacity-90">Join Us</a>
-      </nav>
+      <div class="nav_center">
+        <nav role="navigation" class="nav_menu w-nav-menu">
+          <ul role="list" class="nav_menu-list w-list-unstyled">
+            <li class="nav_menu-list-item">
+              <div data-delay="0" data-hover="false" class="nav_dropdown-menu w-dropdown">
+                <div class="nav_link w-dropdown-toggle">
+                  <div>Solutions</div>
+                  <div class="nav-caret w-icon-dropdown-toggle"></div>
+                </div>
+                <nav class="mega-nav_dropdown-list w-dropdown-list">
+                  <div class="mega-nav_dropdown-list-wrapper">
+                    <ul role="list" class="grid_3-col tablet-1-col gap-medium margin-bottom_none w-list-unstyled">
+                      <li id="w-node-_80809302-0803-a6d7-3f50-faaa38cb129c-d66a6ef8" class="w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca445-b55ca430">
+                        <div class="w-layout-grid grid_3-col tablet-1-col gap-small">
+                          <div>
+                            <div class="eyebrow">Flyer templates</div>
+                            <ul role="list" class="mega-nav_list w-list-unstyled">
+                              <li class="margin-bottom_none">
+                                <a href="#" class="mega-nav_link-item w-inline-block">
+                                  <div class="icon_medium"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 32 32" fill="currentColor">
+                                      <path d="m25.7 9.3l-7-7A.9.9 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.9.9 0 0 0-.3-.7M18 4.4l5.6 5.6H18ZM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6Z" stroke-linejoin="round"></path>
+                                    </svg></div>
+                                  <div id="w-node-_80809302-0803-a6d7-3f50-faaa38cb12a7-d66a6ef8" class="w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca450-b55ca430">
+                                    <div><strong>Chic Flyers</strong></div>
+                                    <div class="paragraph_small text-color_secondary">Sophisticated flyers for every listing.</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li class="margin-bottom_none">
+                                <a href="#" class="mega-nav_link-item w-inline-block">
+                                  <div class="icon_medium"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 32 32" fill="currentColor">
+                                      <path d="m25.7 9.3l-7-7A.9.9 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.9.9 0 0 0-.3-.7M18 4.4l5.6 5.6H18ZM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6Z" stroke-linejoin="round"></path>
+                                    </svg></div>
+                                  <div id="w-node-_80809302-0803-a6d7-3f50-faaa38cb12b2-d66a6ef8" class="w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca45b-b55ca430">
+                                    <div><strong>Open House Kits</strong></div>
+                                    <div class="paragraph_small text-color_secondary">Curated sets for memorable showings.</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li class="margin-bottom_none">
+                                <a href="#" class="mega-nav_link-item w-inline-block">
+                                  <div class="icon_medium"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 32 32" fill="currentColor">
+                                      <path d="m25.7 9.3l-7-7A.9.9 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.9.9 0 0 0-.3-.7M18 4.4l5.6 5.6H18ZM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6Z" stroke-linejoin="round"></path>
+                                    </svg></div>
+                                  <div id="w-node-_80809302-0803-a6d7-3f50-faaa38cb12bd-d66a6ef8" class="w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca466-b55ca430">
+                                    <div><strong>Just Listed</strong></div>
+                                    <div class="paragraph_small text-color_secondary">Fresh layouts to captivate buyers.</div>
+                                  </div>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div>
+                            <div class="eyebrow">Website templates</div>
+                            <ul role="list" class="mega-nav_list w-list-unstyled">
+                              <li class="margin-bottom_none">
+                                <a href="#" class="mega-nav_link-item w-inline-block">
+                                  <div class="icon_medium"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 32 32" fill="currentColor">
+                                      <path d="m25.7 9.3l-7-7A.9.9 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.9.9 0 0 0-.3-.7M18 4.4l5.6 5.6H18ZM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6Z" stroke-linejoin="round"></path>
+                                    </svg></div>
+                                  <div id="w-node-_80809302-0803-a6d7-3f50-faaa38cb12cc-d66a6ef8" class="w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca475-b55ca430">
+                                    <div><strong>Agent Sites</strong></div>
+                                    <div class="paragraph_small text-color_secondary">Refined, responsive agent websites.</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li class="margin-bottom_none">
+                                <a href="#" class="mega-nav_link-item w-inline-block">
+                                  <div class="icon_medium"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 32 32" fill="currentColor">
+                                      <path d="m25.7 9.3l-7-7A.9.9 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.9.9 0 0 0-.3-.7M18 4.4l5.6 5.6H18ZM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6Z" stroke-linejoin="round"></path>
+                                    </svg></div>
+                                  <div id="w-node-_80809302-0803-a6d7-3f50-faaa38cb12d7-d66a6ef8" class="w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca480-b55ca430">
+                                    <div><strong>Property Pages</strong></div>
+                                    <div class="paragraph_small text-color_secondary">Showcase homes with style.</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li class="margin-bottom_none">
+                                <a href="#" class="mega-nav_link-item w-inline-block">
+                                  <div class="icon_medium"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 32 32" fill="currentColor">
+                                      <path d="m25.7 9.3l-7-7A.9.9 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.9.9 0 0 0-.3-.7M18 4.4l5.6 5.6H18ZM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6Z" stroke-linejoin="round"></path>
+                                    </svg></div>
+                                  <div id="w-node-_80809302-0803-a6d7-3f50-faaa38cb12e2-d66a6ef8" class="w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca48b-b55ca430">
+                                    <div><strong>Landing Pages</strong></div>
+                                    <div class="paragraph_small text-color_secondary">Drive leads with sleek design.</div>
+                                  </div>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div>
+                            <div class="eyebrow">SaaS tools</div>
+                            <ul role="list" class="mega-nav_list w-list-unstyled">
+                              <li class="margin-bottom_none">
+                                <a href="#" class="mega-nav_link-item w-inline-block">
+                                  <div class="icon_medium"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 32 32" fill="currentColor">
+                                      <path d="m25.7 9.3l-7-7A.9.9 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.9.9 0 0 0-.3-.7M18 4.4l5.6 5.6H18ZM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6Z" stroke-linejoin="round"></path>
+                                    </svg></div>
+                                  <div id="w-node-_80809302-0803-a6d7-3f50-faaa38cb12f1-d66a6ef8" class="w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca49a-b55ca430">
+                                    <div><strong>CRM Suite</strong></div>
+                                    <div class="paragraph_small text-color_secondary">Effortless lead and deal tracking.</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li class="margin-bottom_none">
+                                <a href="#" class="mega-nav_link-item w-inline-block">
+                                  <div class="icon_medium"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 32 32" fill="currentColor">
+                                      <path d="m25.7 9.3l-7-7A.9.9 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.9.9 0 0 0-.3-.7M18 4.4l5.6 5.6H18ZM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6Z" stroke-linejoin="round"></path>
+                                    </svg></div>
+                                  <div id="w-node-_80809302-0803-a6d7-3f50-faaa38cb12fc-d66a6ef8" class="w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca4a5-b55ca430">
+                                    <div><strong>Analytics</strong></div>
+                                    <div class="paragraph_small text-color_secondary">Insightful data for smarter moves.</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <li class="margin-bottom_none">
+                                <a href="#" class="mega-nav_link-item w-inline-block">
+                                  <div class="icon_medium"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 32 32" fill="currentColor">
+                                      <path d="m25.7 9.3l-7-7A.9.9 0 0 0 18 2H8a2.006 2.006 0 0 0-2 2v24a2.006 2.006 0 0 0 2 2h16a2.006 2.006 0 0 0 2-2V10a.9.9 0 0 0-.3-.7M18 4.4l5.6 5.6H18ZM24 28H8V4h8v6a2.006 2.006 0 0 0 2 2h6Z" stroke-linejoin="round"></path>
+                                    </svg></div>
+                                  <div id="w-node-_80809302-0803-a6d7-3f50-faaa38cb1307-d66a6ef8" class="w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca4b0-b55ca430">
+                                    <div><strong>Marketing Suite</strong></div>
+                                    <div class="paragraph_small text-color_secondary">Automate, connect, and grow.</div>
+                                  </div>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </li>
+                      <li id="w-node-_80809302-0803-a6d7-3f50-faaa38cb130d-d66a6ef8" class="flex_horizontal w-node-_0db0bfe0-8e55-2200-ac63-3837b55ca4b6-b55ca430">
+                        <a href="#" class="card-link is-inverse flex-child_expand w-inline-block">
+                          <div class="card_body">
+                            <div class="heading_h3">Elevate your real estate game</div>
+                            <p class="paragraph_small text-color_inverse-secondary">Unlock premium tools to amplify your business and make your mark.</p>
+                            <div class="margin_top-auto">
+                              <div class="button-group">
+                                <div class="text-button is-secondary">
+                                  <div>Browse</div>
+                                  <div class="button_icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 16 16" fill="none">
+                                      <path d="M2 8H14.5M14.5 8L8.5 2M14.5 8L8.5 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                                    </svg></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+            </li>
+            <li class="nav_menu-list-item">
+              <a href="#" class="nav_link w-inline-block">
+                <div>Features</div>
+              </a>
+            </li>
+            <li class="nav_menu-list-item">
+              <a href="#" class="nav_link w-inline-block">
+                <div>Insights</div>
+              </a>
+            </li>
+            <li class="nav_menu-list-item">
+              <div data-delay="0" data-hover="false" class="nav_dropdown-menu w-dropdown">
+                <div class="nav_link w-dropdown-toggle">
+                  <div>Help</div>
+                  <div class="nav-caret w-icon-dropdown-toggle"></div>
+                </div>
+                <div class="nav_dropdown-list w-dropdown-list">
+                  <div class="nav-menu_dropdown-list-wrapper">
+                    <ul role="list" class="flex_vertical margin-bottom_none w-list-unstyled">
+                      <li class="margin-bottom_none">
+                        <a href="#" class="nav_dropdown-link w-inline-block">
+                          <div class="button_label">Support</div>
+                        </a>
+                      </li>
+                      <li class="margin-bottom_none">
+                        <a href="#" class="nav_dropdown-link w-inline-block">
+                          <div class="button_label">FAQ</div>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="nav_right">
+        <div class="button-group margin-top_none">
+          <a href="#" class="button w-inline-block">
+            <div class="button_label">Join</div>
+          </a>
+        </div>
+      </div>
+      <div class="nav_mobile-menu-button w-nav-button">
+        <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
+            <g class="nc-icon-wrapper" stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" fill="none" stroke="currentColor" stroke-miterlimit="10">
+              <line x1="1" y1="12" x2="23" y2="12" stroke="currentColor"></line>
+              <line x1="1" y1="5" x2="23" y2="5"></line>
+              <line x1="1" y1="19" x2="23" y2="19"></line>
+            </g>
+          </svg></div>
+      </div>
+    </div>
+  </div>
+  <header class="section padding_none">
+    <div class="grid_1-col min-height_100dvh padding-top_xxlarge padding-bottom_medium">
+      <div class="container is-max flex_horizontal flex_vertical">
+        <div id="w-node-e7e2a327-4de4-fd63-041d-6dbbf4935835-e04e0b1d" class="ix_hero-intro-clip-mask is-element-2-hero-intro-clip-mask w-node-a798ba29-2c2c-8656-2ffe-8fab309f9d91-b447564d">
+          <h1 class="heading-responsive_large text_all-caps margin-bottom_none">Luxury tools for modern agents</h1>
+        </div>
+        <div id="w-node-e7e2a327-4de4-fd63-041d-6dbbf4935838-e04e0b1d" class="grid_2-col flex-child_expand w-node-a798ba29-2c2c-8656-2ffe-8fab309f9d9b-b447564d">
+          <div id="w-node-e7e2a327-4de4-fd63-041d-6dbbf4935839-e04e0b1d" class="ix_hero-intro-clip-mask is-element-1-hero-intro-clip-mask z-index_2 w-node-a798ba29-2c2c-8656-2ffe-8fab309f9d97-b447564d">
+            <div class="max-width_small">
+              <p class="subheading">Discover premium templates and SaaS solutions crafted for ambitious real estate professionals. Streamline your workflow, impress clients, and elevate your business with modern, luxury-inspired resources designed for growth.</p>
+              <a href="#" class="button w-button">Explore now</a>
+            </div>
+          </div>
+          <div id="w-node-e7e2a327-4de4-fd63-041d-6dbbf493583f-e04e0b1d" class="ix_hero-intro-clip-mask is-element-3-hero-intro-clip-mask w-node-a798ba29-2c2c-8656-2ffe-8fab309f9d9a-b447564d"><img width="545" height="373" alt="[background image] image of plumbing company exterior (for a plumbing service)" src="images/aeaee34e-bccb-4e9b-b2e4-a65548787e22.avif" loading="lazy" data-aisg-image-id="1b7fbb96-916a-417d-af2c-1b44b2672b19" class="image_cover">
+            <div class="mask_left display_block_tablet"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
-
-  <!-- HERO -->
-  <section class="hero text-center pt-36 pb-10 px-4">
-    <div class="max-w-4xl mx-auto">
-      <h2 id="heroTitle" class="text-4xl md:text-5xl font-bold mb-4 leading-tight text-swirl">
-        Your Realty, Professionally Defined.
-      </h2>
-      <p id="heroDesc" class="text-lg mb-8 text-swirl">
-        Add a short description to establish credibility and expertise.
-      </p>
-    </div>
-  </section>
-
-  <!-- SAAS FEATURES -->
-  <section class="py-16 px-4">
-    <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
-      <div class="glass p-6 text-center card">
-        <img src="saas1.png" alt="SaaS 1" class="mx-auto mb-4 w-24 h-24 object-contain">
-        <h3 class="text-xl font-semibold mb-2">ReDefined.AI</h3>
-        <p>AI-powered listing visuals that boost clicks and trust instantly.</p>
-      </div>
-      <div class="glass p-6 text-center card">
-        <img src="saas2.png" alt="SaaS 2" class="mx-auto mb-4 w-24 h-24 object-contain">
-        <h3 class="text-xl font-semibold mb-2">Flip.AI</h3>
-        <p>Visual ROI enhancer for investors — smart before/after comps.</p>
-      </div>
-      <div class="glass p-6 text-center card">
-        <img src="saas3.png" alt="SaaS 3" class="mx-auto mb-4 w-24 h-24 object-contain">
-        <h3 class="text-xl font-semibold mb-2">MetaRefine.ai</h3>
-        <p>Always-on brand polish that makes every agent look premium.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURE TEMPLATES -->
-  <section class="py-16 px-4">
-    <div class="max-w-7xl mx-auto">
-      <h3 class="text-3xl font-bold mb-8 text-center">{ Feature Templates }</h3>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="card overflow-hidden rounded-lg shadow-lg">
-          <img src="flyer1.jpg" alt="Flyer 1" class="w-full h-80 object-cover">
-          <div class="p-4">
-            <p>Free Open House & Listing Flyers</p>
+  <section class="section is-inverse">
+    <div class="container">
+      <div class="w-layout-grid grid_2-col mobile-l-1-col gap-small">
+        <a href="#" class="card-link on-accent-inverse w-inline-block">
+          <div class="card_body flex_vertical is-y-center">
+            <div class="eyebrow">Smart listing tools</div>
+            <h3>Luxury templates. Effortless workflow.</h3>
+            <p class="max-width_xsmall">Elevate your listings with modern, customizable templates and seamless automation—crafted for agents and investors who demand more from every detail.</p>
+            <div class="margin-top_small">
+              <div class="text-button is-secondary on-inverse">
+                <div>Discover</div>
+                <div class="button_icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 16 16" fill="none">
+                    <path d="M2 8H14.5M14.5 8L8.5 2M14.5 8L8.5 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                  </svg></div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="card overflow-hidden rounded-lg shadow-lg">
-          <img src="flyer2.jpg" alt="Flyer 2" class="w-full h-80 object-cover">
-          <div class="p-4">
-            <p>Free Open House & Listing Flyers</p>
-          </div>
-        </div>
-        <div class="card overflow-hidden rounded-lg shadow-lg">
-          <img src="flyer3.jpg" alt="Flyer 3" class="w-full h-80 object-cover">
-          <div class="p-4">
-            <p>Free Open House & Listing Flyers</p>
-          </div>
+        </a>
+        <div class="card on-inverse">
+          <a href="#" class="link-content-block grid_1-col ratio_1x1 w-inline-block">
+            <div id="w-node-_5e565f8e-fe50-21ad-7c68-d424a662f61f-cf033dcc" class="position_relative w-node-c61a24ce-fb76-6a4f-3d18-320a55b80cdf-b447564d"><img width="527" height="527" alt="[background image] image of a work desk with a laptop and documents (for an ai legal tech company)" src="images/f071c7fe-af80-44d5-80a5-4b1630a63b77.avif" loading="lazy" data-aisg-image-id="0389e997-c6a9-4b2f-afee-f35594e58305" class="image_cover position_absolute">
+              <div class="overlay_opacity-middle"></div>
+            </div>
+            <div id="w-node-_5e565f8e-fe50-21ad-7c68-d424a662f622-cf033dcc" class="position_relative padding_small text-color_on-overlay z-index_2 w-node-c61a24ce-fb76-6a4f-3d18-320a55b80ce4-b447564d">
+              <div class="eyebrow">Premium productivity</div>
+              <p class="max-width_xsmall heading_h4">Access exclusive templates, integrations, and automation to streamline your real estate workflow and impress every client.</p>
+            </div>
+          </a>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- ROTATOR -->
-  <section class="py-20 px-4 text-center">
-    <h3 class="text-3xl font-bold mb-6">Experience Every Angle</h3>
-    <div class="rotator max-w-6xl mx-auto">
-      <img src="SaSS.png" alt="RealtySaSS Logo Premium Animation">
+  <section class="section">
+    <div class="container">
+      <div data-duration-out="100" data-current="Tab 1" data-easing="ease" data-duration-in="300" class="grid_5-col gap-medium w-tabs">
+        <div id="w-node-_05ef1f7b-d3c7-7154-d601-04bc180da690-180da68d" class="grid_3-col w-node-_62768a87-95f1-e6dc-1ea4-8befbf7362db-b447564d w-tab-menu">
+          <a data-w-tab="Tab 1" class="tab_menu-link w-tab-link w--current">
+            <div class="paragraph_large text-align_center margin-bottom_none">Flyer templates</div>
+          </a>
+          <a data-w-tab="Tab 2" class="tab_menu-link w-tab-link">
+            <div class="paragraph_large text-align_center margin-bottom_none">Website templates</div>
+          </a>
+          <a data-w-tab="Tab 3" class="tab_menu-link w-tab-link">
+            <div class="paragraph_large text-align_center margin-bottom_none">Productivity tools</div>
+          </a>
+        </div>
+        <div id="w-node-_05ef1f7b-d3c7-7154-d601-04bc180da69a-180da68d" class="tabs_content w-node-_62768a87-95f1-e6dc-1ea4-8befbf736327-b447564d w-tab-content">
+          <div data-w-tab="Tab 1" class="w-tab-pane w--tab-active">
+            <div>
+              <div class="header is-align-center">
+                <h3 class="heading_h2">Elevate every listing instantly</h3>
+              </div>
+              <div class="w-layout-grid grid_5-col gap-xsmall">
+                <div id="w-node-_2257e848-2635-05ec-9dcf-5e16cdda77ea-180da68d" class="card flex_vertical is-y-center w-node-_62768a87-95f1-e6dc-1ea4-8befbf7362f0-b447564d">
+                  <div class="card_body flex_vertical">
+                    <div class="icon margin-bottom_xsmall"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 24 24" fill="none">
+                        <path d="M12.5 18.25C16.2279 18.25 19.25 15.2279 19.25 11.5C19.25 7.77208 16.2279 4.75 12.5 4.75C8.77208 4.75 5.75 7.77208 5.75 11.5C5.75 12.6007 6.01345 13.6398 6.48072 14.5578L5 19L9.71819 17.6519C10.5664 18.0361 11.5082 18.25 12.5 18.25Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                      </svg></div>
+                    <h3 id="w-node-_2257e848-2635-05ec-9dcf-5e16cdda77ef-180da68d" class="heading_h4 w-node-_62768a87-95f1-e6dc-1ea4-8befbf7362e3-b447564d">Polished flyer templates</h3>
+                    <p class="text-color_secondary">Discover a refined selection of modern, fully customizable flyers designed to make your listings stand out and captivate buyers.</p><br>
+                    <p></p>
+                    <div class="margin_top-auto padding-top_xsmall">
+                      <div class="text-button is-secondary">
+                        <div>Explore</div>
+                        <div class="button_icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 16 16" fill="none">
+                            <path d="M2 8H14.5M14.5 8L8.5 2M14.5 8L8.5 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                          </svg></div>
+                      </div>
+                    </div>
+                  </div>
+                </div><img width="647" height="443" alt="[background image]" src="images/bc439fa3-30c4-4a9e-b34f-12518ba042bf.avif" loading="lazy" id="w-node-_2257e848-2635-05ec-9dcf-5e16cdda77fb-180da68d" data-aisg-image-id="924b2682-c6f1-4ea0-90e2-6f53bdfca356" class="image image_cover w-node-_62768a87-95f1-e6dc-1ea4-8befbf7362f1-b447564d">
+              </div>
+            </div>
+          </div>
+          <div data-w-tab="Tab 2" class="w-tab-pane">
+            <div>
+              <div class="header is-align-center">
+                <h3 class="heading_h2">Websites that win clients</h3>
+              </div>
+              <div class="w-layout-grid grid_5-col gap-xsmall">
+                <div id="w-node-_4c1b1bb0-f44f-d5b8-03b2-a38d955113b0-180da68d" class="card flex_vertical is-y-center w-node-_62768a87-95f1-e6dc-1ea4-8befbf736309-b447564d">
+                  <div class="card_body flex_vertical">
+                    <div class="icon margin-bottom_xsmall"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 24 24" fill="none">
+                        <path d="M12.5 18.25C16.2279 18.25 19.25 15.2279 19.25 11.5C19.25 7.77208 16.2279 4.75 12.5 4.75C8.77208 4.75 5.75 7.77208 5.75 11.5C5.75 12.6007 6.01345 13.6398 6.48072 14.5578L5 19L9.71819 17.6519C10.5664 18.0361 11.5082 18.25 12.5 18.25Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                      </svg></div>
+                    <h3 id="w-node-_4c1b1bb0-f44f-d5b8-03b2-a38d955113b5-180da68d" class="heading_h4 w-node-_62768a87-95f1-e6dc-1ea4-8befbf7362fc-b447564d">Luxury-inspired site designs</h3>
+                    <p class="text-color_secondary">Impress with sleek, responsive templates that highlight your properties and reinforce your professional brand at every touchpoint.</p><br>
+                    <p></p>
+                    <div class="margin_top-auto padding-top_xsmall">
+                      <div class="text-button is-secondary">
+                        <div>Preview</div>
+                        <div class="button_icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 16 16" fill="none">
+                            <path d="M2 8H14.5M14.5 8L8.5 2M14.5 8L8.5 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                          </svg></div>
+                      </div>
+                    </div>
+                  </div>
+                </div><img width="" height="" alt="image of busy office with team collaborating (for a fintech company)" src="images/b684433a-8bf9-468d-8635-37d14f8569e4.avif" loading="lazy" id="w-node-_4c1b1bb0-f44f-d5b8-03b2-a38d955113c1-180da68d" data-aisg-image-id="1274dc51-cf35-434a-8a00-61b56c2a1cef" class="image image_cover w-node-_62768a87-95f1-e6dc-1ea4-8befbf73630a-b447564d">
+              </div>
+            </div>
+          </div>
+          <div data-w-tab="Tab 3" class="w-tab-pane">
+            <div>
+              <div class="header is-align-center">
+                <h3 class="heading_h2">Productivity, reimagined for agents</h3>
+              </div>
+              <div class="w-layout-grid grid_5-col gap-xsmall">
+                <div id="w-node-_1ab21496-d5ae-a037-f2c4-b5baea125610-180da68d" class="card flex_vertical is-y-center w-node-_62768a87-95f1-e6dc-1ea4-8befbf736322-b447564d">
+                  <div class="card_body flex_vertical">
+                    <div class="icon margin-bottom_xsmall"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 24 24" fill="none">
+                        <path d="M12.5 18.25C16.2279 18.25 19.25 15.2279 19.25 11.5C19.25 7.77208 16.2279 4.75 12.5 4.75C8.77208 4.75 5.75 7.77208 5.75 11.5C5.75 12.6007 6.01345 13.6398 6.48072 14.5578L5 19L9.71819 17.6519C10.5664 18.0361 11.5082 18.25 12.5 18.25Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                      </svg></div>
+                    <h3 id="w-node-_1ab21496-d5ae-a037-f2c4-b5baea125615-180da68d" class="heading_h4 w-node-_62768a87-95f1-e6dc-1ea4-8befbf736315-b447564d">Intuitive business tools</h3>
+                    <p class="text-color_secondary">Automate your workflow with smart SaaS solutions—track leads, manage tasks, and boost efficiency with ease.</p><br>
+                    <p></p>
+                    <div class="margin_top-auto padding-top_xsmall">
+                      <div class="text-button is-secondary">
+                        <div>Discover</div>
+                        <div class="button_icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 16 16" fill="none">
+                            <path d="M2 8H14.5M14.5 8L8.5 2M14.5 8L8.5 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                          </svg></div>
+                      </div>
+                    </div>
+                  </div>
+                </div><img width="" height="" alt="[background image] image of a team brainstorming in an office (for a web development agency)" src="images/ea7016cc-8af0-4a53-a784-50c14e30777b.avif" loading="lazy" id="w-node-_1ab21496-d5ae-a037-f2c4-b5baea125621-180da68d" data-aisg-image-id="9ca89a46-193d-410d-9819-d076f83e1bb1" class="image image_cover w-node-_62768a87-95f1-e6dc-1ea4-8befbf736323-b447564d">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
-
-  <!-- FOOTER -->
-  <footer class="bg-[#111] text-gray-400 pt-20 pb-10 px-6 text-center">
-    <h3 class="text-3xl md:text-4xl font-bold mb-4 text-white">Grow your real estate business with RealtySaSS</h3>
-    <p class="mb-4">Try Tease Mode — our playful SaSS swirl. Premium, a touch risqué, never cheap.</p>
-    <a href="#" class="inline-block px-6 py-3 gold text-gray-900 font-semibold rounded-full hover:opacity-90">Get Started</a>
+  <section class="section is-secondary">
+    <div class="container">
+      <div class="header is-align-center">
+        <h2 class="heading_h1">Pricing for every ambition</h2>
+      </div>
+      <ul role="list" class="grid_4-col gap-small padding_none margin-bottom_none w-list-unstyled">
+        <li class="card on-secondary">
+          <div class="card_body is-small">
+            <div class="margin_bottom-auto">
+              <h3 class="heading_h4">Starter</h3>
+              <p>Core tools for new agents. Build your brand and explore digital marketing essentials.</p><br>
+              <p></p>
+            </div>
+            <div class="margin-top_small">
+              <p class="text-color_secondary margin-bottom_none"> </p>
+              <h4 class="heading_h2 margin-bottom_none">$0</h4>
+              <p class="text-color_secondary">Monthly</p>
+            </div>
+            <div class="button-group is-vertical-stretch">
+              <a href="#" class="button is-secondary w-inline-block">
+                <div>Start free</div>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li class="card on-secondary">
+          <div class="card_body is-small">
+            <div class="margin_bottom-auto">
+              <h3 class="heading_h4">Essentials</h3>
+              <p>Premium templates and key SaaS features. Perfect for agents ready to stand out.</p><br>
+              <p></p>
+            </div>
+            <div class="margin-top_small">
+              <p class="text-color_secondary margin-bottom_none">From</p>
+              <h4 class="heading_h2 margin-bottom_none">$19</h4>
+              <p class="text-color_secondary">Or $199 yearly</p>
+            </div>
+            <div class="button-group is-vertical-stretch">
+              <a href="#" class="button is-secondary w-inline-block">
+                <div>Upgrade</div>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li class="card is-featured on-secondary">
+          <div class="card_body is-small">
+            <div class="margin_bottom-auto">
+              <h3 class="heading_h4">Team</h3>
+              <p>Collaborate, manage listings, and streamline your agency’s workflow. Built for teams.</p>
+            </div>
+            <div class="margin-top_small">
+              <p class="text-color_secondary margin-bottom_none">From</p>
+              <h4 class="heading_h2 margin-bottom_none">$29</h4>
+              <p class="text-color_secondary">Or $299 yearly</p>
+            </div>
+            <div class="button-group is-vertical-stretch">
+              <a href="#" class="button w-inline-block">
+                <div>Team plan</div>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li class="card on-secondary">
+          <div class="card_body is-small">
+            <div class="margin_bottom-auto">
+              <h3 class="heading_h4">Business</h3>
+              <p>Advanced automation, analytics, and integrations for high-volume agents and boutique firms.</p>
+            </div>
+            <div class="margin-top_small">
+              <p class="text-color_secondary margin-bottom_none">From</p>
+              <h4 class="heading_h2 margin-bottom_none">$49</h4>
+              <p class="text-color_secondary">Or $499 yearly</p>
+            </div>
+            <div class="button-group is-vertical-stretch">
+              <a href="#" class="button is-secondary w-inline-block">
+                <div>Business</div>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li id="w-node-_30afcc52-40fc-73ac-574c-dd2664bfbefc-6c527ca4" class="card on-secondary w-node-ed504178-63ed-9f7f-544e-abd442759e76-b447564d">
+          <div class="card_body">
+            <div class="flex_horizontal is-space-between tablet-vertical gap-small is-y-bottom">
+              <div class="w-layout-hflex flex_horizontal gap-xxsmall tablet-vertical">
+                <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 24 24" fill="none">
+                    <path d="M19 12C15.134 12 12 15.134 12 19C12 15.134 8.86599 12 5 12C8.86599 12 12 8.86599 12 5C12 8.86599 15.134 12 19 12Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+                    <path d="M8 16L5.5 18.5" stroke="currentColor" stroke-width="1.5"></path>
+                    <path d="M8 8L5.5 5.5" stroke="currentColor" stroke-width="1.5"></path>
+                    <path d="M16 16L18.5 18.5" stroke="currentColor" stroke-width="1.5"></path>
+                    <path d="M16 8L18.5 5.5" stroke="currentColor" stroke-width="1.5"></path>
+                  </svg></div>
+                <div class="max-width_medium">
+                  <h3 class="heading_h4">Enterprise</h3>
+                  <p class="margin-bottom_none">Custom solutions, dedicated support, and tailored onboarding for brokerages and large teams.</p><br>
+                  <p></p>
+                </div>
+              </div>
+              <div class="button-group is-vertical-stretch">
+                <a href="#" class="button is-secondary w-inline-block">
+                  <div>Contact</div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="card">
+        <div class="padding_small">
+          <div class="w-layout-grid grid_3-col tablet-1-col gap-small">
+            <div id="w-node-_05a65c5a-bd43-3049-fde9-141ed4a4c7c5-d4a4c7c0" class="flex_horizontal is-y-center gap-xsmall is-wrap w-node-_7757ec08-dc43-6864-3f05-15d6037af14b-b447564d">
+              <div>
+                <div class="heading_h2">Upgrade your real estate hustle</div>
+                <p class="subheading margin-bottom_none">Unlock premium templates, modern tools, and seamless workflows. Designed for agents, investors, and flippers ready to elevate their business and make a lasting impression in any market.</p>
+              </div>
+            </div>
+            <a id="w-node-_05a65c5a-bd43-3049-fde9-141ed4a4c7cd-d4a4c7c0" href="#" class="button w-node-_7757ec08-dc43-6864-3f05-15d6037af14d-b447564d w-button">Join now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section is-secondary">
+    <div class="container">
+      <div class="w-layout-grid header is-2-col">
+        <div id="w-node-_86c6bb2f-c595-1d46-2294-c5e7caf3db38-caf3db34" class="w-node-_61012df3-7892-49c5-e505-fc228e43666a-b447564d">
+          <p class="eyebrow">Client testimonials</p>
+          <h2 class="margin-bottom_none">Elevate your real estate game</h2>
+        </div>
+        <p id="w-node-_86c6bb2f-c595-1d46-2294-c5e7caf3db3f-caf3db34" class="margin-bottom_none w-node-_61012df3-7892-49c5-e505-fc228e43666c-b447564d">Hear from driven agents and investors who have transformed their workflow and client experience with our premium SaaS platform. These testimonials showcase the tangible results, elevated branding, and seamless productivity RealtySaSS delivers to real estate professionals at every level.</p>
+      </div>
+      <div class="w-layout-grid grid_3-col tablet-1-col gap-small text-align_center">
+        <div id="w-node-_86c6bb2f-c595-1d46-2294-c5e7caf3db42-caf3db34" class="card on-secondary w-node-_61012df3-7892-49c5-e505-fc228e436677-b447564d">
+          <div class="card_body text-align_center">
+            <div class="flex_horizontal is-x-center margin-bottom_small">
+              <div class="avatar"><img width="64" height="64" alt="[headshot] image of customer (for a legal tech)" src="images/6beafc42-4ec1-4335-b7c7-d076454cda3a.avif" loading="lazy" data-aisg-image-id="011bd1c2-179e-4207-af34-cef99bf35f57" class="image_cover"></div>
+            </div>
+            <div class="margin-bottom_xsmall"><strong>Morgan Ellis</strong></div>
+            <p>The modern templates and intuitive tools have completely streamlined my process. My listings stand out, and clients consistently compliment my polished presentations.</p>
+          </div>
+        </div>
+        <div id="w-node-_448fa483-772a-0b70-3d64-d5d5fe84702e-caf3db34" class="card on-secondary w-node-_61012df3-7892-49c5-e505-fc228e436681-b447564d">
+          <div class="card_body text-align_center">
+            <div class="flex_horizontal is-x-center margin-bottom_small">
+              <div class="avatar"><img width="64" height="64" alt="&lt;subject&gt;[headshot] image of a customer (for a mobility and transportation)&lt;/subject&gt;" src="images/0b6e2156-8c9f-4ab8-8e68-c7abc8175066.avif" loading="lazy" data-aisg-image-id="e8c93bf4-c2ac-47ef-819c-a977d853498b" class="image_cover"></div>
+            </div>
+            <div class="margin-bottom_xsmall"><strong>Riley Chen</strong></div>
+            <p>Adopting this platform was a strategic move. The SaaS features are sleek, efficient, and have noticeably accelerated my deal flow.</p>
+          </div>
+        </div>
+        <div id="w-node-cf86a41d-afd9-1380-5852-4398b8ee58bd-caf3db34" class="card on-secondary w-node-_61012df3-7892-49c5-e505-fc228e43668b-b447564d">
+          <div class="card_body text-align_center">
+            <div class="flex_horizontal is-x-center margin-bottom_small">
+              <div class="avatar"><img width="64" height="64" alt="[headshot] customer (for a cemeteries &amp; funeral home)" src="images/5e5cc695-478f-4bce-9791-1d095c1e6d0f.avif" loading="lazy" data-aisg-image-id="155e6bb8-0c11-45ad-9b4b-8cb28ecca354" class="image_cover"></div>
+            </div>
+            <div class="margin-bottom_xsmall"><strong>Skylar Patel</strong></div>
+            <p>The professional resources give my brand a luxe edge. Support is prompt, and every feature feels thoughtfully designed for real estate success.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div id="w-node-c08a178d-39e1-35d8-4f34-2b7bc1865c72-c1865c6f" class="header w-node-_1dc47b1f-df2a-c18b-b19c-eeb0ba1aa23e-b447564d">
+        <div class="eyebrow">Luxury answers for modern agents</div>
+        <h2>Your real estate FAQ, refined</h2>
+        <p class="subheading">Discover expert guidance on our platform’s features, productivity tools, and design templates. Get clear, actionable answers to elevate your business—whether you’re an agent, investor, or flipper. All your questions, expertly addressed in one place.</p>
+      </div>
+      <div id="w-node-b9a4e631-bad5-4935-a3b3-9d0d1667b0e8-c1865c6f" class="flex_horizontal flex_vertical gap-small w-node-_1dc47b1f-df2a-c18b-b19c-eeb0ba1aa25f-b447564d">
+        <div id="w-node-c08a178d-39e1-35d8-4f34-2b7bc1865c7a-c1865c6f" class="divider w-node-_1dc47b1f-df2a-c18b-b19c-eeb0ba1aa245-b447564d">
+          <div class="w-layout-grid grid_2-col gap-small">
+            <div id="w-node-c08a178d-39e1-35d8-4f34-2b7bc1865c7d-c1865c6f" class="heading_h4 w-node-_1dc47b1f-df2a-c18b-b19c-eeb0ba1aa240-b447564d">How does your platform enhance efficiency?</div>
+            <div class="rich-text paragraph_large w-richtext">
+              <p>Our platform integrates advanced automation, customizable templates, and seamless client management to streamline your daily workflow. By minimizing manual tasks and centralizing resources, you gain more time to focus on client relationships and closing deals in a competitive market.</p>
+            </div>
+          </div>
+        </div>
+        <div class="divider">
+          <div class="w-layout-grid grid_2-col gap-small">
+            <div id="w-node-_15301e38-e1b7-7afa-927f-bd1dfe6b45e1-c1865c6f" class="heading_h4 w-node-_1dc47b1f-df2a-c18b-b19c-eeb0ba1aa247-b447564d">What sets your templates apart?</div>
+            <div class="rich-text paragraph_large w-richtext">
+              <p>Our templates blend modern, high-end aesthetics with conversion-driven layouts. Each design is fully customizable, mobile-optimized, and crafted to help you make a memorable impression—no matter your experience level or market segment.</p>
+            </div>
+          </div>
+        </div>
+        <div class="divider">
+          <div class="w-layout-grid grid_2-col gap-small">
+            <div id="w-node-_18c5af56-2eae-1f0f-8664-8aa50abe69f4-c1865c6f" class="heading_h4 w-node-_1dc47b1f-df2a-c18b-b19c-eeb0ba1aa250-b447564d">Is this platform beginner-friendly?</div>
+            <div class="rich-text paragraph_large w-richtext">
+              <p>Yes. The intuitive interface, step-by-step onboarding, and robust support resources ensure a smooth start for newcomers. Whether you’re launching your first listing or scaling your portfolio, our tools adapt to your pace and goals.</p>
+            </div>
+          </div>
+        </div>
+        <div class="divider">
+          <div class="w-layout-grid grid_2-col gap-small">
+            <div id="w-node-d491d981-1355-5471-215d-50a9f6b6f4da-c1865c6f" class="heading_h4 w-node-_1dc47b1f-df2a-c18b-b19c-eeb0ba1aa259-b447564d">How is client data protected?</div>
+            <div class="rich-text paragraph_large w-richtext">
+              <p>We employ enterprise-level security, including encrypted storage and regular compliance audits. Your client data remains confidential and protected at every stage, so you can operate with complete peace of mind.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section is-secondary">
+    <div class="container">
+      <div class="w-layout-grid grid_3-col gap-small">
+        <a href="#" class="link-content-block w-inline-block">
+          <div class="ratio_3x2 margin-bottom_xsmall"><img width="342" height="228" alt="image of construction plans" src="images/bff6b772-e803-493f-b509-591f960b1e3b.avif" loading="lazy" data-aisg-image-id="e943ed6d-1f03-46e2-b271-1b05692928dc" class="image_cover"></div>
+          <h3 class="heading_h4">Essential market trends, expertly decoded</h3>
+          <div>Gain a competitive edge with in-depth analysis of current real estate market movements, pricing shifts, and buyer behavior. Our expert commentary empowers you to make informed decisions and anticipate industry changes with confidence.</div>
+        </a>
+        <a href="#" class="link-content-block w-inline-block">
+          <div class="ratio_3x2 margin-bottom_xsmall"><img width="342" height="228" alt="image of a laptop on a desk [real estate tech]" src="images/57c16212-5885-4d97-96a6-a7821d30064f.avif" loading="lazy" data-aisg-image-id="cfecd35f-6d5a-403b-a0cd-b1b6adbfaadd" class="image_cover"></div>
+          <h3 class="heading_h4">Elevate every listing’s first impression</h3>
+          <div>Master the art of visual storytelling with advanced design strategies for property flyers and websites. Learn how to highlight unique features, optimize layouts, and use color psychology to captivate and convert potential buyers.</div>
+        </a>
+        <a href="#" class="link-content-block w-inline-block">
+          <div class="ratio_3x2 margin-bottom_xsmall"><img width="342" height="228" alt="[interface] screenshot of dashboard interface (for a real estate tech)" src="images/63eec668-96e7-4091-a36a-6830b3db548d.avif" loading="lazy" data-aisg-image-id="4084ae04-1668-44d0-9d18-0026972fc0e1" class="image_cover"></div>
+          <h3 class="heading_h4">Work smarter, close faster, stress less</h3>
+          <div>Streamline your daily workflow with actionable productivity frameworks, automation tools, and time-saving techniques. Discover how to maximize efficiency, prioritize high-impact tasks, and achieve more with less effort.</div>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div id="w-node-_98a99d5b-bb74-197d-b51a-c651f147a419-f147a417" class="header w-node-b8754437-cf3b-9aa4-7128-2162f53ea4d5-b447564d">
+        <h2 class="eyebrow margin-bottom_xsmall">Get in touch</h2>
+        <h2 class="heading_h2">Let’s talk real estate success</h2>
+        <p class="paragraph_large margin-bottom_none">Ready to elevate your business? Connect with our team for tailored support, partnership opportunities, or a quick consultation. We’re here to help you thrive in every market.</p>
+      </div>
+      <div id="w-node-_98a99d5b-bb74-197d-b51a-c651f147a420-f147a417" data-easing="ease" data-current="Map Tab 1" data-duration-out="100" data-duration-in="300" class="grid_5-col tablet-1-col gap-small w-node-b8754437-cf3b-9aa4-7128-2162f53ea50b-b447564d w-tabs">
+        <div id="w-node-_98a99d5b-bb74-197d-b51a-c651f147a421-f147a417" class="grid_1-col w-node-b8754437-cf3b-9aa4-7128-2162f53ea500-b447564d w-tab-menu">
+          <a data-w-tab="Map Tab 1" id="w-node-_98a99d5b-bb74-197d-b51a-c651f147a422-f147a417" class="tab_menu-button flex_horizontal is-y-center w-node-b8754437-cf3b-9aa4-7128-2162f53ea4e3-b447564d w-tab-link w--current">
+            <div>
+              <h4 class="heading_h4">San Francisco</h4>
+              <div class="margin-bottom_xsmall">101 Web Lane<br>San Francisco, CA, USA</div>
+              <div class="text-button is-secondary">
+                <div>Email</div>
+                <div class="button_icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 16 16" fill="none">
+                    <path d="M2 8H14.5M14.5 8L8.5 2M14.5 8L8.5 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                  </svg></div>
+              </div>
+            </div>
+          </a>
+          <a data-w-tab="Map Tab 2" id="w-node-_98a99d5b-bb74-197d-b51a-c651f147a42c-f147a417" class="tab_menu-button flex_horizontal is-y-center w-node-b8754437-cf3b-9aa4-7128-2162f53ea4f1-b447564d w-tab-link">
+            <div>
+              <h4 class="heading_h4">New York</h4>
+              <div class="margin-bottom_xsmall">101 Flow Street<br>New York, NY, USA</div>
+              <div class="text-button is-secondary">
+                <div>Email</div>
+                <div class="button_icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 16 16" fill="none">
+                    <path d="M2 8H14.5M14.5 8L8.5 2M14.5 8L8.5 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                  </svg></div>
+              </div>
+            </div>
+          </a>
+          <a data-w-tab="Map Tab 3" id="w-node-_98a99d5b-bb74-197d-b51a-c651f147a436-f147a417" class="tab_menu-button flex_horizontal is-y-center w-node-b8754437-cf3b-9aa4-7128-2162f53ea4ff-b447564d w-tab-link">
+            <div>
+              <h4 class="heading_h4">Miami</h4>
+              <div class="margin-bottom_xsmall">101 HTML Road<br>Miami, FL, USA</div>
+              <div class="text-button is-secondary">
+                <div>Email</div>
+                <div class="button_icon"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 16 16" fill="none">
+                    <path d="M2 8H14.5M14.5 8L8.5 2M14.5 8L8.5 14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+                  </svg></div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div id="w-node-_98a99d5b-bb74-197d-b51a-c651f147a440-f147a417" class="w-node-b8754437-cf3b-9aa4-7128-2162f53ea50a-b447564d w-tab-content">
+          <div data-w-tab="Map Tab 1" class="w-tab-pane w--tab-active">
+            <div class="ratio_4x3"><img width="641" height="480" alt="[background image] image of a tech office setting for an ai developer tools business" src="images/9d3197a9-3ce3-4fa6-b8a7-a6ab610bb0bc.avif" loading="lazy" data-aisg-image-id="df805604-55ca-4e13-aafd-f0995cbad957" class="image_cover"></div>
+          </div>
+          <div data-w-tab="Map Tab 2" class="w-tab-pane">
+            <div class="ratio_4x3"><img width="" height="" alt="[team] image of individual team member (for a automotive service)" src="images/263c4dfe-c65c-4808-a421-8a43752818d1.avif" loading="lazy" data-aisg-image-id="2e11a914-af31-422b-8d11-82b91c08c29a" class="image_cover"></div>
+          </div>
+          <div data-w-tab="Map Tab 3" class="w-tab-pane">
+            <div class="ratio_4x3"><img width="" height="" alt="image of a laptop on a desk [real estate tech]" src="images/57c16212-5885-4d97-96a6-a7821d30064f.avif" loading="lazy" data-aisg-image-id="cfecd35f-6d5a-403b-a0cd-b1b6adbfaadd" class="image_cover"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="footer is-inverse">
+    <div class="container">
+      <div class="w-layout-grid grid_4-col gap-medium">
+        <div id="w-node-_25727a3d-379c-5c57-7915-14cd562c0b4d-9351d813" class="w-node-cd1f025e-a376-7ac5-b1c0-183bbce05d4a-bce05d47">
+          <h2 class="heading_h2 margin-bottom_none">Luxury tools for modern agents<br></h2>
+          <a href="#" class="footer_link on-inverse w-inline-block">
+            <div class="heading_h2">Get started</div>
+          </a>
+        </div>
+        <div id="w-node-_686aafad-4ad6-d604-e192-54da9351d81c-9351d813" class="w-node-cd1f025e-a376-7ac5-b1c0-183bbce05d51-bce05d47">
+          <div>555 555 5555</div>
+          <a href="#" class="footer_link on-inverse w-inline-block">
+            <div>hello@realtysass.com</div>
+          </a>
+        </div>
+        <ul id="w-node-_686aafad-4ad6-d604-e192-54da9351d824-9351d813" role="list" class="grid_2-col gap-xsmall w-node-cd1f025e-a376-7ac5-b1c0-183bbce05d57-bce05d47 w-list-unstyled">
+          <li class="margin-bottom_none">
+            <a href="#" class="footer_link on-inverse w-inline-block">
+              <div class="paragraph_xxlarge"><strong>Flyers</strong></div>
+            </a>
+          </li>
+          <li class="margin-bottom_none">
+            <a href="#" class="footer_link on-inverse w-inline-block">
+              <div class="paragraph_xxlarge"><strong>Pricing</strong></div>
+            </a>
+          </li>
+          <li class="margin-bottom_none">
+            <a href="#" class="footer_link on-inverse w-inline-block">
+              <div class="paragraph_xxlarge"><strong>SaaS</strong></div>
+            </a>
+          </li>
+          <li class="margin-bottom_none">
+            <a href="#" class="footer_link on-inverse w-inline-block">
+              <div class="paragraph_xxlarge"><strong>Help</strong></div>
+            </a>
+          </li>
+          <li class="margin-bottom_none">
+            <a href="#" class="footer_link on-inverse w-inline-block">
+              <div class="paragraph_xxlarge"><strong>Insights</strong></div>
+            </a>
+          </li>
+          <li class="margin-bottom_none">
+            <a href="#" class="footer_link on-inverse w-inline-block">
+              <div class="paragraph_xxlarge"><strong>Access</strong></div>
+            </a>
+          </li>
+        </ul>
+        <a id="w-node-_686aafad-4ad6-d604-e192-54da9351d83f-9351d813" href="#" class="footer_link on-inverse w-node-cd1f025e-a376-7ac5-b1c0-183bbce05d76-bce05d47 w-inline-block">
+          <div>Contact</div>
+        </a>
+        <div id="w-node-_4b35a35a-6825-701b-7465-a7558e90304e-9351d813" class="w-layout-grid grid_2-col gap-small w-node-cd1f025e-a376-7ac5-b1c0-183bbce05d79-bce05d47">
+          <ul role="list" aria-label="Social media links" class="footer_icon-group w-list-unstyled">
+            <li class="margin-bottom_none">
+              <a href="#" class="footer_icon-link w-inline-block">
+                <div class="icon_small-1x1 text-color_inherit"><svg width="100%" height="100%" viewbox="0 0 16 16">
+                    <path d="M16,8.048a8,8,0,1,0-9.25,7.9V10.36H4.719V8.048H6.75V6.285A2.822,2.822,0,0,1,9.771,3.173a12.2,12.2,0,0,1,1.791.156V5.3H10.554a1.155,1.155,0,0,0-1.3,1.25v1.5h2.219l-.355,2.312H9.25v5.591A8,8,0,0,0,16,8.048Z" fill="currentColor"></path>
+                  </svg></div>
+                <div class="screen-reader">Facebook</div>
+              </a>
+            </li>
+            <li class="margin-bottom_none">
+              <a href="#" class="footer_icon-link w-inline-block">
+                <div class="icon_small-1x1 text-color_inherit"><svg width="100%" height="100%" viewbox="0 0 16 16">
+                    <path d="M8,1.441c2.136,0,2.389.009,3.233.047a4.419,4.419,0,0,1,1.485.276,2.472,2.472,0,0,1,.92.6,2.472,2.472,0,0,1,.6.92,4.419,4.419,0,0,1,.276,1.485c.038.844.047,1.1.047,3.233s-.009,2.389-.047,3.233a4.419,4.419,0,0,1-.276,1.485,2.644,2.644,0,0,1-1.518,1.518,4.419,4.419,0,0,1-1.485.276c-.844.038-1.1.047-3.233.047s-2.389-.009-3.233-.047a4.419,4.419,0,0,1-1.485-.276,2.472,2.472,0,0,1-.92-.6,2.472,2.472,0,0,1-.6-.92,4.419,4.419,0,0,1-.276-1.485c-.038-.844-.047-1.1-.047-3.233s.009-2.389.047-3.233a4.419,4.419,0,0,1,.276-1.485,2.472,2.472,0,0,1,.6-.92,2.472,2.472,0,0,1,.92-.6,4.419,4.419,0,0,1,1.485-.276c.844-.038,1.1-.047,3.233-.047M8,0C5.827,0,5.555.009,4.7.048A5.868,5.868,0,0,0,2.76.42a3.908,3.908,0,0,0-1.417.923A3.908,3.908,0,0,0,.42,2.76,5.868,5.868,0,0,0,.048,4.7C.009,5.555,0,5.827,0,8s.009,2.445.048,3.3A5.868,5.868,0,0,0,.42,13.24a3.908,3.908,0,0,0,.923,1.417,3.908,3.908,0,0,0,1.417.923,5.868,5.868,0,0,0,1.942.372C5.555,15.991,5.827,16,8,16s2.445-.009,3.3-.048a5.868,5.868,0,0,0,1.942-.372,4.094,4.094,0,0,0,2.34-2.34,5.868,5.868,0,0,0,.372-1.942c.039-.853.048-1.125.048-3.3s-.009-2.445-.048-3.3A5.868,5.868,0,0,0,15.58,2.76a3.908,3.908,0,0,0-.923-1.417A3.908,3.908,0,0,0,13.24.42,5.868,5.868,0,0,0,11.3.048C10.445.009,10.173,0,8,0Z" fill="currentColor"></path>
+                    <path d="M8,3.892A4.108,4.108,0,1,0,12.108,8,4.108,4.108,0,0,0,8,3.892Zm0,6.775A2.667,2.667,0,1,1,10.667,8,2.667,2.667,0,0,1,8,10.667Z" fill="currentColor"></path>
+                    <circle cx="12.27" cy="3.73" r="0.96" fill="currentColor"></circle>
+                  </svg></div>
+                <div class="screen-reader">Instagram<br></div>
+              </a>
+            </li>
+            <li class="margin-bottom_none">
+              <a href="#" class="footer_icon-link w-inline-block">
+                <div class="icon_small-1x1 text-color_inherit"><svg width="100%" height="100%" viewbox="0 0 16 16">
+                    <path d="M12.3723 1.16992H14.6895L9.6272 6.95576L15.5825 14.829H10.9196L7.26734 10.0539L3.08837 14.829H0.769833L6.18442 8.64037L0.471436 1.16992H5.2528L8.55409 5.53451L12.3723 1.16992ZM11.5591 13.4421H12.843L4.55514 2.48399H3.17733L11.5591 13.4421Z" fill="currentColor"></path>
+                  </svg></div>
+                <div class="screen-reader">X</div>
+              </a>
+            </li>
+            <li class="margin-bottom_none">
+              <a href="#" class="footer_icon-link w-inline-block">
+                <div class="icon_small-1x1 text-color_inherit"><svg width="100%" height="100%" viewbox="0 0 16 16">
+                    <path d="M15.3,0H0.7C0.3,0,0,0.3,0,0.7v14.7C0,15.7,0.3,16,0.7,16h14.7c0.4,0,0.7-0.3,0.7-0.7V0.7 C16,0.3,15.7,0,15.3,0z M4.7,13.6H2.4V6h2.4V13.6z M3.6,5C2.8,5,2.2,4.3,2.2,3.6c0-0.8,0.6-1.4,1.4-1.4c0.8,0,1.4,0.6,1.4,1.4 C4.9,4.3,4.3,5,3.6,5z M13.6,13.6h-2.4V9.9c0-0.9,0-2-1.2-2c-1.2,0-1.4,1-1.4,2v3.8H6.2V6h2.3v1h0c0.3-0.6,1.1-1.2,2.2-1.2 c2.4,0,2.8,1.6,2.8,3.6V13.6z" fill="currentColor"></path>
+                  </svg></div>
+                <div class="screen-reader">LinkedIn</div>
+              </a>
+            </li>
+            <li class="margin-bottom_none">
+              <a href="#" class="footer_icon-link w-inline-block">
+                <div class="icon_small-1x1 text-color_inherit"><svg width="100%" height="100%" viewbox="0 0 16 16">
+                    <path d="M15.8,4.8c-0.2-1.3-0.8-2.2-2.2-2.4C11.4,2,8,2,8,2S4.6,2,2.4,2.4C1,2.6,0.3,3.5,0.2,4.8C0,6.1,0,8,0,8 s0,1.9,0.2,3.2c0.2,1.3,0.8,2.2,2.2,2.4C4.6,14,8,14,8,14s3.4,0,5.6-0.4c1.4-0.3,2-1.1,2.2-2.4C16,9.9,16,8,16,8S16,6.1,15.8,4.8z M6,11V5l5,3L6,11z" fill="currentColor"></path>
+                  </svg></div>
+                <div class="screen-reader">YouTube</div>
+              </a>
+            </li>
+          </ul>
+          <div id="w-node-_686aafad-4ad6-d604-e192-54da9351d859-9351d813" class="text-color_secondary w-node-cd1f025e-a376-7ac5-b1c0-183bbce05da1-bce05d47">Made by Taylor Brooks</div>
+        </div>
+      </div>
+    </div>
   </footer>
-
-  <!-- TEASE TOGGLE -->
-  <button id="teaseToggle" onclick="toggleTeaseMode()" class="px-3 py-1 rounded-full border border-gray-600 text-gray-800 text-xs">
-    Tease Mode: Off
-  </button>
-
-  <!-- SCRIPTS -->
-  <script>
-    function toggleTeaseMode() {
-      const body = document.body;
-      const btn = document.getElementById('teaseToggle');
-      const heroTitle = document.getElementById('heroTitle');
-      const heroDesc = document.getElementById('heroDesc');
-
-      if (body.classList.contains('theme-tease')) {
-        body.classList.remove('theme-tease');
-        body.classList.add('theme-neutral');
-        document.title = "RealtySaSS – Neutral Mode";
-        heroTitle.innerHTML = "Your Realty, Professionally Defined.";
-        heroDesc.innerHTML = "Add a short description to establish credibility and expertise.";
-        btn.textContent = "Tease Mode: Off";
-        btn.classList.remove('bg-red-600', 'text-white');
-        btn.classList.add('border', 'border-gray-600', 'text-gray-800');
-      } else {
-        body.classList.remove('theme-neutral');
-        body.classList.add('theme-tease');
-        document.title = "RealtySaSS – Tease Mode";
-        heroTitle.innerHTML = "Mmm… Put some SaSS in your Realty.";
-        heroDesc.innerHTML = "We know you like it polished, a touch risqué — and wildly profitable.";
-        btn.textContent = "Tease Mode: On";
-        btn.classList.remove('border', 'border-gray-600', 'text-gray-800');
-        btn.classList.add('bg-red-600', 'text-white');
-      }
-    }
-  </script>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=6871ea4efbcaa166b4475632" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
 </body>
-</html>
+Exports don't include native form functionality.

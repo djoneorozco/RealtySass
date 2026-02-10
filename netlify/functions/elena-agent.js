@@ -1,13 +1,14 @@
 // netlify/functions/elena-agent.js
 // ============================================================
-// v2.1.0 — RealtySaSS • Agentic Elena (Orchestrator)
+// v2.2.0 — RealtySaSS • Agentic Elena (Orchestrator)
 //
 // ✅ Adds deterministic knowledge loading:
 // - netlify/functions/data/ask-elena-realestate-basics.json
+// - netlify/functions/data/realtysass.json
 // - netlify/functions/data/states-<state>.json  (ex: states-texas.json)
 //
 // ✅ Output includes:
-// - knowledge: { basics, state }      (so Ask-Elena can narrate or render)
+// - knowledge: { basics, state, realtysass }      (so Ask-Elena can narrate or render)
 // - knowledge_used: receipt info (file names, load ok, errors)
 //
 // ============================================================
@@ -147,9 +148,11 @@ function pickName(profile) {
 // ------------------------------
 const DATA_DIR = path.join(__dirname, "data");
 const BASICS_FILENAME = "ask-elena-realestate-basics.json";
+const REALTYSASS_FILENAME = "realtysass.json";
 
 // Cache across warm invocations
 let __BASICS_CACHE = null;
+let __REALTYSASS_CACHE = null;
 const __STATE_CACHE = new Map();
 
 const STATE_ALIASES = {
@@ -222,6 +225,27 @@ function loadBasics() {
   }
 }
 
+function loadRealtySaSS() {
+  if (__REALTYSASS_CACHE) {
+    return { ok: true, file: REALTYSASS_FILENAME, data: __REALTYSASS_CACHE, error: null, cached: true };
+  }
+
+  const abs = path.join(DATA_DIR, REALTYSASS_FILENAME);
+  try {
+    const data = readJsonFileAbs(abs);
+    __REALTYSASS_CACHE = data;
+    return { ok: true, file: REALTYSASS_FILENAME, data, error: null, cached: false };
+  } catch (e) {
+    return {
+      ok: false,
+      file: REALTYSASS_FILENAME,
+      data: null,
+      error: `Failed to load ${REALTYSASS_FILENAME}: ${String(e?.message || e)}`,
+      cached: false,
+    };
+  }
+}
+
 function loadState(stateKey) {
   const key = normalizeStateKey(stateKey);
   if (!key) {
@@ -252,13 +276,6 @@ function loadState(stateKey) {
 }
 
 function resolveStateFromInputs({ body, profile, contextProfile }) {
-  // Priority order (tight + predictable):
-  // 1) overrides.state or overrides.license_state
-  // 2) context.state
-  // 3) context.profile.license_state
-  // 4) profile.license_state (from Supabase)
-  // 5) profile.market_state
-  // 6) scenario.state
   const o = body?.overrides && typeof body.overrides === "object" ? body.overrides : {};
   const ctx = body?.context && typeof body.context === "object" ? body.context : {};
   const scenario = body?.scenario && typeof body.scenario === "object" ? body.scenario : {};
@@ -493,7 +510,9 @@ function buildScenario(body) {
   const termYearsRaw = num(pickFirst(overrides.termYears, fad.termYears, scenario.termYears));
   const termYears = termYearsRaw ? clamp(Math.round(termYearsRaw), 10, 40) : 30;
 
-  const loanType = String(pickFirst(overrides.loanType, fad.loanType, scenario.loanType, "conv") || "conv").toLowerCase();
+  const loanType = String(
+    pickFirst(overrides.loanType, fad.loanType, scenario.loanType, "conv") || "conv"
+  ).toLowerCase();
 
   const taxRate = num(pickFirst(overrides.taxRate, fad.taxRate, scenario.taxRate));
   const insuranceAnnual = num(pickFirst(overrides.insuranceAnnual, fad.insuranceAnnual, scenario.insuranceAnnual));
@@ -680,11 +699,11 @@ const SELECT_COLS = [
   "last_name",
   "phone",
   "mode",
-  "notes",
+  "notes"
   // OPTIONAL if you have them (only add if they exist in Supabase):
-  // "license_state",
-  // "state",
-  // "market_state",
+  // ,"license_state"
+  // ,"state"
+  // ,"market_state"
 ].join(",");
 
 async function fetchProfileByEmail(email) {
@@ -766,6 +785,8 @@ exports.handler = async (event) => {
   }
 
   const name = pickName(profile);
+
+  // Build profile_used WITHOUT assuming extra columns exist in Supabase row
   const profile_used = profile
     ? {
         email: normalizeEmail(profile.email || email) || (email || null),
@@ -775,14 +796,10 @@ exports.handler = async (event) => {
         phone: safeStr(profile.phone) || null,
         mode: safeStr(profile.mode) || null,
         notes: safeStr(profile.notes) || null,
-        // license_state/state fields only if they exist in your Supabase row:
-        license_state: safeStr(profile.license_state) || null,
-        state: safeStr(profile.state) || null,
-        market_state: safeStr(profile.market_state) || null,
       }
     : (email ? { email } : null);
 
-  // Knowledge resolution
+  // Knowledge resolution (Basics + RealtySaSS + State)
   const resolvedStateRaw = resolveStateFromInputs({
     body,
     profile,
@@ -790,10 +807,12 @@ exports.handler = async (event) => {
   });
 
   const basicsLoad = loadBasics();
+  const realtysassLoad = loadRealtySaSS();
   const stateLoad = loadState(resolvedStateRaw);
 
   const knowledge = {
     basics: basicsLoad.ok ? basicsLoad.data : null,
+    realtysass: realtysassLoad.ok ? realtysassLoad.data : null,
     state: stateLoad.ok ? stateLoad.data : null,
     state_key: stateLoad.ok ? stateLoad.key : normalizeStateKey(resolvedStateRaw) || null,
   };
@@ -804,6 +823,12 @@ exports.handler = async (event) => {
       file: basicsLoad.file,
       cached: basicsLoad.cached,
       error: basicsLoad.error || null,
+    },
+    realtysass: {
+      ok: realtysassLoad.ok,
+      file: realtysassLoad.file,
+      cached: realtysassLoad.cached,
+      error: realtysassLoad.error || null,
     },
     state: {
       ok: stateLoad.ok,
@@ -828,9 +853,17 @@ exports.handler = async (event) => {
 
   if (Number.isFinite(price) && Number.isFinite(downpayment) && Number.isFinite(creditScore)) {
     // If state json contains defaults, use them as a fallback layer (still deterministic)
-    const stateDefaults = stateLoad.ok && stateLoad.data && typeof stateLoad.data === "object" ? stateLoad.data.defaults : null;
+    const stateDefaults =
+      stateLoad.ok && stateLoad.data && typeof stateLoad.data === "object"
+        ? stateLoad.data.defaults || null
+        : null;
+
     const taxRate = pickFirst(sc.taxRate, stateDefaults?.tax_rate, stateDefaults?.property_tax_rate);
-    const insuranceAnnual = pickFirst(sc.insuranceAnnual, stateDefaults?.insurance_annual, stateDefaults?.homeowners_insurance_annual);
+    const insuranceAnnual = pickFirst(
+      sc.insuranceAnnual,
+      stateDefaults?.insurance_annual,
+      stateDefaults?.homeowners_insurance_annual
+    );
     const hoaMonthly = pickFirst(sc.hoaMonthly, stateDefaults?.hoa_monthly);
 
     const m = estimateAllInHousing({
@@ -911,6 +944,7 @@ exports.handler = async (event) => {
       mortgage: mortgageSource,
       quick: quick ? "deterministic_quick_rails" : "missing_income",
       knowledge_basics: basicsLoad.ok ? "file" : "missing",
+      knowledge_realtysass: realtysassLoad.ok ? "file" : "missing",
       knowledge_state: stateLoad.ok ? "file" : "missing",
     },
   };
@@ -980,6 +1014,7 @@ exports.handler = async (event) => {
       computedAprAssumed: aprAssumed,
       dataDir: DATA_DIR,
       basicsFile: BASICS_FILENAME,
+      realtysassFile: REALTYSASS_FILENAME,
       stateFile: knowledge_used.state.file || null,
     };
   }

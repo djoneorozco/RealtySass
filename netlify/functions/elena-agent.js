@@ -156,7 +156,6 @@ let __REALTYSASS_CACHE = null;
 const __STATE_CACHE = new Map();
 
 const STATE_ALIASES = {
-  // USPS -> full
   tx: "texas",
   az: "arizona",
   ca: "california",
@@ -175,7 +174,6 @@ const STATE_ALIASES = {
   md: "maryland",
   pa: "pennsylvania",
 
-  // common variants
   "new york": "new-york",
   "new jersey": "new-jersey",
   "north carolina": "north-carolina",
@@ -186,14 +184,11 @@ function normalizeStateKey(raw) {
   const s0 = safeStr(raw).toLowerCase();
   if (!s0) return "";
 
-  // If "TX" style:
   if (/^[a-z]{2}$/.test(s0) && STATE_ALIASES[s0]) return STATE_ALIASES[s0];
 
-  // Normalize spaces/underscores -> hyphen
   const cleaned = s0.replace(/[_\s]+/g, "-").replace(/[^a-z-]/g, "");
   if (!cleaned) return "";
 
-  // Map known aliases
   if (STATE_ALIASES[cleaned]) return STATE_ALIASES[cleaned];
 
   return cleaned;
@@ -691,7 +686,7 @@ function pickNextAction({ verdict, missing_inputs, price, housingAllIn }) {
 // ------------------------------
 // //#5 SUPABASE PROFILE LOOKUP (DIRECT)
 // ------------------------------
-const SELECT_COLS = [
+const SELECT_COLS_AGENT = [
   "id",
   "email",
   "full_name",
@@ -700,10 +695,6 @@ const SELECT_COLS = [
   "phone",
   "mode",
   "notes"
-  // OPTIONAL if you have them (only add if they exist in Supabase):
-  // ,"license_state"
-  // ,"state"
-  // ,"market_state"
 ].join(",");
 
 async function fetchProfileByEmail(email) {
@@ -726,7 +717,7 @@ async function fetchProfileByEmail(email) {
 
     const { data, error } = await supabase
       .from("profiles")
-      .select(SELECT_COLS)
+      .select(SELECT_COLS_AGENT)
       .eq("email", email)
       .maybeSingle();
 
@@ -852,7 +843,6 @@ exports.handler = async (event) => {
   let mortgageSource = "missing";
 
   if (Number.isFinite(price) && Number.isFinite(downpayment) && Number.isFinite(creditScore)) {
-    // If state json contains defaults, use them as a fallback layer (still deterministic)
     const stateDefaults =
       stateLoad.ok && stateLoad.data && typeof stateLoad.data === "object"
         ? stateLoad.data.defaults || null
@@ -962,7 +952,6 @@ exports.handler = async (event) => {
     missing_inputs,
     inputs_used,
 
-    // ✅ NEW: knowledge packet for Ask-Elena to narrate/render deterministically
     knowledge,
     knowledge_used,
 

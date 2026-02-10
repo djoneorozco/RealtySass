@@ -1,0 +1,275 @@
+{
+  "meta": {
+    "name": "Ask-Elena • Real Estate Basics",
+    "version": "v1.0.0",
+    "updated_at": "2026-02-10",
+    "purpose": "Foundational real-estate knowledge pack for Ask-Elena: definitions, workflows, money math, risks, and practical guidance.",
+    "tone": {
+      "voice": "warm, confident, mentor",
+      "style": "BLUF-first, no fluff, plain language",
+      "disclaimers": [
+        "General education only; not legal or tax advice.",
+        "Local laws, lender rules, and HOA/insurance vary by state and property."
+      ]
+    }
+  },
+
+  "core_concepts": {
+    "parties": [
+      { "term": "Buyer", "meaning": "Purchases the property and finances (or pays cash)." },
+      { "term": "Seller", "meaning": "Owns the property and transfers title at closing." },
+      { "term": "Listing Agent", "meaning": "Represents seller; markets home, negotiates." },
+      { "term": "Buyer Agent", "meaning": "Represents buyer; writes offer, negotiates, coordinates process." },
+      { "term": "Lender", "meaning": "Provides mortgage funding (unless cash)." },
+      { "term": "Title Company / Escrow", "meaning": "Handles closing logistics, settlement statement, title transfer." },
+      { "term": "Appraiser", "meaning": "Estimates market value for lender risk." },
+      { "term": "Inspector", "meaning": "Evaluates condition; identifies defects and safety issues." },
+      { "term": "HOA", "meaning": "Community association; may collect monthly dues and enforce rules." }
+    ],
+
+    "key_documents": [
+      { "term": "Pre-Approval", "meaning": "Lender review of income/credit/DTI; strengthens your offer." },
+      { "term": "Purchase Agreement", "meaning": "The offer/contract: price, terms, deadlines, contingencies." },
+      { "term": "Disclosures", "meaning": "Seller-provided info about known defects, history, HOA docs, etc." },
+      { "term": "Inspection Report", "meaning": "Inspector findings; used to negotiate repairs/credits." },
+      { "term": "Appraisal Report", "meaning": "Value estimate; must support the loan amount." },
+      { "term": "Title Commitment", "meaning": "Shows ownership + liens/claims that must be cleared." },
+      { "term": "Closing Disclosure", "meaning": "Final lender costs + monthly payment details; compare to Loan Estimate." }
+    ]
+  },
+
+  "process_flow": {
+    "home_buying_steps": [
+      {
+        "step": 1,
+        "name": "Define budget + target market",
+        "what_it_means": "Know your max all-in monthly payment and price band.",
+        "success_criteria": [
+          "Monthly payment cap established",
+          "Cash-to-close estimated",
+          "Target neighborhoods and commute needs defined"
+        ]
+      },
+      {
+        "step": 2,
+        "name": "Get pre-approved",
+        "what_it_means": "A lender confirms your purchasing power and rate range.",
+        "success_criteria": ["Pre-approval letter in hand", "Rate/loan type chosen"]
+      },
+      {
+        "step": 3,
+        "name": "Shop + shortlist",
+        "what_it_means": "Tour homes, compare condition, layout, resale, and risk factors.",
+        "success_criteria": ["Top 3 homes selected", "Offer strategy chosen"]
+      },
+      {
+        "step": 4,
+        "name": "Write offer + negotiate",
+        "what_it_means": "Price + terms + concessions + deadlines.",
+        "success_criteria": ["Offer accepted", "Contract deadlines tracked"]
+      },
+      {
+        "step": 5,
+        "name": "Inspection + due diligence",
+        "what_it_means": "Confirm condition, negotiate repairs/credits, review HOA docs.",
+        "success_criteria": ["Major risks identified", "Repair/credit resolution"]
+      },
+      {
+        "step": 6,
+        "name": "Appraisal + underwriting",
+        "what_it_means": "Lender verifies the home value and your financial profile.",
+        "success_criteria": ["Appraisal supports contract", "Conditions cleared"]
+      },
+      {
+        "step": 7,
+        "name": "Final walkthrough + close",
+        "what_it_means": "Confirm repairs completed; sign documents; receive keys.",
+        "success_criteria": ["Cash-to-close confirmed", "Closing completed"]
+      }
+    ],
+
+    "common_contingencies": [
+      {
+        "term": "Inspection Contingency",
+        "why_it_exists": "Allows buyer to renegotiate or exit if condition is unacceptable.",
+        "default_window_days": "7–10"
+      },
+      {
+        "term": "Financing Contingency",
+        "why_it_exists": "Protects buyer if loan approval fails within timeline.",
+        "default_window_days": "14–21"
+      },
+      {
+        "term": "Appraisal Contingency",
+        "why_it_exists": "Protects buyer if appraised value is below purchase price.",
+        "default_window_days": "Aligned with appraisal delivery"
+      },
+      {
+        "term": "Sale of Current Home",
+        "why_it_exists": "Buyer needs to sell existing home to fund purchase.",
+        "default_window_days": "Varies; can weaken offer"
+      }
+    ]
+  },
+
+  "money_math": {
+    "monthly_payment_components": [
+      { "component": "Principal", "meaning": "Loan paydown portion (builds equity)." },
+      { "component": "Interest", "meaning": "Cost of borrowing; usually higher early in loan." },
+      { "component": "Property Taxes", "meaning": "Often escrowed monthly; varies by county/state." },
+      { "component": "Homeowners Insurance", "meaning": "Coverage for home; required by lender." },
+      { "component": "PMI", "meaning": "If down payment is low on conventional loans; may drop later." },
+      { "component": "HOA", "meaning": "Monthly dues; may include amenities or maintenance." },
+      { "component": "Utilities/Maintenance Reserve", "meaning": "Not in mortgage, but real monthly cash burn." }
+    ],
+
+    "key_metrics": {
+      "DTI": {
+        "meaning": "Debt-to-Income ratio = monthly debt payments / gross monthly income.",
+        "why_it_matters": "High DTI reduces approval odds and affordability buffer."
+      },
+      "LTV": {
+        "meaning": "Loan-to-Value = loan amount / home value.",
+        "why_it_matters": "Higher LTV often means higher risk, PMI, and stricter underwriting."
+      },
+      "Cash_to_Close": {
+        "meaning": "Down payment + closing costs + prepaid items - credits.",
+        "why_it_matters": "This is the true upfront cash requirement."
+      }
+    },
+
+    "rule_of_thumb_thresholds": {
+      "housing_ratio": {
+        "safe_zone": { "max_percent_of_gross_income": 28, "label": "GREEN" },
+        "caution_zone": { "max_percent_of_gross_income": 33, "label": "CAUTION" },
+        "no_go_zone": { "above_percent_of_gross_income": 33, "label": "NO-GO" },
+        "note": "These are conservative guardrails; individual situations vary."
+      },
+      "emergency_fund": {
+        "recommended_months": "3–6",
+        "note": "If your job or income is variable, aim higher."
+      },
+      "maintenance_reserve": {
+        "recommended_percent_of_home_value_per_year": "1% (starting point)",
+        "note": "Older homes or harsh climates may require more."
+      }
+    },
+
+    "closing_costs_ranges": {
+      "buyer_closing_costs_percent": {
+        "typical": "2%–5% of purchase price",
+        "note": "Depends on lender fees, points, taxes, insurance, and local rules."
+      },
+      "seller_concessions": {
+        "meaning": "Seller pays some buyer costs; can reduce cash-to-close.",
+        "tradeoff": "May require higher offer price or reduced leverage in hot markets."
+      }
+    }
+  },
+
+  "negotiation_playbook": {
+    "offer_strength_levers": [
+      { "lever": "Higher earnest money", "effect": "Signals seriousness; can strengthen offer." },
+      { "lever": "Shorter option/inspection window", "effect": "Seller prefers faster certainty." },
+      { "lever": "Fewer contingencies", "effect": "Stronger but increases buyer risk." },
+      { "lever": "Flexible closing date", "effect": "Matches seller needs; can win deals." },
+      { "lever": "Appraisal gap coverage", "effect": "Strong in hot markets; increases cash risk." }
+    ],
+
+    "inspection_outcomes": [
+      {
+        "outcome": "Request repairs",
+        "best_for": "Safety issues or major systems (roof, HVAC, foundation).",
+        "risk": "Seller may refuse or do low-quality fixes."
+      },
+      {
+        "outcome": "Request credit",
+        "best_for": "When you want control of contractors after closing.",
+        "risk": "Credit may be capped by lender or concessions limits."
+      },
+      {
+        "outcome": "Price reduction",
+        "best_for": "Structural/major valuation issues that affect appraisal.",
+        "risk": "Negotiation may stall if seller anchored on price."
+      }
+    ]
+  },
+
+  "property_risk_flags": {
+    "major_red_flags": [
+      "Foundation movement/structural cracking",
+      "Roof near end-of-life or active leaks",
+      "Electrical hazards (aluminum wiring, double-tapped breakers, unpermitted work)",
+      "Plumbing failures or polybutylene piping",
+      "Mold remediation history without documentation",
+      "Drainage issues (standing water, negative grading)",
+      "Evidence of termites or major wood rot"
+    ],
+    "soft_red_flags": [
+      "Busy road noise, poor parking, hard ingress/egress",
+      "Odd layout that hurts resale",
+      "Very high HOA dues for little value",
+      "Short-term rental restrictions (if buyer wants STR)",
+      "Deferred maintenance (peeling paint, rotting trim, old HVAC filters)"
+    ],
+    "elena_guidance": {
+      "prompt_to_user": [
+        "What year is the roof and HVAC?",
+        "Any HOA? If yes, dues and restrictions?",
+        "Any known foundation repairs or water intrusion?",
+        "How long do you plan to keep the home?"
+      ]
+    }
+  },
+
+  "rent_vs_buy": {
+    "decision_logic": {
+      "buy_is_stronger_when": [
+        "You plan to stay 3+ years (market-dependent)",
+        "Monthly payment is within guardrails with buffer",
+        "Home condition risk is manageable",
+        "Cash reserves remain healthy after closing"
+      ],
+      "rent_is_stronger_when": [
+        "Short timeline (<2–3 years)",
+        "Payment breaks guardrails or leaves thin buffer",
+        "Major uncertainty (job/base/location)",
+        "Market is overheated and buyer has weak leverage"
+      ]
+    },
+    "comparison_factors": [
+      { "factor": "Flexibility", "rent": "High", "buy": "Low" },
+      { "factor": "Upfront cost", "rent": "Low", "buy": "High (down + closing)" },
+      { "factor": "Maintenance risk", "rent": "Low", "buy": "High" },
+      { "factor": "Wealth building", "rent": "None", "buy": "Equity + potential appreciation" }
+    ]
+  },
+
+  "terminology_quick_hits": [
+    { "term": "Equity", "meaning": "Home value - loan balance. Your ownership stake." },
+    { "term": "Escrow", "meaning": "Account used to collect taxes/insurance monthly and pay annually." },
+    { "term": "Points", "meaning": "Upfront fee to buy down interest rate (optional)." },
+    { "term": "Contingency", "meaning": "Contract condition that must be satisfied (inspection, financing, appraisal)." },
+    { "term": "Earnest Money", "meaning": "Deposit showing good faith; applied to closing if deal completes." },
+    { "term": "Option Fee", "meaning": "Common in some states: fee for inspection window; may be non-refundable." }
+  ],
+
+  "elena_response_patterns": {
+    "bluf_template": {
+      "format": [
+        "BLUF: <1 sentence verdict + why>",
+        "Numbers: <income, expenses, housing cap, est payment, cash-to-close>",
+        "Risks: <top 2-3>",
+        "Next moves: <3 steps>"
+      ]
+    },
+    "questions_to_unlock_decision": [
+      "Purchase price target?",
+      "Down payment cash available?",
+      "Credit score range?",
+      "Monthly non-housing debts (car, cards, loans)?",
+      "How long will you keep the home?",
+      "HOA and property type (SFH/townhome/condo)?"
+    ]
+  }
+}

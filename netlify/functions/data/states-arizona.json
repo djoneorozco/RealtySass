@@ -1,0 +1,192 @@
+{
+  "state": {
+    "name": "Arizona",
+    "abbr": "AZ"
+  },
+  "version": "1.0.0",
+  "updated_at": "2026-02-10",
+  "purpose": "Ask-Elena state-level real estate reference for Arizona (workflow norms, timelines, common issues, compliance-safe guidance). Not legal advice; defer to broker/attorney for legal interpretation.",
+  "market_profile": {
+    "general_character": [
+      "Strong seasonal swings in some submarkets (snowbird influence in many areas).",
+      "Heat and sun exposure affect property condition more than many states.",
+      "New-build and HOA communities are common in many metros."
+    ],
+    "common_property_types": [
+      "Single-family homes",
+      "Townhomes/condos",
+      "New-build communities",
+      "Investment rentals (LTR/STR in some areas)"
+    ],
+    "common_transaction_drivers": [
+      "Condition (roof/HVAC) and utility costs",
+      "HOA rules and fees",
+      "Insurance availability/price sensitivity",
+      "Pool/spa condition and safety compliance"
+    ]
+  },
+  "standard_roles_and_parties": {
+    "key_parties": [
+      "Buyer",
+      "Seller",
+      "Listing agent",
+      "Buyer agent",
+      "Escrow/title company",
+      "Lender",
+      "Home inspector",
+      "Appraiser"
+    ],
+    "notes": [
+      "Arizona commonly uses escrow/title for holding earnest money and coordinating closing steps."
+    ]
+  },
+  "transaction_timeline_norms": {
+    "typical_contract_to_close_days": {
+      "cash": [14, 30],
+      "conventional": [21, 35],
+      "fha_va_usda": [25, 45]
+    },
+    "typical_critical_milestones": [
+      {
+        "name": "Earnest money deposit",
+        "guidance": "Confirm deadlines and receipt early; document proof of deposit."
+      },
+      {
+        "name": "Inspection window",
+        "guidance": "Schedule inspections immediately; prioritize roof/HVAC/plumbing/electrical/pool where applicable."
+      },
+      {
+        "name": "Appraisal",
+        "guidance": "Prep comps packet if the deal is tight; align expectations if price is aggressive."
+      },
+      {
+        "name": "Final walkthrough",
+        "guidance": "Confirm repairs completed with receipts; verify utilities and property condition match contract terms."
+      }
+    ]
+  },
+  "negotiation_norms": {
+    "common_concession_types": [
+      "Seller credit toward closing costs",
+      "Repairs by licensed contractor with receipts",
+      "Price reduction for big-ticket defects",
+      "Home warranty (as a band-aid, not a fix)"
+    ],
+    "preferred_negotiation_posture": [
+      "Focus on health/safety + big-ticket first (roof, HVAC, plumbing, electrical, structural).",
+      "Offer options (repair vs credit vs price) to keep negotiations moving.",
+      "Keep messages short, factual, and calm to reduce emotional escalation."
+    ]
+  },
+  "common_risks_and_flags": {
+    "climate_and_environment": [
+      "Extreme heat impacts HVAC load, attic temps, roofing materials, and energy bills.",
+      "Sun exposure can accelerate exterior wear (paint, stucco cracking, window seals).",
+      "Monsoon-related drainage issues can appear: grading, washes, roof drainage, landscaping runoff."
+    ],
+    "property_systems": [
+      "HVAC age/maintenance is a top-value factor; confirm service history if possible.",
+      "Roof condition and remaining life are high leverage; check for prior leaks/patching.",
+      "Pools/spas: equipment condition, leaks, safety barriers, and ongoing maintenance costs."
+    ],
+    "hoa_and_community": [
+      "HOA docs can materially affect usage (rentals, exterior changes, parking, short-term rentals).",
+      "Confirm dues, special assessments, transfer fees, and any pending litigation if applicable."
+    ],
+    "title_and_permitting": [
+      "Verify solar ownership vs leased agreements; confirm transfer requirements.",
+      "Watch for unpermitted additions/remodels; request documentation when visible."
+    ]
+  },
+  "inspection_focus_playbook": {
+    "priority_order": [
+      "Roof",
+      "HVAC",
+      "Plumbing",
+      "Electrical",
+      "Foundation/structural indicators",
+      "Windows/doors/seals",
+      "Pool/spa (if present)",
+      "Drainage/grading"
+    ],
+    "buyer_agent_script": {
+      "setup": "We’re not trying to nickel-and-dime — we’re focusing on health/safety and big-ticket items that affect financing and long-term ownership.",
+      "options": [
+        "Licensed repair + receipt",
+        "Credit at closing",
+        "Price adjustment for major defects"
+      ]
+    }
+  },
+  "pricing_and_comps_guidance": {
+    "comps_basics": [
+      "Anchor comps within the closest reasonable radius and similar school/HOA boundaries when applicable.",
+      "Match bed/bath/sqft as tightly as possible; adjust cautiously for pools, lots, and condition.",
+      "Use days-on-market and recent pendings to gauge true demand."
+    ],
+    "ask_elena_required_inputs_for_comp_help": [
+      "City/zip (or neighborhood)",
+      "Beds/baths/sqft",
+      "HOA? (yes/no + monthly dues if known)",
+      "Pool? (yes/no)",
+      "Condition level (turnkey / average / needs work)",
+      "Target list/offer price"
+    ],
+    "no_mls_disclaimer": "Elena does not have MLS access; provide 2–3 comp anchors or the agent can paste summaries."
+  },
+  "contracting_and_forms": {
+    "general_guidance": [
+      "Use your broker-approved Arizona forms and state association templates.",
+      "Confirm local addenda commonly used in your area (HOA, solar, pool, well/septic if applicable)."
+    ],
+    "earnest_money_posture": [
+      "Clarify timing, holder, and proof of deposit early.",
+      "Document deadlines in a single transaction tracker to avoid preventable defaults."
+    ]
+  },
+  "disclosures_and_compliance_guardrails": {
+    "disclaimer": "Not legal advice. For legal interpretation, consult broker/attorney.",
+    "fair_housing_safe_language": [
+      "Focus on property features and objective criteria (price, commute, property condition).",
+      "Avoid steering language about who a neighborhood is 'for' or value judgments like 'safe' or 'good schools'.",
+      "If asked about demographics or protected-class-adjacent topics, redirect to objective sources and let clients decide."
+    ],
+    "common_safe_redirects": [
+      "I can share objective info like commute times, property features, and market stats — what matters most to you?",
+      "For school research, I recommend checking the district resources and third-party objective sites; I can help you compare commute and home features."
+    ],
+    "material_defects_high_level": [
+      "When in doubt, disclose and document.",
+      "Keep it factual, dated, and aligned with your state forms."
+    ]
+  },
+  "client_messaging_templates": {
+    "buyer_follow_up_no_response": {
+      "text": "Quick ping — still want me to line up options for you this week, or should I pause for now?",
+      "if_pause_response": "No problem. Want me to circle back next week, or later this month?"
+    },
+    "offer_intro_to_listing_agent": {
+      "script": "Hey — I’m bringing you a clean offer. My buyer is motivated and we’re aiming for a smooth close. What matters most to your seller: price, timeline, or certainty?"
+    },
+    "seller_price_reality_check": {
+      "script": "Here’s the honest read: the market will tell us in the first 7 days. If we’re priced right, we’ll get strong traffic and at least one serious offer. If not, we adjust fast — not after we go stale."
+    }
+  },
+  "agent_operating_system": {
+    "daily_minimums": [
+      "2 outbound follow-ups to active leads",
+      "1 status update to each client under contract (even if no change)",
+      "Update timeline/tasks same day after any event (showing, inspection, appraisal)"
+    ],
+    "weekly_minimums": [
+      "Review pipeline stage-by-stage; identify top 3 stuck deals and unblock them",
+      "Refresh comp sets for active listings and hot buyers",
+      "Audit deadlines for every file under contract"
+    ]
+  },
+  "data_keys_for_runtime": {
+    "state_key": "arizona",
+    "file_expected_path": "netlify/functions/data/states-arizona.json",
+    "suggested_lookup_aliases": ["az", "arizona"]
+  }
+}

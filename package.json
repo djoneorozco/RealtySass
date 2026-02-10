@@ -1,0 +1,14 @@
+{
+  "name": "realtysass-functions",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "netlify/functions/summarize.js",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0",
+    "@netlify/functions": "^2.7.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "busboy": "^1.6.0",
+    "jose": "^5.4.0",
+    "resend": "^3.4.0"
+  }
+}

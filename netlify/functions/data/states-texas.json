@@ -1,0 +1,271 @@
+{
+  "meta": {
+    "name": "Texas Real Estate Pack",
+    "state": "TX",
+    "version": "v1.0.0",
+    "updated_at": "2026-02-10",
+    "purpose": "State-specific real estate guidance for Texas. Practical, high-trust prompts + scripts + workflow norms. Not legal advice.",
+    "disclaimer": [
+      "General education only — not legal, tax, or brokerage advice.",
+      "Texas contracts and rules vary by local MLS, broker policy, and the Texas Real Estate Commission (TREC).",
+      "Always follow your broker, promulgated forms, and current TREC guidance."
+    ],
+    "recommended_next_inputs": [
+      "Client type (buyer/seller/investor)",
+      "Property type (SFH/condo/townhome/land/new build)",
+      "Financing type (cash/conventional/FHA/VA/other)",
+      "Timeline (days to close / urgency)",
+      "City/county (tax and HOA norms vary)"
+    ]
+  },
+
+  "state_identity": {
+    "regulator": {
+      "name": "Texas Real Estate Commission",
+      "abbrev": "TREC",
+      "role": "Promulgates and regulates certain forms, licensing rules, and consumer protections (high level)."
+    },
+    "contract_culture": {
+      "theme": "Deadline-driven contract culture with strong emphasis on written amendments and timely notices.",
+      "notes": [
+        "Texas deals are highly schedule-sensitive: option period, financing, appraisal, and HOA/document delivery timelines matter.",
+        "Written amendments are the norm — avoid “verbal understandings.”",
+        "Title company coordination is central in most closings."
+      ]
+    }
+  },
+
+  "core_terms_tx": {
+    "option_period": {
+      "common_name": "Option Period",
+      "what_it_is": "A negotiated due diligence window where the buyer can terminate for essentially any reason (per contract terms) while the option is active.",
+      "why_it_matters": [
+        "This is the buyer’s primary inspection/due diligence window in many Texas transactions.",
+        "Repairs/credits are typically negotiated within or tied to the option window."
+      ],
+      "typical_range_days": "5–10 (deal-dependent)",
+      "money": {
+        "option_fee": "Often paid to seller for the option; terms vary by contract and negotiation.",
+        "earnest_money": "Separate from option fee; deposited with title/escrow."
+      },
+      "agent_moves": [
+        "Schedule inspections immediately (Day 1–2).",
+        "Request HOA docs and seller disclosures ASAP.",
+        "Front-load deal-breakers: foundation/roof/HVAC, drainage, pool, electrical, unpermitted work."
+      ],
+      "seller_counter_levers": [
+        "Shorten option days",
+        "Increase option fee",
+        "Limit repair scope or propose credit cap"
+      ]
+    },
+
+    "earnest_money": {
+      "what_it_is": "Good-faith deposit typically delivered to title/escrow within the timeframe specified by the contract.",
+      "why_it_matters": [
+        "Strengthens offer and signals certainty.",
+        "Late delivery can create avoidable risk and disputes."
+      ],
+      "best_practice": [
+        "Confirm delivery deadline, method, and receipt.",
+        "Keep proof (receipt/acknowledgment) in the file."
+      ]
+    },
+
+    "seller_disclosure_tx": {
+      "concept": "Seller’s disclosure is a key document for known defects and property history (high level).",
+      "agent_guidance": [
+        "Encourage factual completion and timely delivery.",
+        "When in doubt: disclose and document — and loop in broker for interpretation."
+      ]
+    }
+  },
+
+  "workflows_tx": {
+    "buyer_timeline_tx": [
+      {
+        "phase": "Offer Accepted (Day 0)",
+        "critical_actions": [
+          "Confirm contract dates (option start/end, financing, closing).",
+          "Confirm earnest money delivery plan with title.",
+          "Send lender and title contact sheet to all parties."
+        ]
+      },
+      {
+        "phase": "Option / Due Diligence (Day 1–10 typical)",
+        "critical_actions": [
+          "Schedule inspection(s) immediately.",
+          "Review seller disclosures and HOA docs.",
+          "Request repair/credit proposals with clear prioritization (health/safety + big-ticket).",
+          "Prepare Plan B if major issues surface."
+        ]
+      },
+      {
+        "phase": "Appraisal / Underwriting (Mid-contract)",
+        "critical_actions": [
+          "Confirm appraisal ordered and scheduled.",
+          "If appraisal risk exists: prep comp packet and condition notes.",
+          "Track lender conditions and avoid last-week surprises."
+        ]
+      },
+      {
+        "phase": "Clear-to-Close (Final week)",
+        "critical_actions": [
+          "Confirm repairs completed (receipts/photos).",
+          "Final walkthrough plan (timing depends on occupancy).",
+          "Verify cash-to-close and wire instructions (fraud prevention)."
+        ]
+      }
+    ],
+
+    "seller_timeline_tx": [
+      {
+        "phase": "Pre-List",
+        "critical_actions": [
+          "Prep disclosures, survey info, HOA details, and utility notes.",
+          "Pre-inspection (optional) if property risk is high.",
+          "Pricing plan: first 7 days is your window to win attention."
+        ]
+      },
+      {
+        "phase": "Under Contract",
+        "critical_actions": [
+          "Respond quickly during option period (repairs/credits).",
+          "Coordinate access and documentation with title/HOA.",
+          "Keep a backup-offer posture if concessions escalate."
+        ]
+      }
+    ]
+  },
+
+  "common_risk_flags_tx": {
+    "market_practicalities": [
+      "Foundation movement risk in many Texas regions (soil variability).",
+      "Hail/wind exposure in some areas; roof age matters.",
+      "High property tax variability by county and exemptions (homestead).",
+      "Insurance cost swings (wind/hail, rebuild cost changes).",
+      "HOA restrictions can be strict; review bylaws and resale certs early."
+    ],
+    "property_condition_red_flags": [
+      "Cracks indicative of differential settling",
+      "Drainage issues / negative grading",
+      "Roof near end-of-life or active leaks",
+      "Old/undersized electrical panels or unsafe wiring",
+      "Plumbing failures or recurring leaks",
+      "Unpermitted additions/conversions"
+    ],
+    "agent_questions": [
+      "Roof age and last replacement?",
+      "Any foundation repairs? Documents/warranty?",
+      "Any water intrusion history?",
+      "HOA rules, dues, transfer fees, leasing restrictions?",
+      "Survey availability and known easements?"
+    ]
+  },
+
+  "money_context_tx": {
+    "property_taxes": {
+      "high_level": "Texas property taxes can be a major payment driver; rates vary widely by county, city, school district, and exemptions.",
+      "agent_moves": [
+        "Verify current tax amount and exemptions status (homestead, etc.).",
+        "If buyer is relocating, explain escrow/tax increases as a budgeting risk.",
+        "Encourage buyer to confirm projected tax with lender/CPA when needed."
+      ]
+    },
+    "insurance": {
+      "high_level": "Homeowners insurance can vary significantly due to wind/hail exposure, rebuild cost inflation, and claim history.",
+      "agent_moves": [
+        "Encourage buyer to quote insurance early (during option if possible).",
+        "If property is older: flag plumbing/electrical/roof as premium drivers."
+      ]
+    },
+    "closing_costs": {
+      "high_level": "Closing costs vary by lender, points, title fees, and local rules; seller concessions may offset buyer cash-to-close depending on terms.",
+      "what_elena_should_ask": [
+        "Purchase price?",
+        "Down payment?",
+        "Credit score range?",
+        "HOA?",
+        "Estimated taxes/insurance?",
+        "Concessions requested?"
+      ]
+    }
+  },
+
+  "negotiation_tx": {
+    "offer_strength_levers": [
+      "Shorter option period (if buyer is confident)",
+      "Stronger earnest money + timely delivery proof",
+      "Flexible closing date",
+      "Cleaner addenda and fewer carve-outs",
+      "Appraisal gap language (only if buyer can truly cover it)"
+    ],
+    "repair_strategy": {
+      "prioritize": [
+        "Health/safety items",
+        "Structural/foundation",
+        "Roof and active leaks",
+        "HVAC major issues",
+        "Electrical hazards",
+        "Plumbing leaks / sewer scope if indicated"
+      ],
+      "preferred_outcomes": [
+        "Licensed repair + receipt",
+        "Credit (buyer controls contractor post-close)",
+        "Price reduction for valuation-heavy items"
+      ]
+    }
+  },
+
+  "scripts_tx": {
+    "option_period_explainer_to_buyer": {
+      "text": "BLUF: In Texas, the option period is your due diligence window — inspections, HOA review, and decision-making happen here. We’ll schedule inspections immediately, prioritize big-ticket and safety items, and if something is a deal-breaker we act before the option ends."
+    },
+    "earnest_money_instruction_to_buyer": {
+      "text": "Quick heads-up: Earnest money has a delivery deadline in the contract. Let’s get it to the title company early and keep the receipt in the file so there’s zero risk on timing."
+    },
+    "inspection_repair_request_to_listing_agent": {
+      "text": "We’re not trying to nickel-and-dime. We’re focusing on health/safety and big-ticket items that affect financing and long-term risk. If we can resolve these, we can keep the deal clean and on schedule. Would your seller prefer repairs by licensed pros with receipts, or a credit at closing?"
+    },
+    "seller_price_reality_check": {
+      "text": "Here’s the honest read: the market tells us the truth in the first 7 days. If we’re priced right, we’ll see real traffic and serious offers. If not, we adjust fast — we don’t wait until the listing goes stale."
+    },
+    "appraisal_issue_to_listing_agent": {
+      "text": "If appraisal comes in low, I’d love to solve it without drama. We can look at a price adjustment, a credit, or a structured gap plan — what’s most workable for your seller while keeping the close on track?"
+    }
+  },
+
+  "compliance_tx": {
+    "fair_housing_guardrails": [
+      "Use objective property and transaction criteria — avoid people-based language.",
+      "Avoid steering: do not describe neighborhoods as 'good for families' or similar.",
+      "If asked about demographic topics, redirect to objective data sources and let client decide."
+    ],
+    "legal_safety": [
+      "Use your broker/attorney for legal interpretation of forms and disputes.",
+      "Keep communications factual, dated, and documented."
+    ]
+  },
+
+  "elena_intent_hints": {
+    "keywords": [
+      "texas",
+      "tx",
+      "trec",
+      "option period",
+      "option fee",
+      "earnest money",
+      "seller disclosure",
+      "survey",
+      "hoa resale certificate",
+      "title company",
+      "property taxes",
+      "homestead"
+    ],
+    "recommended_responses": [
+      "BLUF + timeline control (dates/deadlines)",
+      "Ask for the minimum missing inputs (city/county, property type, financing, option days)",
+      "Provide 3 next moves + a ready-to-send script"
+    ]
+  }
+}

@@ -1,16 +1,16 @@
 // netlify/functions/ask-elena.js
 // ============================================================
-// v3.3.0 — RealtySaSS • Ask Elena (Local Memory + Thread)
-// ✅ NEW: context.thread + context.memory support
-// ✅ NEW: returns memory_patch for HUD localStorage merge
-// ✅ NEW: remembers simple picks (ex: number 1–10)
-// ✅ Keeps replies short + conversational
+// v3.4.0 — RealtySaSS • Ask Elena
+// ✅ Local Memory Support: context.thread + context.memory
+// ✅ FIX: Recovers last_number_1_10 from thread if memory missing
+// ✅ NEW: "remember 5" command stores the number
+// ✅ Clean answers for product + pricing
 // ============================================================
 
 const { createClient } = require("@supabase/supabase-js");
 
 /* ============================================================
-   //#1 — CORS (RealtySaSS)
+   //#1 — CORS
 ============================================================ */
 const DEFAULT_ALLOW_ORIGINS = [
   "https://realtysass.com",
@@ -76,6 +76,7 @@ function normalizeEmail(x) {
 function safeObj(x) {
   return x && typeof x === "object" ? x : null;
 }
+
 function pickName(profile) {
   const full = safeStr(profile?.full_name);
   const first = safeStr(profile?.first_name);
@@ -119,14 +120,6 @@ function clampTextToChars(text, maxChars) {
   return finalCut.replace(/\s+$/g, "") + "…";
 }
 
-function lastUserTurn(thread) {
-  if (!Array.isArray(thread)) return "";
-  for (let i = thread.length - 1; i >= 0; i--) {
-    if (thread[i] && thread[i].role === "user") return safeStr(thread[i].content);
-  }
-  return "";
-}
-
 function lastAssistantTurn(thread) {
   if (!Array.isArray(thread)) return "";
   for (let i = thread.length - 1; i >= 0; i--) {
@@ -135,8 +128,24 @@ function lastAssistantTurn(thread) {
   return "";
 }
 
+function recoverNumberFromThread(thread) {
+  // Looks for Elena saying: "Sure — 5." or "Sure —5."
+  if (!Array.isArray(thread)) return null;
+  for (let i = thread.length - 1; i >= 0; i--) {
+    const m = thread[i];
+    if (!m || m.role !== "assistant") continue;
+    const txt = String(m.content || "");
+    const match = txt.match(/sure\s*[—-]\s*(10|[1-9])\b/i);
+    if (match) {
+      const n = Number(match[1]);
+      if (Number.isFinite(n) && n >= 1 && n <= 10) return n;
+    }
+  }
+  return null;
+}
+
 /* ============================================================
-   //#4 — Intent detection (with memory-aware follow-ups)
+   //#4 — Intent detection
 ============================================================ */
 function detectIntent(text, memory, thread) {
   const t = String(text || "").toLowerCase().trim();
@@ -147,157 +156,83 @@ function detectIntent(text, memory, thread) {
 
   if (isGreeting) return { type: "greeting" };
 
-  // memory reset
   if (t === "/reset") return { type: "reset" };
 
-  // number picker
-  if (/(tell me|pick|choose).*(number).*(1|one).*(10|ten)/.test(t) || /number 1 to 10/.test(t)) {
+  // remember N
+  const rememberMatch = t.match(/^remember\s+(10|[1-9])\b/);
+  if (rememberMatch) return { type: "remember_number_1_10", n: Number(rememberMatch[1]) };
+
+  // pick number
+  if (/(pick|choose).*(number).*(1|one).*(10|ten)/.test(t) || /number 1 to 10/.test(t)) {
     return { type: "pick_number_1_10" };
   }
+
+  // recall number
   if (t.includes("what number did you") || t.includes("what number was it") || t.includes("which number")) {
-    // if we have a number stored, treat as followup
     if (memory && typeof memory.last_number_1_10 === "number") return { type: "recall_number_1_10" };
+
+    // recovery path: thread might contain the number
+    const recovered = recoverNumberFromThread(thread);
+    if (typeof recovered === "number") return { type: "recall_number_1_10_recovered", n: recovered };
+
     return { type: "recall_number_1_10_missing" };
   }
 
-  // product / account
-  if (t.includes("account") || t.includes("sign up") || t.includes("signup") || t.includes("login")) {
-    return { type: "account_help" };
+  // product/pricing
+  if (t.includes("best product") || t.includes("how much") || t.includes("cost") || t.includes("pricing")) {
+    return { type: "product_pricing" };
   }
+
   if (t.includes("buyerprofile") || t.includes("buyer profile") || t.includes("buyerbrief") || t.includes("realtysass")) {
     return { type: "product_question" };
   }
 
-  // scripts / workflows
-  if (t.includes("script") || t.includes("follow up") || t.includes("follow-up") || t.includes("text") || t.includes("email")) {
-    return { type: "script_request" };
-  }
-  if (t.includes("workflow") || t.includes("process") || t.includes("offer") || t.includes("inspection") || t.includes("appraisal")) {
-    return { type: "workflow_question" };
-  }
-
-  // conversational fallback: if user replies with a single word, treat it as continuation
-  const short = t.split(/\s+/).filter(Boolean).length <= 2;
-  if (short && thread && thread.length >= 2) {
-    return { type: "continuation" };
+  if (t.includes("account") || t.includes("sign up") || t.includes("signup") || t.includes("login")) {
+    return { type: "account_help" };
   }
 
   return { type: "general" };
 }
 
 /* ============================================================
-   //#5 — Deterministic replies (short + conversational)
+   //#5 — Deterministic replies (short)
 ============================================================ */
-function replyGreeting(role) {
-  if (role === "buyerbrief_brief") {
-    return "Hey — where is your buyer in the timeline right now (pre-approval, touring, offer, under contract)?";
-  }
+function replyGreeting() {
   return "Hey — want a script, an offer move, or a workflow?";
 }
 
-function replyProduct(text) {
-  const t = String(text || "").toLowerCase();
-  if (t.includes("buyerprofile") || t.includes("buyer profile")) {
-    return "BuyerProfile is your timeline-first buyer workspace. Tell me: are we building one new buyer, or updating an existing one?";
-  }
-  if (t.includes("buyerbrief")) {
-    return "BuyerBrief™ is the realtor-facing, timeline-first briefing. Where is the client stuck right now?";
-  }
-  if (t.includes("realtysass")) {
-    return "RealtySaSS helps you run cleaner deals: scripts, negotiation prep, workflows, and timeline-based next steps. Buyer, seller, or investor — what are you working on?";
-  }
-  return "Tell me what you want to do: script, offer move, or workflow — and I’ll keep it tight.";
+function replyProduct() {
+  return "RealtySaSS is built to keep deals clean: scripts, negotiation prep, workflows, and timeline-based next steps. Buyer, seller, or investor — who are we working on?";
 }
 
-function replyAccount() {
-  // keep it practical, not vague
+function replyPricing() {
+  // Current pricing snapshot from your locked-in plan
   return [
-    "To create an account:",
-    "1) Click your site’s “Join Us” / “Log In” button (top nav).",
-    "2) Enter email → you’ll get a code → paste it to verify.",
-    "3) Once you’re in, I can save your BuyerProfile/timeline so you don’t restart.",
+    "Best “core” product: **BuyerBrief™** (timeline-first buyer intelligence).",
     "",
-    "If you tell me what page you’re on (Login, Pricing, BuyerProfile), I’ll guide the exact click path."
+    "Pricing:",
+    "• Single: **$179**",
+    "• Pro: **$249/mo** or **$2,200/yr**",
+    "• Teams 5: **$699/mo** or **$6,700/yr**",
+    "• Teams 10: **$1,200/mo** or **$11,500/yr**",
+    "",
+    "Tell me: solo agent or team — and do you want BuyerBrief or the CRM add-on?"
   ].join("\n");
 }
 
-function replyScriptMenu() {
-  return "Pick one: lead follow-up, offer intro, inspection pushback, low appraisal, or price reduction convo.";
-}
-
-function replyWorkflowMenu() {
-  return "Buyer, seller, or investor workflow?";
-}
-
-function replyContinuation(thread, memory) {
-  const lastBot = lastAssistantTurn(thread);
-  const lastTopic = safeStr(memory?.last_topic);
-
-  // If Elena asked a question last, repeat it but shorter + one option
-  if (lastBot && lastBot.includes("?")) {
-    // tighten: last line with question mark
-    const q = lastBot.split("\n").filter(l => l.includes("?")).slice(-1)[0] || "What are we working on?";
-    return `${q} (One line answer is perfect.)`;
-  }
-  if (lastTopic) return `Got it — staying on ${lastTopic}. What’s the next detail you want me to handle?`;
-  return "Got it. What’s the next detail?";
+function replyAccount() {
+  return [
+    "Account setup is quick:",
+    "1) Tap **Join Us** (top nav).",
+    "2) Enter email → get code → verify.",
+    "3) You’re in — and I can save your timeline so you don’t repeat yourself.",
+    "",
+    "Which page are you on right now: Login, Pricing, or BuyerProfile?"
+  ].join("\n");
 }
 
 /* ============================================================
-   //#6 — OpenAI fallback (optional) using thread
-============================================================ */
-async function openAIFallback({ userText, thread, memory, profile, role, maxChars }) {
-  const key = process.env.OPENAI_API_KEY;
-  if (!key) {
-    return clampTextToChars("I’m missing OPENAI_API_KEY. Deterministic mode is on — tell me: script, offer move, or workflow?", maxChars);
-  }
-
-  const system = [
-    "You are Elena, a Realtor-side assistant for RealtySaSS.",
-    "Be conversational. Use the provided thread + memory so you remember context.",
-    "CRITICAL: Keep replies short. Default <= 2 short paragraphs.",
-    "No upsell unless user asked about account/login/pricing/saving/personalizing.",
-    `Role: ${role || "public_mainpage"}. If role is buyerbrief_brief: timeline-only, no selling.`,
-  ].join(" ");
-
-  // build messages from thread (last 12)
-  const msgs = [];
-  msgs.push({ role: "system", content: system });
-
-  const recent = Array.isArray(thread) ? thread.slice(-12) : [];
-  recent.forEach((m) => {
-    if (!m || !m.role || !m.content) return;
-    const r = (m.role === "assistant") ? "assistant" : "user";
-    msgs.push({ role: r, content: String(m.content) });
-  });
-
-  // current message
-  msgs.push({ role: "user", content: userText });
-
-  const resp = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
-    body: JSON.stringify({
-      model: "gpt-4o-mini",
-      temperature: 0.35,
-      max_tokens: 220,
-      messages: [
-        ...msgs,
-        {
-          role: "system",
-          content: "Memory object (facts): " + JSON.stringify(memory || {}),
-        },
-      ],
-    }),
-  });
-
-  const data = await resp.json();
-  const out = (data?.choices?.[0]?.message?.content || "").trim() || "Got it. What’s the one constraint that matters most?";
-  return clampTextToChars(out, maxChars);
-}
-
-/* ============================================================
-   //#7 — Handler
+   //#6 — Handler
 ============================================================ */
 module.exports.handler = async (event) => {
   const origin = event.headers?.origin || "";
@@ -314,18 +249,15 @@ module.exports.handler = async (event) => {
   if (!userText) return respond(400, headers, { error: "Missing message" });
 
   const context = safeObj(payload.context) || {};
-  const role = safeStr(context.role) || "public_mainpage";
-
   const limits = safeObj(context.response_limits) || {};
   const MAX_CHARS = Number.isFinite(Number(limits.max_chars)) ? Number(limits.max_chars) : 420;
   const GREET_MAX = Number.isFinite(Number(limits.greeting_max_chars)) ? Number(limits.greeting_max_chars) : 160;
 
-  // ✅ NEW: thread + memory from client
   const thread = Array.isArray(context.thread) ? context.thread : [];
   const memory = safeObj(context.memory) || {};
   const memory_patch = {};
 
-  // profile lookup (optional)
+  // optional profile lookup
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
   const email = getEmailFromPayload(payload);
@@ -356,123 +288,156 @@ module.exports.handler = async (event) => {
 
   const intent = detectIntent(userText, memory, thread);
 
-  /* ============================
-     //#7.1 Greeting (short)
-  ============================ */
+  // Greeting
   if (intent.type === "greeting") {
     memory_patch.last_intent = "greeting";
-    memory_patch.last_topic = memory.last_topic || "general";
-    const reply = clampTextToChars(replyGreeting(role), GREET_MAX);
+    const reply = clampTextToChars(replyGreeting(), GREET_MAX);
     return respond(200, headers, {
+      ok: true,
       intent: "greeting",
       reply,
       memory_patch,
+      // ✅ also send a full echo (HUD v2.2.1 will store this)
+      memory_echo: { ...memory, ...memory_patch },
       profile: profileContext,
       ui: { speed: 22, startDelay: 90 }
     });
   }
 
-  /* ============================
-     //#7.2 Pick number 1–10 (store)
-  ============================ */
+  // Remember N
+  if (intent.type === "remember_number_1_10") {
+    const n = Number(intent.n);
+    memory_patch.last_number_1_10 = n;
+    memory_patch.last_intent = "remember_number_1_10";
+    const reply = clampTextToChars(`Locked in — I’ll remember **${n}**.`, MAX_CHARS);
+    return respond(200, headers, {
+      ok: true,
+      intent: "remember_number_1_10",
+      reply,
+      memory_patch,
+      memory_echo: { ...memory, ...memory_patch },
+      profile: profileContext
+    });
+  }
+
+  // Pick number 1–10
   if (intent.type === "pick_number_1_10") {
     const n = Math.floor(Math.random() * 10) + 1;
     memory_patch.last_number_1_10 = n;
     memory_patch.last_intent = "pick_number_1_10";
     const reply = clampTextToChars(`Sure — ${n}.`, MAX_CHARS);
-    return respond(200, headers, { intent: "pick_number_1_10", reply, memory_patch, profile: profileContext });
-  }
-
-  /* ============================
-     //#7.3 Recall number 1–10
-  ============================ */
-  if (intent.type === "recall_number_1_10") {
-    const n = Number(memory.last_number_1_10);
-    const reply = clampTextToChars(`I picked **${n}**.`, MAX_CHARS);
-    memory_patch.last_intent = "recall_number_1_10";
-    return respond(200, headers, { intent: "recall_number_1_10", reply, memory_patch, profile: profileContext });
-  }
-  if (intent.type === "recall_number_1_10_missing") {
-    const reply = clampTextToChars("I don’t have it saved yet — ask me to pick a number 1–10 and I’ll remember it.", MAX_CHARS);
-    return respond(200, headers, { intent: "recall_number_1_10_missing", reply, memory_patch, profile: profileContext });
-  }
-
-  /* ============================
-     //#7.4 Account help
-  ============================ */
-  if (intent.type === "account_help") {
-    memory_patch.last_topic = "account";
-    memory_patch.last_intent = "account_help";
-    const reply = clampTextToChars(replyAccount(), MAX_CHARS);
-    return respond(200, headers, { intent: "account_help", reply, memory_patch, profile: profileContext });
-  }
-
-  /* ============================
-     //#7.5 Product question
-  ============================ */
-  if (intent.type === "product_question") {
-    const reply = clampTextToChars(replyProduct(userText), MAX_CHARS);
-    memory_patch.last_topic = "product";
-    memory_patch.last_intent = "product_question";
-    return respond(200, headers, { intent: "product_question", reply, memory_patch, profile: profileContext });
-  }
-
-  /* ============================
-     //#7.6 Script request
-  ============================ */
-  if (intent.type === "script_request") {
-    const reply = clampTextToChars(replyScriptMenu(), MAX_CHARS);
-    memory_patch.last_topic = "scripts";
-    memory_patch.last_intent = "script_request";
-    return respond(200, headers, { intent: "script_request", reply, memory_patch, profile: profileContext });
-  }
-
-  /* ============================
-     //#7.7 Workflow question
-  ============================ */
-  if (intent.type === "workflow_question") {
-    const reply = clampTextToChars(replyWorkflowMenu(), MAX_CHARS);
-    memory_patch.last_topic = "workflow";
-    memory_patch.last_intent = "workflow_question";
-    return respond(200, headers, { intent: "workflow_question", reply, memory_patch, profile: profileContext });
-  }
-
-  /* ============================
-     //#7.8 Continuation (memory-aware)
-  ============================ */
-  if (intent.type === "continuation") {
-    const reply = clampTextToChars(replyContinuation(thread, memory), MAX_CHARS);
-    memory_patch.last_intent = "continuation";
-    return respond(200, headers, { intent: "continuation", reply, memory_patch, profile: profileContext });
-  }
-
-  /* ============================
-     //#7.9 OpenAI fallback (thread-based)
-  ============================ */
-  try {
-    const reply = await openAIFallback({
-      userText,
-      thread,
-      memory,
-      profile: profileContext,
-      role,
-      maxChars: MAX_CHARS
-    });
-
-    memory_patch.last_intent = "openai_fallback";
-    // crude topic tracking
-    if (/buyerprofile|buyer profile/i.test(userText)) memory_patch.last_topic = "buyerprofile";
-    if (/offer/i.test(userText)) memory_patch.last_topic = "offer";
-    if (/inspection/i.test(userText)) memory_patch.last_topic = "inspection";
-
     return respond(200, headers, {
-      intent: "openai_fallback",
+      ok: true,
+      intent: "pick_number_1_10",
       reply,
       memory_patch,
+      memory_echo: { ...memory, ...memory_patch },
       profile: profileContext
     });
-  } catch (e) {
-    const reply = clampTextToChars("I hit a hiccup. Try that again in one line — script, offer move, or workflow?", MAX_CHARS);
-    return respond(200, headers, { intent: "error", reply, memory_patch, profile: profileContext });
   }
+
+  // Recall number (normal)
+  if (intent.type === "recall_number_1_10") {
+    const n = Number(memory.last_number_1_10);
+    memory_patch.last_intent = "recall_number_1_10";
+    const reply = clampTextToChars(`I picked **${n}**.`, MAX_CHARS);
+    return respond(200, headers, {
+      ok: true,
+      intent: "recall_number_1_10",
+      reply,
+      memory_patch,
+      memory_echo: { ...memory, ...memory_patch },
+      profile: profileContext
+    });
+  }
+
+  // Recall number (recovered from thread)
+  if (intent.type === "recall_number_1_10_recovered") {
+    const n = Number(intent.n);
+    memory_patch.last_number_1_10 = n;
+    memory_patch.last_intent = "recall_number_1_10_recovered";
+    const reply = clampTextToChars(`I picked **${n}**.`, MAX_CHARS);
+    return respond(200, headers, {
+      ok: true,
+      intent: "recall_number_1_10_recovered",
+      reply,
+      memory_patch,
+      memory_echo: { ...memory, ...memory_patch },
+      profile: profileContext
+    });
+  }
+
+  // Recall missing
+  if (intent.type === "recall_number_1_10_missing") {
+    const reply = clampTextToChars(
+      "I don’t have it saved yet — say **“remember 5”** (or any 1–10) and I’ll keep it.",
+      MAX_CHARS
+    );
+    return respond(200, headers, {
+      ok: true,
+      intent: "recall_number_1_10_missing",
+      reply,
+      memory_patch,
+      memory_echo: { ...memory, ...memory_patch },
+      profile: profileContext
+    });
+  }
+
+  // Product + pricing
+  if (intent.type === "product_pricing") {
+    memory_patch.last_intent = "product_pricing";
+    const reply = clampTextToChars(replyPricing(), MAX_CHARS);
+    return respond(200, headers, {
+      ok: true,
+      intent: "product_pricing",
+      reply,
+      memory_patch,
+      memory_echo: { ...memory, ...memory_patch },
+      profile: profileContext
+    });
+  }
+
+  // Product question
+  if (intent.type === "product_question") {
+    memory_patch.last_intent = "product_question";
+    const reply = clampTextToChars(replyProduct(), MAX_CHARS);
+    return respond(200, headers, {
+      ok: true,
+      intent: "product_question",
+      reply,
+      memory_patch,
+      memory_echo: { ...memory, ...memory_patch },
+      profile: profileContext
+    });
+  }
+
+  // Account help
+  if (intent.type === "account_help") {
+    memory_patch.last_intent = "account_help";
+    const reply = clampTextToChars(replyAccount(), MAX_CHARS);
+    return respond(200, headers, {
+      ok: true,
+      intent: "account_help",
+      reply,
+      memory_patch,
+      memory_echo: { ...memory, ...memory_patch },
+      profile: profileContext
+    });
+  }
+
+  // General fallback (tight)
+  memory_patch.last_intent = "general";
+  const reply = clampTextToChars(
+    "Got you. Pick one so I can be surgical: **script**, **offer move**, or **workflow**?",
+    MAX_CHARS
+  );
+
+  return respond(200, headers, {
+    ok: true,
+    intent: "general",
+    reply,
+    memory_patch,
+    memory_echo: { ...memory, ...memory_patch },
+    profile: profileContext
+  });
 };

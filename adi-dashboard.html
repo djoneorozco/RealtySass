@@ -1,0 +1,916 @@
+<!DOCTYPE html><!--  This site was created in Webflow. https://webflow.com  --><!--  Last Published: Tue Feb 10 2026 02:34:24 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="69812817f82bceda4540fb50" data-wf-site="697e270fb126ef5fe6610167" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ADI Dashboard</title>
+  <meta content="ADI Dashboard" property="og:title">
+  <meta content="ADI Dashboard" property="twitter:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/realtysass-a30aee.webflow.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","PT Serif:400,400italic,700,700italic","Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic","Barlow Condensed:300,400,500,600,700","DM Sans:300,400,500,600,700","Gilda Display:300,400,500,600,700","Inter Tight:300,400,500,600,700"]  }});</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.svg" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.svg" rel="apple-touch-icon">
+</head>
+<body>
+  <section class="section-268">
+    <div data-w-id="fae5a3b7-a997-ebe7-b716-7b255f230f89" data-animation="over-left" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
+      <div class="container navbar-container w-container">
+        <div class="navbar-content">
+          <a aria-label="Main" role="Navigation" href="index.html" class="brand w-nav-brand"><img src="images/RS.png" loading="lazy" width="150" sizes="(max-width: 479px) 80vw, 150px" alt="Logo" srcset="images/b4ab8f37201140495c2b4eb2080e3216_RS-p-500.png 500w, images/RS.png 800w" class="black-logo"><img src="images/Group-9-2.svg" loading="lazy" alt="main logo white" class="white-logo"></a>
+          <nav role="navigation" class="nav-menu-wrapper w-nav-menu">
+            <div class="nav-menu none--border">
+              <a href="index.html" class="global-link nav-link first">home</a>
+              <a href="about-pages/pcs-united.html" class="global-link nav-link">PCS United</a>
+              <a href="features-pages/house-of-saas.html" class="global-link nav-link">House of SaSS</a>
+              <a href="pricing.html" class="global-link nav-link">pricing</a>
+              <a href="career.html" class="global-link nav-link">career</a>
+              <div data-delay="0" data-hover="false" data-w-id="9d4fda97-87d9-798c-247f-a302eba4e4fe" class="dropdown w-dropdown">
+                <div class="dropdown-toggle w-dropdown-toggle">
+                  <div class="dropdown-icon w-icon-dropdown-toggle"></div>
+                  <div class="global-link nav-link">more</div>
+                </div>
+                <nav class="nav-dropdown-list w-dropdown-list">
+                  <div class="nav-dropdown-content">
+                    <div class="nav-dropdown-grid-block">
+                      <div class="nav-grid-child">
+                        <div class="global-link-dropdown nav-link for--title">multi pages</div>
+                        <a href="index.html" class="global-link-dropdown nav-link for--dropdown">Home v1</a>
+                        <a href="home-pages/home-v2.html" class="global-link-dropdown nav-link for--dropdown">Home v2</a>
+                        <a href="home-pages/house-of-sass.html" class="global-link-dropdown nav-link for--dropdown">Home v3</a>
+                        <a href="about-pages/pcs-united.html" class="global-link-dropdown nav-link for--dropdown">About v1</a>
+                        <a href="about-pages/about-v2.html" class="global-link-dropdown nav-link for--dropdown">About v2</a>
+                        <a href="about-pages/about-v3.html" class="global-link-dropdown nav-link for--dropdown">About v3</a>
+                      </div>
+                      <div class="nav-grid-child">
+                        <div class="global-link-dropdown nav-link for--title">multi pages</div>
+                        <a href="features-pages/house-of-saas.html" class="global-link-dropdown nav-link for--dropdown">Features v1</a>
+                        <a href="features-pages/features-v2.html" class="global-link-dropdown nav-link for--dropdown">Features v2</a>
+                        <a href="features-pages/features-v3.html" class="global-link-dropdown nav-link for--dropdown">Features v3</a>
+                        <a href="contact.html" class="global-link-dropdown nav-link for--dropdown">Contact</a>
+                      </div>
+                      <div class="nav-grid-child">
+                        <div class="global-link-dropdown nav-link for--title">main pages</div>
+                        <a href="pricing.html" class="global-link-dropdown nav-link for--dropdown">Pricing</a>
+                        <a href="integrations.html" class="global-link-dropdown nav-link for--dropdown">Integrations</a>
+                        <a href="career.html" class="global-link-dropdown nav-link for--dropdown">Career</a>
+                        <a href="team.html" class="global-link-dropdown nav-link for--dropdown">Team</a>
+                        <a href="blog.html" class="global-link-dropdown nav-link for--dropdown">Blog</a>
+                      </div>
+                      <div class="nav-grid-child">
+                        <div class="global-link-dropdown nav-link for--title">Utility Pages</div>
+                        <a href="utility-pages/sign-in.html" class="global-link-dropdown nav-link for--dropdown">Sign in</a>
+                        <a href="utility-pages/sign-up.html" class="global-link-dropdown nav-link for--dropdown">Sign up</a>
+                        <a href="utility-pages/reset-password.html" class="global-link-dropdown nav-link for--dropdown">Reset password</a>
+                        <a href="legal-pages/terms-of-use.html" class="global-link-dropdown nav-link for--dropdown">Terms of service</a>
+                        <a href="legal-pages/privacy-policy.html" class="global-link-dropdown nav-link for--dropdown">Privacy policy</a>
+                      </div>
+                      <div class="nav-grid-child">
+                        <div class="global-link-dropdown nav-link for--title">CMS pages</div>
+                        <a href="https://praxlq.webflow.io/post/a-guide-to-remote-work-best-practices-and-tools-you-need" class="global-link-dropdown nav-link for--dropdown">Blog Details</a>
+                        <a href="https://praxlq.webflow.io/author/michael-miller" class="global-link-dropdown nav-link for--dropdown">Author Details</a>
+                        <a href="https://praxlq.webflow.io/blog-category/strategy" class="global-link-dropdown nav-link for--dropdown">Category details</a>
+                        <a href="https://praxlq.webflow.io/career/senior-frontend-engineer-core" class="global-link-dropdown nav-link for--dropdown">Career Details</a>
+                        <a href="https://praxlq.webflow.io/product/starter" class="global-link-dropdown nav-link for--dropdown">Product details</a>
+                      </div>
+                      <div class="nav-grid-child">
+                        <div class="global-link-dropdown nav-link for--title">other pages</div>
+                        <a href="coming-soon.html" class="global-link-dropdown nav-link for--dropdown">Coming Soon</a>
+                        <a href="extra-components/faqs.html" class="global-link-dropdown nav-link for--dropdown">FAQs</a>
+                        <a href="extra-components/testimonials.html" class="global-link-dropdown nav-link for--dropdown">Testimonials</a>
+                        <a href="template-pages/style-guide.html" class="global-link-dropdown nav-link for--dropdown">Style Gyide</a>
+                        <a href="template-pages/change-log.html" class="global-link-dropdown nav-link for--dropdown">Change log</a>
+                        <a href="template-pages/licenses.html" class="global-link-dropdown nav-link for--dropdown">Licensing</a>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+              <div data-delay="0" data-hover="false" data-w-id="233b3374-8041-d1ad-26d2-e7bc63f57423" class="dropdown w-dropdown">
+                <div class="dropdown-toggle w-dropdown-toggle">
+                  <div class="dropdown-icon w-icon-dropdown-toggle"></div>
+                  <div class="global-link nav-link">House of SaSS</div>
+                </div>
+                <nav class="nav-dropdown-list w-dropdown-list">
+                  <div class="nav-grid-child">
+                    <div class="global-link-dropdown nav-link for--title">S.A.A.S</div>
+                    <a href="index.html" class="global-link-dropdown nav-link for--dropdown">RE-Cal</a>
+                    <a href="home-pages/home-v2.html" class="global-link-dropdown nav-link for--dropdown">RE-Psych</a>
+                    <a href="home-pages/house-of-sass.html" class="global-link-dropdown nav-link for--dropdown">RE-Decor</a>
+                    <a href="about-pages/pcs-united.html" class="global-link-dropdown nav-link for--dropdown">RE-Admin</a>
+                  </div>
+                  <div class="nav-dropdown-content">
+                    <div class="nav-dropdown-grid-block"></div>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </nav>
+          <div class="cart-wrap">
+            <div data-open-product="" data-wf-cart-type="leftSidebar" data-wf-cart-query="" data-wf-page-link-href-prefix="" data-wf-cart-easing="ease-in-out-cubic" data-wf-cart-duration="500" class="w-commerce-commercecartwrapper" data-node-type="commerce-cart-wrapper">
+              <a data-w-id="1cb93335-3aa9-75d0-cfa2-359e6299970a" class="w-commerce-commercecartopenlink cart-button w-inline-block" role="button" aria-haspopup="dialog" aria-label="Open cart" data-node-type="commerce-cart-open-link" href="#">
+                <div class="hide-on-tablet w-inline-block">Cart(</div>
+                <div class="w-commerce-commercecartopenlinkcount cart-quantity">0</div>
+                <div class="hide-on-tablet w-inline-block">)</div><img src="images/icons8-cart-24-1_1icons8-cart-24-1.png" loading="lazy" alt="cart" class="cart-image">
+              </a>
+              <div style="display:none" class="w-commerce-commercecartcontainerwrapper w-commerce-commercecartcontainerwrapper--cartType-leftSidebar nav-cart-wrapper" data-node-type="commerce-cart-container-wrapper">
+                <div data-node-type="commerce-cart-container" role="dialog" class="w-commerce-commercecartcontainer cart-container">
+                  <div class="w-commerce-commercecartheader cart-header">
+                    <h4 class="w-commerce-commercecartheading">Your Cart</h4>
+                    <a class="w-commerce-commercecartcloselink cart-close-button w-inline-block" role="button" aria-label="Close cart" data-node-type="commerce-cart-close-link"><img loading="lazy" src="images/icons8-cross-50-1_1icons8-cross-50-1.png" alt="cross icon"></a>
+                  </div>
+                  <div class="w-commerce-commercecartformwrapper cart-form-wrapper">
+                    <form style="display:none" class="w-commerce-commercecartform cart-default-state" data-node-type="commerce-cart-form">
+                      <script type="text/x-wf-template" id="wf-template-1cb93335-3aa9-75d0-cfa2-359e62999719"></script>
+                      <div class="w-commerce-commercecartlist cart-list" data-wf-collection="database.commerceOrder.userItems" data-wf-template-id="wf-template-1cb93335-3aa9-75d0-cfa2-359e62999719"></div>
+                      <div class="w-commerce-commercecartfooter cart-footer">
+                        <div aria-live="polite" aria-atomic="true" class="w-commerce-commercecartlineitem">
+                          <div>Subtotal</div>
+                          <div class="w-commerce-commercecartordervalue order-price"></div>
+                        </div>
+                        <div>
+                          <div data-node-type="commerce-cart-quick-checkout-actions">
+                            <a role="button" aria-haspopup="dialog" aria-label="Apple Pay" data-node-type="commerce-cart-apple-pay-button" style="background-image:-webkit-named-image(apple-pay-logo-white);background-size:100% 50%;background-position:50% 50%;background-repeat:no-repeat" class="w-commerce-commercecartapplepaybutton apple-pay" tabindex="0">
+                              <div></div>
+                            </a>
+                            <a role="button" tabindex="0" aria-haspopup="dialog" data-node-type="commerce-cart-quick-checkout-button" style="display:none" class="w-commerce-commercecartquickcheckoutbutton apple-pay"><svg class="w-commerce-commercequickcheckoutgoogleicon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewbox="0 0 16 16">
+                                <defs>
+                                  <polygon id="google-mark-a" points="0 .329 3.494 .329 3.494 7.649 0 7.649"></polygon>
+                                  <polygon id="google-mark-c" points=".894 0 13.169 0 13.169 6.443 .894 6.443"></polygon>
+                                </defs>
+                                <g fill="none" fill-rule="evenodd">
+                                  <path fill="#4285F4" d="M10.5967,12.0469 L10.5967,14.0649 L13.1167,14.0649 C14.6047,12.6759 15.4577,10.6209 15.4577,8.1779 C15.4577,7.6339 15.4137,7.0889 15.3257,6.5559 L7.8887,6.5559 L7.8887,9.6329 L12.1507,9.6329 C11.9767,10.6119 11.4147,11.4899 10.5967,12.0469"></path>
+                                  <path fill="#34A853" d="M7.8887,16 C10.0137,16 11.8107,15.289 13.1147,14.067 C13.1147,14.066 13.1157,14.065 13.1167,14.064 L10.5967,12.047 C10.5877,12.053 10.5807,12.061 10.5727,12.067 C9.8607,12.556 8.9507,12.833 7.8887,12.833 C5.8577,12.833 4.1387,11.457 3.4937,9.605 L0.8747,9.605 L0.8747,11.648 C2.2197,14.319 4.9287,16 7.8887,16"></path>
+                                  <g transform="translate(0 4)">
+                                    <mask id="google-mark-b" fill="#fff">
+                                      <use xlink:href="#google-mark-a"></use>
+                                    </mask>
+                                    <path fill="#FBBC04" d="M3.4639,5.5337 C3.1369,4.5477 3.1359,3.4727 3.4609,2.4757 L3.4639,2.4777 C3.4679,2.4657 3.4749,2.4547 3.4789,2.4427 L3.4939,0.3287 L0.8939,0.3287 C0.8799,0.3577 0.8599,0.3827 0.8459,0.4117 C-0.2821,2.6667 -0.2821,5.3337 0.8459,7.5887 L0.8459,7.5997 C0.8549,7.6167 0.8659,7.6317 0.8749,7.6487 L3.4939,5.6057 C3.4849,5.5807 3.4729,5.5587 3.4639,5.5337" mask="url(#google-mark-b)"></path>
+                                  </g>
+                                  <mask id="google-mark-d" fill="#fff">
+                                    <use xlink:href="#google-mark-c"></use>
+                                  </mask>
+                                  <path fill="#EA4335" d="M0.894,4.3291 L3.478,6.4431 C4.113,4.5611 5.843,3.1671 7.889,3.1671 C9.018,3.1451 10.102,3.5781 10.912,4.3671 L13.169,2.0781 C11.733,0.7231 9.85,-0.0219 7.889,0.0001 C4.941,0.0001 2.245,1.6791 0.894,4.3291" mask="url(#google-mark-d)"></path>
+                                </g>
+                              </svg><svg class="w-commerce-commercequickcheckoutmicrosofticon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewbox="0 0 16 16">
+                                <g fill="none" fill-rule="evenodd">
+                                  <polygon fill="#F05022" points="7 7 1 7 1 1 7 1"></polygon>
+                                  <polygon fill="#7DB902" points="15 7 9 7 9 1 15 1"></polygon>
+                                  <polygon fill="#00A4EE" points="7 15 1 15 1 9 7 9"></polygon>
+                                  <polygon fill="#FFB700" points="15 15 9 15 9 9 15 9"></polygon>
+                                </g>
+                              </svg>
+                              <div>Pay with browser.</div>
+                            </a>
+                          </div>
+                          <a href="checkout.html" value="Continue to Checkout" class="w-commerce-commercecartcheckoutbutton global-pricing-button secondary for--product" data-loading-text="Hang Tight..." data-node-type="cart-checkout-button">Continue to Checkout</a>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="w-commerce-commercecartemptystate empty-message">
+                      <div aria-label="This cart is empty" aria-live="polite">No items found.</div>
+                    </div>
+                    <div aria-live="assertive" style="display:none" data-node-type="commerce-cart-error" class="w-commerce-commercecarterrorstate form-message-error">
+                      <div class="w-cart-error-msg" data-w-cart-quantity-error="Product is not available in this quantity." data-w-cart-general-error="Something went wrong when adding this item to the cart." data-w-cart-checkout-error="Checkout is disabled on this site." data-w-cart-cart_order_min-error="The order minimum was not met. Add more items to your cart to continue." data-w-cart-subscription_error-error="Before you purchase, please use your email invite to verify your address so we can send order updates.">Product is not available in this quantity.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="menu-button w-nav-button">
+              <div class="w-icon-nav-menu"></div>
+            </div>
+            <div class="nav-menu hide-on-tablet">
+              <a data-w-id="86d06777-2d03-939f-acc2-9be894164065" href="pricing.html" class="primary-glow-wrapper w-inline-block">
+                <div data-w-id="86d06777-2d03-939f-acc2-9be894164066" class="button-overflow-hidden">
+                  <div class="box-shadow-block">
+                    <div class="pedding-stroke">
+                      <div class="inside-button">
+                        <div class="button-text">Log In</div>
+                        <div class="hover-line"></div>
+                      </div>
+                    </div>
+                    <div class="glow-wrapper stroke">
+                      <div class="glow-item left"></div>
+                      <div class="glow-item"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="glow-wrapper bg">
+                  <div class="glow-item left bg"></div>
+                  <div class="glow-item bg"></div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section-267"></section>
+  <section class="section-269">
+    <div class="w-layout-blockcontainer w-container">
+      <div class="w-embed w-script"><!--  ============================================================
+  RealtySaSS • ADI Dashboard (Anonymized Demand Intelligence)
+  Version: v1.0.1 (STYLE UPGRADE — House of SaSS Frosted Glass)
+  ✅ NO logic changes
+  ✅ Frosted glass applied ONLY where it adds premium depth:
+     - Top header strip
+     - Filter bar shell
+     - KPI cards
+     - City group header
+     - Table header (sticky)
+  ✅ Stronger navy base + radial lighting + controlled glow
+===============================================================  -->
+        <div id="rs-adi" data-endpoint="" style="all: initial;">
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+          <style>
+    /* ============================================================
+      //#1 RESET + TOKENS (House of SaSS)
+    ============================================================ */
+    #rs-adi, #rs-adi *{ box-sizing:border-box; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; }
+    #rs-adi{
+      --bg:#0b0e1a;
+      --panel:#101426;
+      --panel2:#0f1324;
+      /* Frosted glass */
+      --glass: rgba(12,14,25,.58);
+      --glass2: rgba(12,14,25,.42);
+      --blur: 10px;
+      --stroke: rgba(255,255,255,.10);
+      --stroke2: rgba(255,255,255,.08);
+      --ink:#e9ecff;
+      --sub:#a8b0d6;
+      --teal:#8ef3c5;
+      --blue:#6aa7ff;
+      --ok:#34d399;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      width:100%;
+      color:var(--ink);
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:18px;
+      overflow:hidden;
+      /* Deeper “command center” background like the mock */
+      background:
+        radial-gradient(900px 520px at 20% 12%, rgba(106,167,255,.18), transparent 60%),
+        radial-gradient(820px 520px at 82% 18%, rgba(142,243,197,.14), transparent 62%),
+        radial-gradient(1200px 800px at 50% 115%, rgba(0,0,0,.55), transparent 55%),
+        linear-gradient(180deg, #0b0e1a 0%, #070914 100%);
+      box-shadow: 0 24px 48px rgba(0,0,0,.82);
+    }
+    /* Reusable frosted layer */
+    .glass{
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+    }
+    .glass.soft{
+      background: var(--glass2);
+      border-color: rgba(255,255,255,.06);
+      backdrop-filter: blur(calc(var(--blur) - 2px));
+      -webkit-backdrop-filter: blur(calc(var(--blur) - 2px));
+    }
+    /* Subtle inner glow edge (House of SaSS signature) */
+    .glow-edge{ position:relative; }
+    .glow-edge:before{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius: inherit;
+      pointer-events:none;
+      background:
+        radial-gradient(600px 220px at 15% 15%, rgba(142,243,197,.14), transparent 55%),
+        radial-gradient(600px 220px at 85% 15%, rgba(106,167,255,.14), transparent 55%);
+      opacity:.85;
+      mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+      -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+      padding:1px;
+      box-sizing:border-box;
+    }
+    /* ============================================================
+      //#2 HEADER (Frosted strip + breathing room)
+    ============================================================ */
+    .adi-top{
+      padding:20px 22px 14px 22px;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .adi-topShell{
+      border-radius:16px;
+      padding:16px 16px 14px 16px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+    }
+    .adi-brand{
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
+    }
+    .adi-title{
+      display:flex; flex-direction:column; gap:6px;
+      min-width:0;
+    }
+    .adi-title h2{
+      margin:0;
+      font-size:18px;
+      letter-spacing:.02em;
+      font-weight:900;
+    }
+    .adi-title .adi-sub{
+      margin:0;
+      font-size:11px;
+      color:var(--sub);
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .adi-disclaimer{
+      margin-top:10px;
+      font-size:12px;
+      color:rgba(233,236,255,.76);
+    }
+    .adi-disclaimer span{ color:var(--sub); }
+    /* ============================================================
+      //#3 FILTER BAR (Frosted capsule)
+    ============================================================ */
+    .adi-filters{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap:10px;
+      align-items:end;
+    }
+    .filterShell{
+      border-radius:14px;
+      padding:12px;
+      margin-top:12px;
+      box-shadow: 0 16px 36px rgba(0,0,0,.50);
+    }
+    .field label{
+      display:block;
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--sub);
+      margin:0 0 6px 2px;
+    }
+    .field select, .field input{
+      width:100%;
+      height:40px;
+      border-radius:10px;
+      background: rgba(12,14,25,.55);
+      border:1px solid rgba(255,255,255,.10);
+      color:var(--ink);
+      padding:0 12px;
+      outline:none;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    .field select:focus, .field input:focus{
+      border-color: rgba(142,243,197,.75);
+      box-shadow:
+        0 0 0 1px rgba(142,243,197,.22),
+        0 10px 22px rgba(0,0,0,.35);
+    }
+    .btn{
+      height:40px;
+      border-radius:999px;
+      border:0;
+      cursor:pointer;
+      font-weight:900;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      font-size:12px;
+      color:#050712;
+      background: radial-gradient(circle at 30% 30%, var(--teal), var(--blue));
+      box-shadow: 0 14px 30px rgba(0,0,0,.80);
+      transition: transform .12s ease, filter .12s ease, box-shadow .12s ease;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      filter:brightness(1.06);
+      box-shadow: 0 18px 36px rgba(0,0,0,.86);
+    }
+    .btn:active{ transform: translateY(0px); filter:brightness(.98); }
+    /* ============================================================
+      //#4 BADGES / PILLS
+    ============================================================ */
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color:rgba(233,236,255,.90);
+      font-size:12px;
+      font-weight:900;
+      flex:0 0 auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    .pill b{ color:var(--teal); }
+    /* ============================================================
+      //#5 BODY + KPIs (more depth, less “flat”)
+    ============================================================ */
+    .adi-body{ padding:14px 14px 18px 14px; }
+    .adi-kpis{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:10px;
+      margin-bottom:12px;
+      padding:0 6px;
+    }
+    .kpi{
+      border-radius:14px;
+      padding:12px 12px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+    }
+    .kpi .kpi-label{
+      font-size:10px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: rgba(233,236,255,.78);
+      margin-bottom:6px;
+    }
+    .kpi .kpi-val{
+      font-size:16px;
+      font-weight:900;
+      color: rgba(233,236,255,.65);
+    }
+    /* ============================================================
+      //#6 CITY GROUPS (header like the mock)
+    ============================================================ */
+    .group{
+      margin-top:10px;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow: 0 18px 44px rgba(0,0,0,.60);
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .group-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .group-head .left{
+      display:flex; align-items:center; gap:10px;
+      min-width:0;
+    }
+    .chev{
+      width:26px; height:26px;
+      border-radius:9px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      color:var(--ink);
+      flex:0 0 auto;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+    }
+.group-title{
+  font-weight:900;
+  letter-spacing:.02em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  color: rgba(233,236,255,.92);
+}
+    .group-meta{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    /* ============================================================
+      //#7 TABLE (closer to mock: cleaner, lighter lines, frosted header)
+    ============================================================ */
+    .table-wrap{ overflow:auto; }
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      min-width:1150px;
+      background: rgba(7,9,20,.30);
+    }
+    thead th{
+      position:sticky; top:0;
+      background: rgba(12,14,25,.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:rgba(168,176,214,.92);
+      text-align:left;
+      padding:12px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      white-space:nowrap;
+      z-index:2;
+    }
+    tbody td{
+      padding:12px 10px;
+      border-bottom:1px solid rgba(255,255,255,.05);
+      color:rgba(233,236,255,.92);
+      font-size:13px;
+      white-space:nowrap;
+    }
+    tbody tr:hover td{ background: rgba(255,255,255,.03); }
+    /* Subtle row striping like premium dashboards */
+    tbody tr:nth-child(2n) td{ background: rgba(255,255,255,.012); }
+    .muted{ color:rgba(233,236,255,.62); }
+    /* ============================================================
+      //#8 TAGS (more “capsule” look like mock)
+    ============================================================ */
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.02em;
+      background: rgba(0,0,0,.16);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+    }
+    /* Health grades */
+    .tag.grade-a{ border-color: rgba(52,211,153,.35); color:#dffdf2; }
+    .tag.grade-b{ border-color: rgba(52,211,153,.18); color:#e9ecff; }
+    .tag.grade-c{ border-color: rgba(251,191,36,.35); color:#fff7da; }
+    .tag.grade-d{ border-color: rgba(251,113,133,.35); color:#ffe2ea; }
+    /* Timeline */
+    .tag.tl-now{ border-color: rgba(251,113,133,.35); }
+    .tag.tl-30{ border-color: rgba(52,211,153,.35); }
+    .tag.tl-60{ border-color: rgba(251,191,36,.35); }
+    /* ============================================================
+      //#9 FOOTER
+    ============================================================ */
+    .foot{
+      padding:10px 22px 16px 22px;
+      color:rgba(233,236,255,.62);
+      font-size:12px;
+      border-top:1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.10);
+    }
+    /* ============================================================
+      //#10 RESPONSIVE
+    ============================================================ */
+    @media (max-width: 980px){
+      .adi-filters{ grid-template-columns: 1fr 1fr; }
+      .adi-kpis{ grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+          <!--  ============================================================
+    //#11 UI MARKUP (Same structure + added glass wrappers)
+  ============================================================  -->
+          <div class="adi-top">
+            <div class="adi-topShell glass glow-edge">
+              <div class="adi-brand">
+                <div class="adi-title">
+                  <h2>Anonymized Demand Intelligence</h2>
+                  <div class="adi-sub">Active PCS Demand • Last 30 Days</div>
+                </div>
+                <div class="pill" title="ADI is anonymized buyer intelligence (no PII).">
+                  ADI <b>ON</b>
+                </div>
+              </div>
+              <div class="filterShell glass soft glow-edge">
+                <div class="adi-filters">
+                  <div class="field">
+                    <label>Filter by City</label>
+                    <select id="adi-city"></select>
+                  </div>
+                  <div class="field">
+                    <label>Timeline</label>
+                    <select id="adi-timeline"></select>
+                  </div>
+                  <div class="field">
+                    <label>Health Grade</label>
+                    <select id="adi-grade"></select>
+                  </div>
+                  <button class="btn" id="adi-reset">Reset</button>
+                </div>
+                <div class="adi-disclaimer">
+                  All data anonymized. <span>No personal identifiers.</span> Aggregated buyer intelligence only.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="adi-body">
+            <div class="adi-kpis">
+              <div class="kpi glass glow-edge">
+                <div class="kpi-label">Rows visible</div>
+                <div class="kpi-val" id="k-rows">—</div>
+              </div>
+              <div class="kpi glass glow-edge">
+                <div class="kpi-label">Cities visible</div>
+                <div class="kpi-val" id="k-cities">—</div>
+              </div>
+              <div class="kpi glass glow-edge">
+                <div class="kpi-label">High readiness</div>
+                <div class="kpi-val" id="k-high">—</div>
+              </div>
+              <div class="kpi glass glow-edge">
+                <div class="kpi-label">Now / 30–60</div>
+                <div class="kpi-val" id="k-soon">—</div>
+              </div>
+            </div>
+            <div id="adi-groups"></div>
+          </div>
+          <div class="foot">
+            Tip: Realtors should default to a single city view. ADI is designed for preparation, not outreach.
+          </div>
+          <script>
+  (() => {
+    // ============================================================
+    // //#12 STATE + MOCK DATA (20 rows)
+    // ============================================================
+    const root = document.getElementById("rs-adi");
+    const ENDPOINT = (root.getAttribute("data-endpoint") || "").trim(); // optional later
+    const elCity = document.getElementById("adi-city");
+    const elTL   = document.getElementById("adi-timeline");
+    const elGr   = document.getElementById("adi-grade");
+    const elReset= document.getElementById("adi-reset");
+    const elGroups = document.getElementById("adi-groups");
+    const kRows   = document.getElementById("k-rows");
+    const kCities = document.getElementById("k-cities");
+    const kHigh   = document.getElementById("k-high");
+    const kSoon   = document.getElementById("k-soon");
+    // Mock dataset matches your ADI schema (bands, buckets, no PII)
+    const MOCK = [
+      // San Antonio (JBSA)
+      { city:"San Antonio, TX (JBSA)", pcs_id:"PCS-1027", pcs_status:"Orders Pending", rank_band:"E-6", family:4, timeline:"30–60 days", grade:"A-", credit:"Good", income:"Mid", residual:"Balanced", downpay:"3–5%", target:"$320k–$380k", rentbuy:"Buy", va:"VA Ready", commute:"Moderate", flex:"Move-in ready", notes:"VA-ready, prefers 3–4 bed" },
+      { city:"San Antonio, TX (JBSA)", pcs_id:"PCS-1031", pcs_status:"Orders Received", rank_band:"O-3", family:2, timeline:"60–120 days", grade:"A", credit:"Excellent", income:"High", residual:"Strong", downpay:"5–10%", target:"$420k–$480k", rentbuy:"Buy", va:"VA Likely", commute:"Flexible", flex:"Light updates OK", notes:"Commute flexible, condo ok" },
+      { city:"San Antonio, TX (JBSA)", pcs_id:"PCS-1044", pcs_status:"Early Research", rank_band:"E-4", family:3, timeline:"60–120 days", grade:"C+", credit:"Fair", income:"Low", residual:"Tight", downpay:"0–2%", target:"$260k–$300k", rentbuy:"Rent", va:"VA Unknown", commute:"Tight", flex:"Move-in ready", notes:"Price sensitive, wants schools" },
+      { city:"San Antonio, TX (JBSA)", pcs_id:"PCS-1059", pcs_status:"Finalizing Housing", rank_band:"E-7", family:5, timeline:"30–60 days", grade:"B", credit:"Good", income:"Mid", residual:"Balanced", downpay:"3–5%", target:"$360k–$420k", rentbuy:"Buy", va:"VA Ready", commute:"Moderate", flex:"Light updates OK", notes:"Needs yard, schools, quick close" },
+      { city:"San Antonio, TX (JBSA)", pcs_id:"PCS-1068", pcs_status:"Orders Received", rank_band:"O-4", family:4, timeline:"Now", grade:"A", credit:"Excellent", income:"High", residual:"Strong", downpay:"10%+", target:"$500k–$600k", rentbuy:"Buy", va:"VA Likely", commute:"Flexible", flex:"Move-in ready", notes:"Executive housing, low repair tolerance" },
+      // Las Vegas (Nellis)
+      { city:"Las Vegas, NV (Nellis AFB)", pcs_id:"PCS-1102", pcs_status:"Orders Pending", rank_band:"E-5", family:2, timeline:"30–60 days", grade:"B+", credit:"Good", income:"Mid", residual:"Balanced", downpay:"3–5%", target:"$340k–$390k", rentbuy:"Buy", va:"VA Ready", commute:"Moderate", flex:"Move-in ready", notes:"VA eligible, prefers newer" },
+      { city:"Las Vegas, NV (Nellis AFB)", pcs_id:"PCS-1115", pcs_status:"Orders Received", rank_band:"E-6", family:4, timeline:"Now", grade:"C", credit:"Fair", income:"Mid", residual:"Tight", downpay:"0–2%", target:"$300k–$340k", rentbuy:"Rent", va:"VA Likely", commute:"Tight", flex:"Move-in ready", notes:"Inventory risk, budget tight" },
+      { city:"Las Vegas, NV (Nellis AFB)", pcs_id:"PCS-1129", pcs_status:"Early Research", rank_band:"O-2", family:1, timeline:"60–120 days", grade:"A", credit:"Excellent", income:"High", residual:"Strong", downpay:"5–10%", target:"$380k–$420k", rentbuy:"Buy", va:"VA Likely", commute:"Flexible", flex:"Light updates OK", notes:"Condo acceptable, low urgency" },
+      { city:"Las Vegas, NV (Nellis AFB)", pcs_id:"PCS-1141", pcs_status:"Finalizing Housing", rank_band:"E-7", family:5, timeline:"30–60 days", grade:"B", credit:"Good", income:"Mid", residual:"Balanced", downpay:"3–5%", target:"$400k–$460k", rentbuy:"Buy", va:"VA Ready", commute:"Moderate", flex:"Move-in ready", notes:"HOA cautious, wants yard" },
+      { city:"Las Vegas, NV (Nellis AFB)", pcs_id:"PCS-1156", pcs_status:"Orders Received", rank_band:"O-5", family:3, timeline:"Now", grade:"A", credit:"Excellent", income:"High", residual:"Strong", downpay:"10%+", target:"$550k–$650k", rentbuy:"Buy", va:"VA Likely", commute:"Flexible", flex:"Move-in ready", notes:"Low tolerance for repairs" },
+      // Okinawa (Kadena)
+      { city:"Okinawa, JP (Kadena AB)", pcs_id:"PCS-1204", pcs_status:"Orders Received", rank_band:"E-5", family:4, timeline:"Now", grade:"C", credit:"Good", income:"Mid", residual:"Tight", downpay:"N/A", target:"¥180k–¥220k", rentbuy:"Rent", va:"N/A", commute:"Tight", flex:"Move-in ready", notes:"OCONUS lease rules, short timeline" },
+      { city:"Okinawa, JP (Kadena AB)", pcs_id:"PCS-1217", pcs_status:"Orders Pending", rank_band:"E-6", family:5, timeline:"30–60 days", grade:"B", credit:"Good", income:"Mid", residual:"Balanced", downpay:"N/A", target:"¥220k–¥260k", rentbuy:"Rent", va:"N/A", commute:"Moderate", flex:"Move-in ready", notes:"School proximity priority" },
+      { city:"Okinawa, JP (Kadena AB)", pcs_id:"PCS-1230", pcs_status:"Early Research", rank_band:"O-3", family:2, timeline:"60–120 days", grade:"A", credit:"Excellent", income:"High", residual:"Strong", downpay:"N/A", target:"¥260k–¥300k", rentbuy:"Rent", va:"N/A", commute:"Flexible", flex:"Light updates OK", notes:"Short-term lease acceptable" },
+      { city:"Okinawa, JP (Kadena AB)", pcs_id:"PCS-1249", pcs_status:"Orders Received", rank_band:"E-4", family:3, timeline:"Now", grade:"C-", credit:"Fair", income:"Low", residual:"Tight", downpay:"N/A", target:"¥160k–¥190k", rentbuy:"Rent", va:"N/A", commute:"Tight", flex:"Move-in ready", notes:"Budget constrained, needs 3 bed" },
+      { city:"Okinawa, JP (Kadena AB)", pcs_id:"PCS-1262", pcs_status:"Finalizing Housing", rank_band:"O-4", family:4, timeline:"30–60 days", grade:"A", credit:"Excellent", income:"High", residual:"Strong", downpay:"N/A", target:"¥300k–¥340k", rentbuy:"Rent", va:"N/A", commute:"Moderate", flex:"Move-in ready", notes:"Executive allowance likely" },
+      // Albuquerque (Kirtland)
+      { city:"Albuquerque, NM (Kirtland AFB)", pcs_id:"PCS-1308", pcs_status:"Orders Pending", rank_band:"E-6", family:4, timeline:"30–60 days", grade:"B+", credit:"Good", income:"Mid", residual:"Balanced", downpay:"3–5%", target:"$310k–$360k", rentbuy:"Buy", va:"VA Ready", commute:"Moderate", flex:"Move-in ready", notes:"VA-ready, stable profile" },
+      { city:"Albuquerque, NM (Kirtland AFB)", pcs_id:"PCS-1321", pcs_status:"Early Research", rank_band:"E-5", family:3, timeline:"60–120 days", grade:"C", credit:"Fair", income:"Mid", residual:"Tight", downpay:"0–2%", target:"$280k–$320k", rentbuy:"Rent", va:"VA Unknown", commute:"Tight", flex:"Move-in ready", notes:"Commute sensitive, budget cautious" },
+      { city:"Albuquerque, NM (Kirtland AFB)", pcs_id:"PCS-1336", pcs_status:"Orders Received", rank_band:"O-3", family:2, timeline:"Now", grade:"A", credit:"Excellent", income:"High", residual:"Strong", downpay:"5–10%", target:"$400k–$460k", rentbuy:"Buy", va:"VA Likely", commute:"Flexible", flex:"Move-in ready", notes:"New build preferred" },
+      { city:"Albuquerque, NM (Kirtland AFB)", pcs_id:"PCS-1350", pcs_status:"Finalizing Housing", rank_band:"E-7", family:5, timeline:"30–60 days", grade:"B", credit:"Good", income:"Mid", residual:"Balanced", downpay:"3–5%", target:"$360k–$420k", rentbuy:"Buy", va:"VA Ready", commute:"Moderate", flex:"Light updates OK", notes:"School zones priority" },
+      { city:"Albuquerque, NM (Kirtland AFB)", pcs_id:"PCS-1369", pcs_status:"Early Research", rank_band:"O-5", family:4, timeline:"60–120 days", grade:"A", credit:"Excellent", income:"High", residual:"Strong", downpay:"10%+", target:"$520k–$600k", rentbuy:"Buy", va:"VA Likely", commute:"Flexible", flex:"Move-in ready", notes:"Low risk buyer, flexible close" }
+    ];
+    const DEFAULTS = { city:"ALL", timeline:"ALL", grade:"ALL" };
+    const state = {
+      rows: [],
+      filters: {...DEFAULTS},
+      collapsedCities: {}
+    };
+    // ============================================================
+    // //#13 HELPERS
+    // ============================================================
+    const gradeRank = (g) => {
+      const order = ["A+","A","A-","B+","B","B-","C+","C","C-","D+","D","D-","F"];
+      const idx = order.indexOf(String(g||"").toUpperCase());
+      return idx === -1 ? 999 : idx;
+    };
+    const timelineRank = (t) => {
+      const v = (t||"").toLowerCase();
+      if (v.includes("now")) return 0;
+      if (v.includes("30")) return 1;
+      if (v.includes("60")) return 2;
+      return 9;
+    };
+    const tagClassTL = (t) => {
+      const v = (t||"").toLowerCase();
+      if (v.includes("now")) return "tl-now";
+      if (v.includes("30")) return "tl-30";
+      return "tl-60";
+    };
+    const tagClassGrade = (g) => {
+      const v = (g||"").toUpperCase();
+      if (v.startsWith("A")) return "grade-a";
+      if (v.startsWith("B")) return "grade-b";
+      if (v.startsWith("C")) return "grade-c";
+      return "grade-d";
+    };
+    const uniq = (arr) => Array.from(new Set(arr)).filter(Boolean);
+    function setSelectOptions(select, options, firstLabel){
+      select.innerHTML = "";
+      const opt0 = document.createElement("option");
+      opt0.value = "ALL";
+      opt0.textContent = firstLabel || "All";
+      select.appendChild(opt0);
+      options.forEach(v => {
+        const o = document.createElement("option");
+        o.value = v;
+        o.textContent = v;
+        select.appendChild(o);
+      });
+    }
+    // ============================================================
+    // //#14 DATA LOAD (Mock-first, API-ready)
+    // ============================================================
+    async function loadRows(){
+      if (!ENDPOINT){
+        state.rows = MOCK.slice();
+        hydrateFilters();
+        paint();
+        return;
+      }
+      try{
+        const res = await fetch(ENDPOINT, { method:"GET", headers:{ "Accept":"application/json" } });
+        const json = await res.json();
+        const rows = Array.isArray(json) ? json : (json.rows || []);
+        state.rows = rows.length ? rows : MOCK.slice();
+      }catch(e){
+        state.rows = MOCK.slice();
+      }
+      hydrateFilters();
+      paint();
+    }
+    // ============================================================
+    // //#15 FILTERS + SORT
+    // ============================================================
+    function hydrateFilters(){
+      const cities = uniq(state.rows.map(r => r.city)).sort((a,b)=>a.localeCompare(b));
+      const tls    = uniq(state.rows.map(r => r.timeline)).sort((a,b)=>timelineRank(a)-timelineRank(b));
+      const grades = uniq(state.rows.map(r => r.grade)).sort((a,b)=>gradeRank(a)-gradeRank(b));
+      setSelectOptions(elCity, cities, "All Cities");
+      setSelectOptions(elTL, tls, "All Timelines");
+      setSelectOptions(elGr, grades, "All Grades");
+      elCity.value = state.filters.city;
+      elTL.value   = state.filters.timeline;
+      elGr.value   = state.filters.grade;
+    }
+    function applyFilters(rows){
+      return rows.filter(r => {
+        if (state.filters.city !== "ALL" && r.city !== state.filters.city) return false;
+        if (state.filters.timeline !== "ALL" && r.timeline !== state.filters.timeline) return false;
+        if (state.filters.grade !== "ALL" && r.grade !== state.filters.grade) return false;
+        return true;
+      });
+    }
+    function groupByCity(rows){
+      const map = {};
+      rows.forEach(r => { (map[r.city] = map[r.city] || []).push(r); });
+      const cities = Object.keys(map).sort((a,b)=>a.localeCompare(b));
+      return { cities, map };
+    }
+    function sortRowsWithinCity(rows){
+      return rows.slice().sort((a,b)=>{
+        const ida = (a.pcs_id||"").localeCompare(b.pcs_id||"");
+        if (ida !== 0) return ida;
+        const ga = gradeRank(a.grade) - gradeRank(b.grade);
+        if (ga !== 0) return ga;
+        return timelineRank(a.timeline) - timelineRank(b.timeline);
+      });
+    }
+    // ============================================================
+    // //#16 PAINT UI
+    // ============================================================
+    function paint(){
+      const filtered = applyFilters(state.rows);
+      const { cities, map } = groupByCity(filtered);
+      // KPIs
+      kRows.textContent = String(filtered.length);
+      kCities.textContent = String(cities.length);
+      const high = filtered.filter(r => String(r.grade||"").toUpperCase().startsWith("A")).length;
+      kHigh.textContent = String(high);
+      const soon = filtered.filter(r => timelineRank(r.timeline) <= 1).length; // now or 30–60
+      kSoon.textContent = String(soon);
+      // groups
+      elGroups.innerHTML = "";
+      if (!filtered.length){
+        elGroups.innerHTML = `<div class="group glass glow-edge"><div class="group-head">
+          <div class="left"><div class="chev">•</div><div class="group-title">No results</div></div>
+          <div class="group-meta"><span class="pill">Try resetting filters</span></div>
+        </div></div>`;
+        return;
+      }
+      cities.forEach(city => {
+        const rows = sortRowsWithinCity(map[city] || []);
+        const collapsed = !!state.collapsedCities[city];
+        const group = document.createElement("div");
+        group.className = "group glass glow-edge";
+        const head = document.createElement("div");
+        head.className = "group-head";
+        head.innerHTML = `
+          <div class="left">
+            <div class="chev">${collapsed ? "▸" : "▾"}</div>
+            <div class="group-title">${escapeHtml(city)}</div>
+          </div>
+          <div class="group-meta">
+            <span class="pill">Rows <b>${rows.length}</b></span>
+            <span class="pill">A-grades <b>${rows.filter(r=>String(r.grade||"").toUpperCase().startsWith("A")).length}</b></span>
+            <span class="pill">Now/30 <b>${rows.filter(r=>timelineRank(r.timeline)<=1).length}</b></span>
+          </div>
+        `;
+        const wrap = document.createElement("div");
+        wrap.className = "table-wrap";
+        wrap.style.display = collapsed ? "none" : "block";
+        wrap.innerHTML = `
+          <table>
+            <thead>
+              <tr>
+                <th>PCS ID</th>
+                <th>PCS Status</th>
+                <th>Rank</th>
+                <th>Family</th>
+                <th>Timeline</th>
+                <th>Health</th>
+                <th>Credit</th>
+                <th>Income</th>
+                <th>Residual</th>
+                <th>Down Pay</th>
+                <th>Target</th>
+                <th>Rent/Buy</th>
+                <th>VA</th>
+                <th>Commute</th>
+                <th>Flex</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map(r => rowHtml(r)).join("")}
+            </tbody>
+          </table>
+        `;
+        head.addEventListener("click", () => {
+          state.collapsedCities[city] = !state.collapsedCities[city];
+          paint();
+        });
+        group.appendChild(head);
+        group.appendChild(wrap);
+        elGroups.appendChild(group);
+      });
+    }
+    function rowHtml(r){
+      const tlClass = tagClassTL(r.timeline);
+      const grClass = tagClassGrade(r.grade);
+      return `
+        <tr>
+          <td><b>${escapeHtml(r.pcs_id||"")}</b></td>
+          <td class="muted">${escapeHtml(r.pcs_status||"")}</td>
+          <td>${escapeHtml(r.rank_band||"")}</td>
+          <td>${escapeHtml(String(r.family ?? ""))}</td>
+          <td><span class="tag ${tlClass}">${escapeHtml(r.timeline||"")}</span></td>
+          <td><span class="tag ${grClass}">${escapeHtml(r.grade||"")}</span></td>
+          <td>${escapeHtml(r.credit||"")}</td>
+          <td>${escapeHtml(r.income||"")}</td>
+          <td>${escapeHtml(r.residual||"")}</td>
+          <td>${escapeHtml(r.downpay||"")}</td>
+          <td>${escapeHtml(r.target||"")}</td>
+          <td>${escapeHtml(r.rentbuy||"")}</td>
+          <td>${escapeHtml(r.va||"")}</td>
+          <td>${escapeHtml(r.commute||"")}</td>
+          <td>${escapeHtml(r.flex||"")}</td>
+          <td class="muted">${escapeHtml(r.notes||"")}</td>
+        </tr>
+      `;
+    }
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    // ============================================================
+    // //#17 EVENTS
+    // ============================================================
+    elCity.addEventListener("change", () => { state.filters.city = elCity.value; paint(); });
+    elTL.addEventListener("change",   () => { state.filters.timeline = elTL.value; paint(); });
+    elGr.addEventListener("change",   () => { state.filters.grade = elGr.value; paint(); });
+    elReset.addEventListener("click", () => {
+      state.filters = {...DEFAULTS};
+      elCity.value = "ALL";
+      elTL.value = "ALL";
+      elGr.value = "ALL";
+      paint();
+    });
+    // ============================================================
+    // //#18 INIT
+    // ============================================================
+    loadRows();
+  })();
+  </script>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=697e270fb126ef5fe6610167" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+</body>
+</html>

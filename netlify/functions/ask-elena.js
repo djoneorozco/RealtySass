@@ -1,14 +1,10 @@
 // netlify/functions/ask-elena.js
 // ============================================================
-// v3.2.0 — RealtySaSS • Ask Elena (Realtor Mentor + SME)
-// ✅ Fix: greeting intent + short replies
-// ✅ Fix: hard response length cap (chars)
-// ✅ Fix: upsell only when relevant (account/pricing/save/personalize)
-// ✅ Flow:
-//   1) Call /api/elena-agent FIRST (truth packet + knowledge)
-//   2) If affordability/deal-math: deterministic reply from agent
-//   3) Else: deterministic intents (workflow/scripts/compliance/product/greeting)
-//   4) Optional OpenAI narration using agent packet as context
+// v3.3.0 — RealtySaSS • Ask Elena (Local Memory + Thread)
+// ✅ NEW: context.thread + context.memory support
+// ✅ NEW: returns memory_patch for HUD localStorage merge
+// ✅ NEW: remembers simple picks (ex: number 1–10)
+// ✅ Keeps replies short + conversational
 // ============================================================
 
 const { createClient } = require("@supabase/supabase-js");
@@ -20,10 +16,8 @@ const DEFAULT_ALLOW_ORIGINS = [
   "https://realtysass.com",
   "https://www.realtysass.com",
   "https://realtysass.netlify.app",
-
   "https://realtysass.webflow.io",
   "https://www.realtysass.webflow.io",
-
   "http://localhost:8888",
   "http://localhost:3000",
 ];
@@ -31,10 +25,7 @@ const DEFAULT_ALLOW_ORIGINS = [
 function readAllowOriginsFromEnv() {
   const raw = String(process.env.REALTYSASS_ALLOW_ORIGINS || "").trim();
   if (!raw) return DEFAULT_ALLOW_ORIGINS;
-  return raw
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
+  return raw.split(",").map((s) => s.trim()).filter(Boolean);
 }
 
 const ALLOW_ORIGINS = readAllowOriginsFromEnv();
@@ -57,7 +48,7 @@ function respond(statusCode, headers, payload) {
 }
 
 /* ============================================================
-   //#2 — Supabase profile fields (keep only what exists)
+   //#2 — Profile lookup columns
 ============================================================ */
 const SELECT_COLS = [
   "id",
@@ -73,17 +64,18 @@ const SELECT_COLS = [
 ].join(",");
 
 /* ============================================================
-   //#3 — Utility helpers
+   //#3 — Helpers
 ============================================================ */
 function safeStr(x) {
   const s = String(x ?? "").trim();
   return s || "";
 }
-
 function normalizeEmail(x) {
   return safeStr(x).toLowerCase();
 }
-
+function safeObj(x) {
+  return x && typeof x === "object" ? x : null;
+}
 function pickName(profile) {
   const full = safeStr(profile?.full_name);
   const first = safeStr(profile?.first_name);
@@ -116,7 +108,6 @@ function clampTextToChars(text, maxChars) {
   if (!Number.isFinite(n) || n <= 0) return s;
   if (s.length <= n) return s;
 
-  // Try to cut on a clean boundary
   const cut = s.slice(0, n);
   const lastBreak = Math.max(
     cut.lastIndexOf("\n"),
@@ -124,387 +115,189 @@ function clampTextToChars(text, maxChars) {
     cut.lastIndexOf("! "),
     cut.lastIndexOf("? ")
   );
-
   const finalCut = (lastBreak > 120 ? cut.slice(0, lastBreak + 1) : cut).trim();
   return finalCut.replace(/\s+$/g, "") + "…";
 }
 
-/* ============================================================
-   //#4 — Deterministic replies (existing)
-============================================================ */
-function buildProductHelpReply(text) {
-  const t = String(text || "").toLowerCase();
-
-  if (t.includes("buyerbrief")) {
-    return [
-      "BuyerBrief™ is the timeline-first buyer workspace.",
-      "Capture milestones (pre-approval → showings → offer → option → close), assign next steps, and keep clients moving.",
-      "Tell me where the deal is stuck and I’ll give your next 3 moves + the exact message to send.",
-    ].join("\n");
+function lastUserTurn(thread) {
+  if (!Array.isArray(thread)) return "";
+  for (let i = thread.length - 1; i >= 0; i--) {
+    if (thread[i] && thread[i].role === "user") return safeStr(thread[i].content);
   }
-
-  if (t.includes("crm")) {
-    return [
-      "RealtySaSS CRM is your pipeline + follow-up engine.",
-      "Stages, tasks, reminders, notes — clean handoffs from BuyerBrief to pipeline.",
-      "Tell me the lead stage + timeline and I’ll write a follow-up sequence that doesn’t sound desperate.",
-    ].join("\n");
-  }
-
-  if (t.includes("ask elena") || t.includes("elena")) {
-    return [
-      "Ask Elena is your Realtor-side command center: scripts, negotiation prep, deal triage, and workflow guidance.",
-      "Drop a situation + constraints and I’ll give a BLUF + a clean plan.",
-    ].join("\n");
-  }
-
-  return [
-    "RealtySaSS helps you move deals faster with less chaos:",
-    "• Buyer/seller workflows",
-    "• Scripts (text/email/call openers)",
-    "• Negotiation prep + risk flags",
-    "• Deal triage (what to do next)",
-    "",
-    "Tell me: buyer, seller, or investor — and what’s blocking the deal?",
-  ].join("\n");
+  return "";
 }
 
-function buildWorkflowReply(kind) {
-  if (kind === "buyer_workflow") {
-    return [
-      "Buyer Workflow (clean + repeatable):",
-      "1) Intake: timeline, must-haves, budget ceiling, financing type.",
-      "2) Pre-approval: comfort payment (not just max approval).",
-      "3) Search rules: areas, commute, deal-breakers.",
-      "4) Showings: batch 5–8, same-day notes, rank top 3.",
-      "5) Offer plan: comps, concessions, inspection posture.",
-      "6) Option/inspection: health/safety + big-ticket first.",
-      "7) Appraisal plan: comp packet + Plan B.",
-      "8) Clear-to-close: repairs, utilities, walk-through, funds verified.",
-    ].join("\n");
+function lastAssistantTurn(thread) {
+  if (!Array.isArray(thread)) return "";
+  for (let i = thread.length - 1; i >= 0; i--) {
+    if (thread[i] && thread[i].role === "assistant") return safeStr(thread[i].content);
   }
-
-  if (kind === "seller_workflow") {
-    return [
-      "Listing Workflow (win the week):",
-      "1) Positioning: target buyer + value story.",
-      "2) Prep: light fixes, lighting, curb pop, clean.",
-      "3) Pricing: comp set + plan for first 7 days.",
-      "4) Media: photos first, then copy.",
-      "5) Launch: showing windows + offer rules.",
-      "6) Negotiate: net + certainty + timeline.",
-      "7) Under contract: inspections + repair strategy + backup posture.",
-    ].join("\n");
-  }
-
-  if (kind === "investor_workflow") {
-    return [
-      "Investor Workflow (don’t get cute, get paid):",
-      "1) Define target: hold vs flip vs mid-term.",
-      "2) Underwrite: rent comps, taxes/ins/HOA, repairs, reserves.",
-      "3) Exit plan: resale comps + DOM reality.",
-      "4) Offer terms: speed + certainty + inspection posture.",
-      "5) Execute: scope discipline + timeline + buffer.",
-    ].join("\n");
-  }
-
-  return "Tell me if this is buyer, seller, or investor — I’ll drop the exact workflow.";
-}
-
-function buildScriptReply(kind, context) {
-  const buyerName = safeStr(context?.buyer?.name) || "your buyer";
-  const address = safeStr(context?.listing?.address) || "the property";
-  const issue = safeStr(context?.issue) || "";
-
-  if (kind === "followup_no_response") {
-    return [
-      "Text (no response):",
-      `"Quick ping — still want me to line up options this week, or should I pause for now?"`,
-      "",
-      "If they say “pause”:",
-      `"No problem. Want me to circle back next week or later this month?"`,
-    ].join("\n");
-  }
-
-  if (kind === "buyer_offer_intro") {
-    return [
-      "Offer Intro (Agent → Listing Agent):",
-      `"Hey — I’m bringing you a clean offer on ${address}. ${buyerName} is motivated and we’re aiming for a smooth close. What matters most to your seller: price, timeline, or certainty?"`,
-      "",
-      "If they say “certainty”:",
-      `"Perfect — I’ll keep inspections tight and reduce friction. Any preferred dates/title/lender?"`,
-    ].join("\n");
-  }
-
-  if (kind === "inspection_pushback") {
-    return [
-      "Inspection Pushback (calm + firm):",
-      `"Totally get it. We’re not nickel-and-diming — we’re focused on health/safety + big-ticket items that affect financing. If we address these, we can keep the deal on track."`,
-      issue ? `\n"Specifically: ${issue}"` : "",
-      "",
-      "Options:",
-      "• Repair by licensed pro + receipt",
-      "• Credit at closing",
-      "• Price adjustment (roof/HVAC/structural)",
-    ].join("\n");
-  }
-
-  if (kind === "seller_price_reality") {
-    return [
-      "Seller Pricing Reality Check:",
-      `"The market will tell us in the first 7 days. If we’re priced right, we’ll get traffic and offers. If not, we adjust fast — not after we go stale."`,
-      "",
-      `"I’d rather price to win than chase the market down."`,
-    ].join("\n");
-  }
-
-  return [
-    "Tell me what you need a script for:",
-    "• Lead follow-up",
-    "• Offer intro",
-    "• Inspection negotiation",
-    "• Low appraisal",
-    "• Price reduction convo",
-    "",
-    "Drop the situation in one sentence and I’ll write it.",
-  ].join("\n");
-}
-
-function buildComplianceReply(text) {
-  const t = String(text || "").toLowerCase();
-
-  if (t.includes("fair housing") || t.includes("protected class") || t.includes("discrimination")) {
-    return [
-      "Fair Housing guardrails (high-level):",
-      "• Talk property features + objective criteria — not people.",
-      "• Avoid steering language.",
-      "• Redirect protected-class requests to neutral criteria and let them choose.",
-      "",
-      "Paste what you’re about to send and I’ll rewrite it safely.",
-    ].join("\n");
-  }
-
-  if (t.includes("disclosure") || t.includes("material defect") || t.includes("seller disclosure")) {
-    return [
-      "Disclosure (high-level):",
-      "• When in doubt, disclose — and document it.",
-      "• Keep it factual and consistent with state forms.",
-      "• Broker/attorney is final authority for legal interpretation.",
-      "",
-      "Tell me your state + the issue and I’ll suggest safe phrasing (non-legal).",
-    ].join("\n");
-  }
-
-  return [
-    "Compliance mode:",
-    "I can help you phrase things safely — broker/attorney is final authority for legal calls.",
-    "Paste what you’re about to send and I’ll rewrite it clean.",
-  ].join("\n");
+  return "";
 }
 
 /* ============================================================
-   //#5 — Intent detection (simple + reliable)
+   //#4 — Intent detection (with memory-aware follow-ups)
 ============================================================ */
-function detectIntent(text) {
+function detectIntent(text, memory, thread) {
   const t = String(text || "").toLowerCase().trim();
 
-  // ✅ NEW: greeting intent (SHORT)
   const isGreeting =
     /^(hi|hey|hello|yo|sup|good (morning|afternoon|evening))[\!\.\s,]*$/.test(t) ||
     /^(hi|hey|hello)\s+(elena|there)[\!\.\s,]*$/.test(t);
 
   if (isGreeting) return { type: "greeting" };
 
-  // affordability / payment / deal math
-  if (
-    t.includes("afford") ||
-    t.includes("payment") ||
-    t.includes("mortgage") ||
-    t.includes("principal") ||
-    t.includes("interest") ||
-    t.includes("down payment") ||
-    t.includes("downpayment") ||
-    t.includes("pti") ||
-    t.includes("housing cap") ||
-    t.includes("debt to income") ||
-    t.includes("dti")
-  ) return { type: "affordability_question" };
+  // memory reset
+  if (t === "/reset") return { type: "reset" };
 
-  if (
-    t.includes("my profile") ||
-    t.includes("profile loaded") ||
-    t.includes("who am i") ||
-    (t.includes("my") && (t.includes("name") || t.includes("phone") || t.includes("email")))
-  ) return { type: "profile_question" };
+  // number picker
+  if (/(tell me|pick|choose).*(number).*(1|one).*(10|ten)/.test(t) || /number 1 to 10/.test(t)) {
+    return { type: "pick_number_1_10" };
+  }
+  if (t.includes("what number did you") || t.includes("what number was it") || t.includes("which number")) {
+    // if we have a number stored, treat as followup
+    if (memory && typeof memory.last_number_1_10 === "number") return { type: "recall_number_1_10" };
+    return { type: "recall_number_1_10_missing" };
+  }
 
-  if (
-    t.includes("buyerbrief") ||
-    t.includes("crm") ||
-    t.includes("realtysass") ||
-    t.includes("ask elena") ||
-    t.includes("how does this work") ||
-    t.includes("pricing") ||
-    t.includes("subscription")
-  ) return { type: "product_question" };
+  // product / account
+  if (t.includes("account") || t.includes("sign up") || t.includes("signup") || t.includes("login")) {
+    return { type: "account_help" };
+  }
+  if (t.includes("buyerprofile") || t.includes("buyer profile") || t.includes("buyerbrief") || t.includes("realtysass")) {
+    return { type: "product_question" };
+  }
 
-  if (
-    t.includes("buyer workflow") ||
-    t.includes("buyer process") ||
-    t.includes("first-time buyer") ||
-    t.includes("offer strategy") ||
-    t.includes("under contract") ||
-    t.includes("inspection") ||
-    t.includes("appraisal") ||
-    t.includes("closing") ||
-    t.includes("listing workflow") ||
-    t.includes("seller workflow") ||
-    t.includes("listing strategy") ||
-    t.includes("price reduction") ||
-    t.includes("days on market") ||
-    t.includes("stale listing") ||
-    t.includes("investor") ||
-    t.includes("flip") ||
-    t.includes("buy and hold") ||
-    t.includes("cash flow") ||
-    t.includes("rental")
-  ) return { type: "workflow_question" };
+  // scripts / workflows
+  if (t.includes("script") || t.includes("follow up") || t.includes("follow-up") || t.includes("text") || t.includes("email")) {
+    return { type: "script_request" };
+  }
+  if (t.includes("workflow") || t.includes("process") || t.includes("offer") || t.includes("inspection") || t.includes("appraisal")) {
+    return { type: "workflow_question" };
+  }
 
-  if (
-    t.includes("script") ||
-    t.includes("text message") ||
-    t.includes("follow up") ||
-    t.includes("follow-up") ||
-    t.includes("email") ||
-    t.includes("call opener") ||
-    t.includes("what do i say")
-  ) return { type: "script_request" };
+  // conversational fallback: if user replies with a single word, treat it as continuation
+  const short = t.split(/\s+/).filter(Boolean).length <= 2;
+  if (short && thread && thread.length >= 2) {
+    return { type: "continuation" };
+  }
 
-  if (
-    t.includes("fair housing") ||
-    t.includes("protected class") ||
-    t.includes("discrimination") ||
-    t.includes("disclosure") ||
-    t.includes("material defect") ||
-    t.includes("legal")
-  ) return { type: "compliance_question" };
-
-  return null;
+  return { type: "general" };
 }
 
 /* ============================================================
-   //#6 — Agent-first flow helpers
+   //#5 — Deterministic replies (short + conversational)
 ============================================================ */
-function getApiBaseFromEnvOrDefault() {
-  const u = safeStr(process.env.URL);
-  if (u) return u;
-  const p = safeStr(process.env.DEPLOY_PRIME_URL);
-  if (p) return p;
-  return "https://realtysass.netlify.app";
-}
-
-async function callElenaAgent({ origin, payload }) {
-  const base = getApiBaseFromEnvOrDefault();
-  const url = `${base.replace(/\/$/, "")}/api/elena-agent`;
-
-  try {
-    const resp = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Forward-Origin": safeStr(origin) || "",
-      },
-      body: JSON.stringify(payload || {}),
-    });
-
-    const data = await resp.json().catch(() => null);
-    if (!resp.ok) {
-      return { ok: false, error: `Agent HTTP ${resp.status}`, data: data || null };
-    }
-    return { ok: true, error: null, data };
-  } catch (e) {
-    return { ok: false, error: String(e?.message || e), data: null };
-  }
-}
-
-function formatMoney(n) {
-  const x = Number(n);
-  if (!Number.isFinite(x)) return "$0";
-  return x.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
-}
-
-function buildAffordabilityReplyFromAgent(agent) {
-  const v = agent?.verdict || {};
-  const m = agent?.mortgage || {};
-  const q = agent?.quick || {};
-
-  const status = safeStr(v.status) || "INSUFFICIENT";
-  const grade = safeStr(v.grade) || "N/A";
-
-  const lines = [];
-  lines.push(`BLUF: **${status}** (Grade: **${grade}**)`);
-
-  if (v.housingCap != null) lines.push(`• 30% housing cap: ${formatMoney(v.housingCap)}/mo`);
-  if (m.all_in_monthly != null) lines.push(`• Est. all-in housing: ${formatMoney(m.all_in_monthly)}/mo`);
-  if (v.residual != null) lines.push(`• Residual after expenses + housing: ${formatMoney(v.residual)}/mo`);
-
-  if (q?.quick_max_price?.price_0_down) {
-    lines.push("");
-    lines.push("Quick rails (rule-of-thumb):");
-    lines.push(`• Max price @ 0% down: ${formatMoney(q.quick_max_price.price_0_down)}`);
-    if (q.quick_max_price.price_5_down) lines.push(`• Max price @ 5% down: ${formatMoney(q.quick_max_price.price_5_down)}`);
-  }
-
-  const next = agent?.next_action || null;
-  if (next?.why) {
-    lines.push("");
-    lines.push(`Next move: ${safeStr(next.why)}`);
-  }
-
-  if (Array.isArray(agent?.missing_inputs) && agent.missing_inputs.length) {
-    lines.push("");
-    lines.push(`Missing inputs to tighten this: ${agent.missing_inputs.join(", ")}`);
-  }
-
-  const stateKey = safeStr(agent?.knowledge?.state_key);
-  if (stateKey) {
-    lines.push("");
-    lines.push(`State loaded: ${stateKey}`);
-  }
-
-  return lines.join("\n");
-}
-
-function buildGreetingReply(context) {
-  // Ultra short: 1–2 lines + 1 question
-  const role = safeStr(context?.role) || "public_mainpage";
+function replyGreeting(role) {
   if (role === "buyerbrief_brief") {
-    return "Hey — I’m Elena. Where is your buyer in the timeline right now (pre-approval, touring, offer, under contract)?";
+    return "Hey — where is your buyer in the timeline right now (pre-approval, touring, offer, under contract)?";
   }
-  return "Hey — I’m Elena. Want a script, an offer move, or a workflow?";
+  return "Hey — want a script, an offer move, or a workflow?";
 }
 
-function shouldAllowAccountNudge(text, context) {
+function replyProduct(text) {
   const t = String(text || "").toLowerCase();
-  const role = safeStr(context?.role) || "";
-  if (role === "buyerbrief_brief") return false; // ✅ no selling in Brief mode
+  if (t.includes("buyerprofile") || t.includes("buyer profile")) {
+    return "BuyerProfile is your timeline-first buyer workspace. Tell me: are we building one new buyer, or updating an existing one?";
+  }
+  if (t.includes("buyerbrief")) {
+    return "BuyerBrief™ is the realtor-facing, timeline-first briefing. Where is the client stuck right now?";
+  }
+  if (t.includes("realtysass")) {
+    return "RealtySaSS helps you run cleaner deals: scripts, negotiation prep, workflows, and timeline-based next steps. Buyer, seller, or investor — what are you working on?";
+  }
+  return "Tell me what you want to do: script, offer move, or workflow — and I’ll keep it tight.";
+}
 
-  return (
-    t.includes("pricing") ||
-    t.includes("subscription") ||
-    t.includes("account") ||
-    t.includes("sign up") ||
-    t.includes("signup") ||
-    t.includes("login") ||
-    t.includes("save") ||
-    t.includes("personalize") ||
-    t.includes("buyerprofile") ||
-    t.includes("buyer brief") ||
-    t.includes("buyerbrief")
-  );
+function replyAccount() {
+  // keep it practical, not vague
+  return [
+    "To create an account:",
+    "1) Click your site’s “Join Us” / “Log In” button (top nav).",
+    "2) Enter email → you’ll get a code → paste it to verify.",
+    "3) Once you’re in, I can save your BuyerProfile/timeline so you don’t restart.",
+    "",
+    "If you tell me what page you’re on (Login, Pricing, BuyerProfile), I’ll guide the exact click path."
+  ].join("\n");
+}
+
+function replyScriptMenu() {
+  return "Pick one: lead follow-up, offer intro, inspection pushback, low appraisal, or price reduction convo.";
+}
+
+function replyWorkflowMenu() {
+  return "Buyer, seller, or investor workflow?";
+}
+
+function replyContinuation(thread, memory) {
+  const lastBot = lastAssistantTurn(thread);
+  const lastTopic = safeStr(memory?.last_topic);
+
+  // If Elena asked a question last, repeat it but shorter + one option
+  if (lastBot && lastBot.includes("?")) {
+    // tighten: last line with question mark
+    const q = lastBot.split("\n").filter(l => l.includes("?")).slice(-1)[0] || "What are we working on?";
+    return `${q} (One line answer is perfect.)`;
+  }
+  if (lastTopic) return `Got it — staying on ${lastTopic}. What’s the next detail you want me to handle?`;
+  return "Got it. What’s the next detail?";
 }
 
 /* ============================================================
-   //#7 — Main handler
+   //#6 — OpenAI fallback (optional) using thread
+============================================================ */
+async function openAIFallback({ userText, thread, memory, profile, role, maxChars }) {
+  const key = process.env.OPENAI_API_KEY;
+  if (!key) {
+    return clampTextToChars("I’m missing OPENAI_API_KEY. Deterministic mode is on — tell me: script, offer move, or workflow?", maxChars);
+  }
+
+  const system = [
+    "You are Elena, a Realtor-side assistant for RealtySaSS.",
+    "Be conversational. Use the provided thread + memory so you remember context.",
+    "CRITICAL: Keep replies short. Default <= 2 short paragraphs.",
+    "No upsell unless user asked about account/login/pricing/saving/personalizing.",
+    `Role: ${role || "public_mainpage"}. If role is buyerbrief_brief: timeline-only, no selling.`,
+  ].join(" ");
+
+  // build messages from thread (last 12)
+  const msgs = [];
+  msgs.push({ role: "system", content: system });
+
+  const recent = Array.isArray(thread) ? thread.slice(-12) : [];
+  recent.forEach((m) => {
+    if (!m || !m.role || !m.content) return;
+    const r = (m.role === "assistant") ? "assistant" : "user";
+    msgs.push({ role: r, content: String(m.content) });
+  });
+
+  // current message
+  msgs.push({ role: "user", content: userText });
+
+  const resp = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      temperature: 0.35,
+      max_tokens: 220,
+      messages: [
+        ...msgs,
+        {
+          role: "system",
+          content: "Memory object (facts): " + JSON.stringify(memory || {}),
+        },
+      ],
+    }),
+  });
+
+  const data = await resp.json();
+  const out = (data?.choices?.[0]?.message?.content || "").trim() || "Got it. What’s the one constraint that matters most?";
+  return clampTextToChars(out, maxChars);
+}
+
+/* ============================================================
+   //#7 — Handler
 ============================================================ */
 module.exports.handler = async (event) => {
   const origin = event.headers?.origin || "";
@@ -514,385 +307,172 @@ module.exports.handler = async (event) => {
   if (event.httpMethod !== "POST") return respond(405, headers, { error: "Method Not Allowed" });
 
   let payload = {};
-  try {
-    payload = JSON.parse(event.body || "{}");
-  } catch (_) {
-    return respond(400, headers, { error: "Invalid JSON body" });
-  }
+  try { payload = JSON.parse(event.body || "{}"); }
+  catch (_) { return respond(400, headers, { error: "Invalid JSON body" }); }
 
   const userText = safeStr(payload.message);
   if (!userText) return respond(400, headers, { error: "Missing message" });
 
-  const context = payload?.context && typeof payload.context === "object" ? payload.context : {};
-  const contextProfile =
-    context?.profile && typeof context.profile === "object" ? context.profile : null;
+  const context = safeObj(payload.context) || {};
+  const role = safeStr(context.role) || "public_mainpage";
 
-  // response limits (from widget)
-  const limits = (context?.response_limits && typeof context.response_limits === "object") ? context.response_limits : {};
+  const limits = safeObj(context.response_limits) || {};
   const MAX_CHARS = Number.isFinite(Number(limits.max_chars)) ? Number(limits.max_chars) : 420;
   const GREET_MAX = Number.isFinite(Number(limits.greeting_max_chars)) ? Number(limits.greeting_max_chars) : 160;
 
-  // Supabase profile lookup
+  // ✅ NEW: thread + memory from client
+  const thread = Array.isArray(context.thread) ? context.thread : [];
+  const memory = safeObj(context.memory) || {};
+  const memory_patch = {};
+
+  // profile lookup (optional)
   const SUPABASE_URL = process.env.SUPABASE_URL;
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
-
   const email = getEmailFromPayload(payload);
-  let profile = null;
-  let usedSupabase = false;
-  let supabaseError = null;
 
+  let profile = null;
   if (email && SUPABASE_URL && SUPABASE_SERVICE_KEY) {
     try {
       const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
         auth: { persistSession: false, autoRefreshToken: false },
       });
-
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("profiles")
         .select(SELECT_COLS)
         .eq("email", email)
         .maybeSingle();
-
-      if (error) supabaseError = String(error.message || error);
-      if (!error && data) {
-        profile = data;
-        usedSupabase = true;
-      }
-    } catch (err) {
-      supabaseError = String(err);
-    }
+      if (data) profile = data;
+    } catch (_) {}
   }
-
-  if (!profile && contextProfile) profile = contextProfile;
+  if (!profile && safeObj(context.profile)) profile = context.profile;
 
   const name = pickName(profile);
-  const profileContext = profile
-    ? {
-        email: normalizeEmail(profile.email || email) || null,
-        full_name: name.full || null,
-        first_name: safeStr(profile.first_name) || name.first || null,
-        last_name: safeStr(profile.last_name) || name.last || null,
-        phone: safeStr(profile.phone) || null,
-        mode: safeStr(profile.mode) || null,
-        notes: safeStr(profile.notes) || null,
-      }
-    : null;
+  const profileContext = profile ? {
+    email: normalizeEmail(profile.email || email) || null,
+    full_name: name.full || null,
+    first_name: safeStr(profile.first_name) || name.first || null,
+    last_name: safeStr(profile.last_name) || name.last || null,
+  } : null;
 
-  // ✅ Step 1: Call elena-agent FIRST (safe to call; it can still return knowledge packet)
-  const agentCall = await callElenaAgent({
-    origin,
-    payload: {
-      email: email || null,
-      question: userText,
-      overrides: payload?.overrides && typeof payload.overrides === "object" ? payload.overrides : undefined,
-      scenario: payload?.scenario && typeof payload.scenario === "object" ? payload.scenario : undefined,
-      context: {
-        ...(context || {}),
-        profile: profileContext || contextProfile || null,
-      },
-      debug: payload?.debug === true,
-    },
-  });
+  const intent = detectIntent(userText, memory, thread);
 
-  const agent = agentCall.ok ? agentCall.data : null;
-  const intent = detectIntent(userText);
-
-  /* ==========================================================
-     //#7.0 — Deterministic: Greeting (SHORT)
-  ========================================================== */
-  if (intent?.type === "greeting") {
-    const reply = clampTextToChars(buildGreetingReply(context), GREET_MAX);
+  /* ============================
+     //#7.1 Greeting (short)
+  ============================ */
+  if (intent.type === "greeting") {
+    memory_patch.last_intent = "greeting";
+    memory_patch.last_topic = memory.last_topic || "general";
+    const reply = clampTextToChars(replyGreeting(role), GREET_MAX);
     return respond(200, headers, {
       intent: "greeting",
       reply,
-      profile: profileContext || null,
-      agent: agent || null,
-      ui: { speed: 22, startDelay: 90 },
-      debug: {
-        usedSupabase,
-        hasContextProfile: !!contextProfile,
-        supabaseError: supabaseError || null,
-        agentOk: agentCall.ok,
-        agentError: agentCall.error || null,
-      },
-    });
-  }
-
-  /* ==========================================================
-     //#7.1 — Deterministic: Affordability / Deal Math (agent-driven)
-  ========================================================== */
-  if (intent?.type === "affordability_question" && agent?.ok) {
-    let reply = buildAffordabilityReplyFromAgent(agent);
-    reply = clampTextToChars(reply, MAX_CHARS);
-    return respond(200, headers, {
-      intent: "affordability_question",
-      reply,
-      profile: profileContext || null,
-      agent: agent || null,
-      debug: {
-        usedSupabase,
-        hasContextProfile: !!contextProfile,
-        supabaseError: supabaseError || null,
-        agentOk: agentCall.ok,
-        agentError: agentCall.error || null,
-      },
-    });
-  }
-
-  /* ==========================================================
-     //#7.2 — Deterministic: Profile
-  ========================================================== */
-  if (intent?.type === "profile_question") {
-    if (!profileContext || !profileContext.email) {
-      const reply = clampTextToChars(
-        "I can greet you properly once your email is synced. Drop your email (or log in) and I’ll pull your saved profile.",
-        MAX_CHARS
-      );
-      return respond(200, headers, {
-        intent: "profile_question",
-        reply,
-        profile: null,
-        agent: agent || null,
-        debug: {
-          usedSupabase,
-          hasContextProfile: !!contextProfile,
-          supabaseError: supabaseError || null,
-          agentOk: agentCall.ok,
-          agentError: agentCall.error || null,
-        },
-      });
-    }
-
-    const bits = [];
-    bits.push(`Got you — I see ${profileContext.full_name || "your profile"} on file.`);
-    if (profileContext.phone) bits.push(`Phone: ${profileContext.phone}`);
-    if (profileContext.mode) bits.push(`Mode: ${profileContext.mode}`);
-
-    const reply = clampTextToChars(bits.join("\n"), MAX_CHARS);
-
-    return respond(200, headers, {
-      intent: "profile_question",
-      reply,
+      memory_patch,
       profile: profileContext,
-      agent: agent || null,
-      debug: {
-        usedSupabase,
-        hasContextProfile: !!contextProfile,
-        supabaseError: supabaseError || null,
-        agentOk: agentCall.ok,
-        agentError: agentCall.error || null,
-      },
+      ui: { speed: 22, startDelay: 90 }
     });
   }
 
-  /* ==========================================================
-     //#7.3 — Deterministic: Product help
-  ========================================================== */
-  if (intent?.type === "product_question") {
-    let reply = buildProductHelpReply(userText);
-
-    // Optional nudge ONLY if user asked for it
-    if (shouldAllowAccountNudge(userText, context)) {
-      reply += "\n\nIf you want, create an account so I can save your workflow/timeline and personalize scripts to your market.";
-    }
-
-    reply = clampTextToChars(reply, MAX_CHARS);
-
-    return respond(200, headers, {
-      intent: "product_question",
-      reply,
-      profile: profileContext || null,
-      agent: agent || null,
-      debug: {
-        usedSupabase,
-        hasContextProfile: !!contextProfile,
-        supabaseError: supabaseError || null,
-        agentOk: agentCall.ok,
-        agentError: agentCall.error || null,
-      },
-    });
+  /* ============================
+     //#7.2 Pick number 1–10 (store)
+  ============================ */
+  if (intent.type === "pick_number_1_10") {
+    const n = Math.floor(Math.random() * 10) + 1;
+    memory_patch.last_number_1_10 = n;
+    memory_patch.last_intent = "pick_number_1_10";
+    const reply = clampTextToChars(`Sure — ${n}.`, MAX_CHARS);
+    return respond(200, headers, { intent: "pick_number_1_10", reply, memory_patch, profile: profileContext });
   }
 
-  /* ==========================================================
-     //#7.4 — Deterministic: Workflows
-  ========================================================== */
-  if (intent?.type === "workflow_question") {
-    const t = userText.toLowerCase();
-
-    let kind = null;
-    if (t.includes("listing") || t.includes("seller")) kind = "seller_workflow";
-    else if (t.includes("investor") || t.includes("flip") || t.includes("rental") || t.includes("cash flow")) kind = "investor_workflow";
-    else kind = "buyer_workflow";
-
-    let reply = buildWorkflowReply(kind);
-    reply = clampTextToChars(reply, MAX_CHARS);
-
-    return respond(200, headers, {
-      intent: "workflow_question",
-      reply,
-      profile: profileContext || null,
-      agent: agent || null,
-      debug: {
-        usedSupabase,
-        hasContextProfile: !!contextProfile,
-        supabaseError: supabaseError || null,
-        agentOk: agentCall.ok,
-        agentError: agentCall.error || null,
-      },
-    });
+  /* ============================
+     //#7.3 Recall number 1–10
+  ============================ */
+  if (intent.type === "recall_number_1_10") {
+    const n = Number(memory.last_number_1_10);
+    const reply = clampTextToChars(`I picked **${n}**.`, MAX_CHARS);
+    memory_patch.last_intent = "recall_number_1_10";
+    return respond(200, headers, { intent: "recall_number_1_10", reply, memory_patch, profile: profileContext });
+  }
+  if (intent.type === "recall_number_1_10_missing") {
+    const reply = clampTextToChars("I don’t have it saved yet — ask me to pick a number 1–10 and I’ll remember it.", MAX_CHARS);
+    return respond(200, headers, { intent: "recall_number_1_10_missing", reply, memory_patch, profile: profileContext });
   }
 
-  /* ==========================================================
-     //#7.5 — Deterministic: Scripts
-  ========================================================== */
-  if (intent?.type === "script_request") {
-    const t = userText.toLowerCase();
-    let kind = "menu";
-
-    if (t.includes("no response") || t.includes("ghost") || t.includes("follow up") || t.includes("follow-up")) kind = "followup_no_response";
-    if (t.includes("offer") || t.includes("listing agent")) kind = "buyer_offer_intro";
-    if (t.includes("inspection") || t.includes("repairs")) kind = "inspection_pushback";
-    if (t.includes("price reduction") || t.includes("reduce") || t.includes("stale")) kind = "seller_price_reality";
-
-    let reply = buildScriptReply(kind, context || {});
-    reply = clampTextToChars(reply, MAX_CHARS);
-
-    return respond(200, headers, {
-      intent: "script_request",
-      reply,
-      profile: profileContext || null,
-      agent: agent || null,
-      debug: {
-        usedSupabase,
-        hasContextProfile: !!contextProfile,
-        supabaseError: supabaseError || null,
-        agentOk: agentCall.ok,
-        agentError: agentCall.error || null,
-      },
-    });
+  /* ============================
+     //#7.4 Account help
+  ============================ */
+  if (intent.type === "account_help") {
+    memory_patch.last_topic = "account";
+    memory_patch.last_intent = "account_help";
+    const reply = clampTextToChars(replyAccount(), MAX_CHARS);
+    return respond(200, headers, { intent: "account_help", reply, memory_patch, profile: profileContext });
   }
 
-  /* ==========================================================
-     //#7.6 — Deterministic: Compliance guardrails
-  ========================================================== */
-  if (intent?.type === "compliance_question") {
-    let reply = buildComplianceReply(userText);
-    reply = clampTextToChars(reply, MAX_CHARS);
-
-    return respond(200, headers, {
-      intent: "compliance_question",
-      reply,
-      profile: profileContext || null,
-      agent: agent || null,
-      debug: {
-        usedSupabase,
-        hasContextProfile: !!contextProfile,
-        supabaseError: supabaseError || null,
-        agentOk: agentCall.ok,
-        agentError: agentCall.error || null,
-      },
-    });
+  /* ============================
+     //#7.5 Product question
+  ============================ */
+  if (intent.type === "product_question") {
+    const reply = clampTextToChars(replyProduct(userText), MAX_CHARS);
+    memory_patch.last_topic = "product";
+    memory_patch.last_intent = "product_question";
+    return respond(200, headers, { intent: "product_question", reply, memory_patch, profile: profileContext });
   }
 
-  /* ==========================================================
-     //#7.7 — OpenAI fallback (optional) WITH agent packet
-  ========================================================== */
-  const key = process.env.OPENAI_API_KEY;
-  if (!key) {
-    const who = profileContext?.full_name ? `I see you as ${profileContext.full_name}.` : "I don’t see your profile yet.";
-    const reply = clampTextToChars(
-      `Elena (dev echo): “${userText}” — ${who} Add OPENAI_API_KEY for natural-language answers.`,
-      MAX_CHARS
-    );
-
-    return respond(200, headers, {
-      intent: "fallback_no_openai",
-      reply,
-      profile: profileContext || null,
-      agent: agent || null,
-      debug: {
-        usedSupabase,
-        hasContextProfile: !!contextProfile,
-        supabaseError: supabaseError || null,
-        agentOk: agentCall.ok,
-        agentError: agentCall.error || null,
-      },
-    });
+  /* ============================
+     //#7.6 Script request
+  ============================ */
+  if (intent.type === "script_request") {
+    const reply = clampTextToChars(replyScriptMenu(), MAX_CHARS);
+    memory_patch.last_topic = "scripts";
+    memory_patch.last_intent = "script_request";
+    return respond(200, headers, { intent: "script_request", reply, memory_patch, profile: profileContext });
   }
 
-  // Tight system: short by default + no sales unless asked
-  const system = [
-    "You are Elena, the RealtySaSS Realtor-side AI assistant and mentor.",
-    "Tone: confident, warm, slightly daring, professional. Never explicit.",
-    "CRITICAL: Keep replies short by default (<= 2 short paragraphs).",
-    `CRITICAL: Aim for <= ${MAX_CHARS} characters unless the user explicitly asks for more detail.`,
-    "If user greets, respond in ONE line and ask ONE question.",
-    "No upsell unless user asks about pricing/account/login/saving/personalizing/BuyerProfile/BuyerBrief.",
-    "If user asks for a script: provide a ready-to-send version.",
-    "If user asks for a plan: give next 3 moves.",
-    "Compliance: avoid steering/discrimination; recommend broker/attorney for legal interpretation.",
-    "Use agent packet as factual baseline when present.",
-  ].join(" ");
+  /* ============================
+     //#7.7 Workflow question
+  ============================ */
+  if (intent.type === "workflow_question") {
+    const reply = clampTextToChars(replyWorkflowMenu(), MAX_CHARS);
+    memory_patch.last_topic = "workflow";
+    memory_patch.last_intent = "workflow_question";
+    return respond(200, headers, { intent: "workflow_question", reply, memory_patch, profile: profileContext });
+  }
 
+  /* ============================
+     //#7.8 Continuation (memory-aware)
+  ============================ */
+  if (intent.type === "continuation") {
+    const reply = clampTextToChars(replyContinuation(thread, memory), MAX_CHARS);
+    memory_patch.last_intent = "continuation";
+    return respond(200, headers, { intent: "continuation", reply, memory_patch, profile: profileContext });
+  }
+
+  /* ============================
+     //#7.9 OpenAI fallback (thread-based)
+  ============================ */
   try {
-    const resp = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        temperature: 0.35,
-        max_tokens: 220, // ✅ keeps it tight
-        messages: [
-          { role: "system", content: system },
-          {
-            role: "user",
-            content: JSON.stringify({
-              message: userText,
-              profile: profileContext,
-              context: context || null,
-              agent_packet: agent || null,
-              note: "Be short. One question max if needed.",
-            }),
-          },
-        ],
-      }),
+    const reply = await openAIFallback({
+      userText,
+      thread,
+      memory,
+      profile: profileContext,
+      role,
+      maxChars: MAX_CHARS
     });
 
-    const data = await resp.json();
-    let reply =
-      (data?.choices?.[0]?.message?.content || "").trim() ||
-      "Got it. What are you trying to solve: script, offer, objection, or workflow?";
-
-    reply = clampTextToChars(reply, MAX_CHARS);
+    memory_patch.last_intent = "openai_fallback";
+    // crude topic tracking
+    if (/buyerprofile|buyer profile/i.test(userText)) memory_patch.last_topic = "buyerprofile";
+    if (/offer/i.test(userText)) memory_patch.last_topic = "offer";
+    if (/inspection/i.test(userText)) memory_patch.last_topic = "inspection";
 
     return respond(200, headers, {
       intent: "openai_fallback",
       reply,
-      profile: profileContext || null,
-      agent: agent || null,
-      debug: {
-        usedSupabase,
-        hasContextProfile: !!contextProfile,
-        supabaseError: supabaseError || null,
-        agentOk: agentCall.ok,
-        agentError: agentCall.error || null,
-        model: "gpt-4o-mini",
-      },
+      memory_patch,
+      profile: profileContext
     });
-  } catch (err) {
-    return respond(500, headers, {
-      error: "Server exception",
-      detail: String(err),
-      debug: {
-        usedSupabase,
-        hasContextProfile: !!contextProfile,
-        supabaseError: supabaseError || null,
-        agentOk: agentCall.ok,
-        agentError: agentCall.error || null,
-      },
-    });
+  } catch (e) {
+    const reply = clampTextToChars("I hit a hiccup. Try that again in one line — script, offer move, or workflow?", MAX_CHARS);
+    return respond(200, headers, { intent: "error", reply, memory_patch, profile: profileContext });
   }
 };

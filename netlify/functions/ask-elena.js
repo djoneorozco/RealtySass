@@ -1,18 +1,15 @@
 // netlify/functions/ask-elena.js
 // ============================================================
-// v3.0.0 — RealtySaSS • Ask Elena (Realtor Mentor + SME)
+// v3.1.0 — RealtySaSS • Ask Elena (Realtor Mentor + SME)
+// ✅ Adds: Real Estate Basics JSON pack (deterministic answers + prompt context)
 // (Ported from PCSUnited ask-elena.js, refit for RealtySaSS)
 //
 // GOAL (RealtySaSS):
 // - Elena is a Realtor-facing assistant + mentor + real-estate SME
 // - Profile-aware (Supabase profiles lookup by email, with context fallback)
 // - Deterministic answers for common Realtor workflows (checklists, scripts, compliance guardrails)
+// - Deterministic answers for Real Estate fundamentals (escrow, contingencies, DTI, closing costs, etc.)
 // - OpenAI fallback for natural language + writing + strategy (OPTIONAL)
-//
-// IMPORTANT CHANGES FROM PCSUnited VERSION:
-// - ❌ Removed military pay / BAH / base-city JSON logic (that belongs to PCSUnited “Amy”)
-// - ✅ Added Realtor-oriented intents: product help, buyer/seller workflow, scripts, compliance guardrails
-// - ✅ System prompt tuned for RealtySaSS Elena (mentor vibe, BLUF-first, actionable steps)
 //
 // REQUIRED ENV:
 //   SUPABASE_URL
@@ -22,24 +19,83 @@
 // OPTIONAL ENV (recommended):
 //   REALTYSASS_ALLOW_ORIGINS="https://realtysass.com,https://www.realtysass.com,https://realtysass.netlify.app,https://realtysass.webflow.io"
 //
-// CLIENT SHOULD CALL (recommended):
-//   POST https://<your-realtysass-netlify>.netlify.app/api/ask-elena
-//   body: { message, email, context?: { profile?: {...}, listing?: {...}, buyer?: {...} }, identity?: { email } }
+// NOTES:
+// - Put basics JSON at: netlify/functions/data/ask-elena-realestate-basics.json
+// - Ensure your netlify.toml includes:
+//     [functions]
+//     included_files = ["netlify/functions/data/**"]
 // ============================================================
 
 const { createClient } = require("@supabase/supabase-js");
+const fs = require("fs");
+const path = require("path");
+
+/* ============================================================
+   //#0 — Real Estate Basics Pack (JSON)
+   - Deterministic definitions and guardrails
+   - Loaded once (cached) with safe fallback
+============================================================ */
+const BASICS_PATH = path.join(__dirname, "data", "ask-elena-realestate-basics.json");
+let __basicsCache = null;
+let __basicsLoadError = null;
+
+function loadRealEstateBasics() {
+  if (__basicsCache) return __basicsCache;
+  if (__basicsLoadError) return null;
+
+  try {
+    const raw = fs.readFileSync(BASICS_PATH, "utf8");
+    const parsed = JSON.parse(raw);
+    __basicsCache = parsed;
+    return __basicsCache;
+  } catch (err) {
+    __basicsLoadError = String(err?.message || err);
+    return null;
+  }
+}
+
+function basicsForPrompt(basics) {
+  if (!basics || typeof basics !== "object") return "";
+  const meta = basics?.meta || {};
+  const terms = Array.isArray(basics?.terminology_quick_hits)
+    ? basics.terminology_quick_hits.slice(0, 8)
+    : [];
+  const contingencies = Array.isArray(basics?.process_flow?.common_contingencies)
+    ? basics.process_flow.common_contingencies.slice(0, 4)
+    : [];
+  const thresholds = basics?.money_math?.rule_of_thumb_thresholds?.housing_ratio || null;
+
+  const lines = [];
+  if (meta?.name) lines.push(`${meta.name} (${meta.version || "v?"})`);
+  if (meta?.purpose) lines.push(`Purpose: ${meta.purpose}`);
+  if (thresholds) {
+    lines.push(
+      `Housing ratio guardrails (gross income): GREEN ≤ ${thresholds?.safe_zone?.max_percent_of_gross_income || 28}%, ` +
+      `CAUTION ≤ ${thresholds?.caution_zone?.max_percent_of_gross_income || 33}%, ` +
+      `NO-GO > ${thresholds?.no_go_zone?.above_percent_of_gross_income || 33}%`
+    );
+  }
+  if (contingencies.length) {
+    lines.push(
+      `Common contingencies: ${contingencies.map(c => c.term).join(", ")}`
+    );
+  }
+  if (terms.length) {
+    lines.push(
+      `Key terms: ${terms.map(t => t.term).join(", ")}`
+    );
+  }
+  return lines.join("\n");
+}
 
 /* ============================================================
    //#1 — CORS (RealtySaSS)
-   - Strong allowlist by default to prevent cross-site “ghost” behavior.
-   - You can override via REALTYSASS_ALLOW_ORIGINS env.
 ============================================================ */
 const DEFAULT_ALLOW_ORIGINS = [
   "https://realtysass.com",
   "https://www.realtysass.com",
   "https://realtysass.netlify.app",
 
-  // If you use Webflow staging for RealtySaSS:
   "https://realtysass.webflow.io",
   "https://www.realtysass.webflow.io",
 
@@ -77,7 +133,6 @@ function respond(statusCode, headers, payload) {
 
 /* ============================================================
    //#2 — Supabase profile fields (kept compatible)
-   - RealtySaSS can add more columns later; this will not break.
 ============================================================ */
 const SELECT_COLS = [
   "id",
@@ -89,18 +144,7 @@ const SELECT_COLS = [
   "last_name",
   "phone",
   "mode",
-  "notes",
-
-  // Optional / future-safe fields (won’t error if absent in Supabase select?):
-  // NOTE: If these columns don't exist, Supabase will error.
-  // Keep this list to only columns you KNOW exist in your 'profiles' table.
-  //
-  // If you want to add Realtor fields later, do it intentionally:
-  // "brokerage",
-  // "license_state",
-  // "license_number",
-  // "market",
-  // "role",
+  "notes"
 ].join(",");
 
 /* ============================================================
@@ -126,7 +170,6 @@ function pickName(profile) {
 }
 
 function getEmailFromPayload(payload) {
-  // Priority: payload.email -> payload.identity.email -> payload.context.email -> payload.context.profile.email
   const direct = normalizeEmail(payload?.email);
   if (direct) return direct;
 
@@ -168,13 +211,11 @@ function clamp(n, a, b) {
 function buildProductHelpReply(text) {
   const t = String(text || "").toLowerCase();
 
-  // Keep it reality-based (no promises about features that aren’t implemented).
-  // This is the SAFE "default explanation" for the product ecosystem.
   if (t.includes("buyerbrief")) {
     return [
       "BuyerBrief™ is the timeline-first buyer workspace.",
       "Use it to capture milestones (pre-approval → showings → offer → option period → close), assign next steps, and keep everything organized for the client and your team.",
-      "If you tell me where the deal is stuck (pre-approval, inventory, offer terms, repairs, appraisal), I’ll give you the next 3 moves and the exact message to send."
+      "Tell me where the deal is stuck (pre-approval, inventory, offer terms, repairs, appraisal) and I’ll give you the next 3 moves + the exact message to send."
     ].join("\n");
   }
 
@@ -182,14 +223,14 @@ function buildProductHelpReply(text) {
     return [
       "RealtySaSS CRM is the pipeline + follow-up engine (when enabled in your stack).",
       "Think: stages, tasks, reminders, notes, and clean handoffs between buyer timeline + your pipeline.",
-      "Tell me your current lead stage and timeframe, and I’ll write a follow-up sequence (text + email) that doesn’t sound desperate."
+      "Tell me your current lead stage + timeframe, and I’ll write a follow-up sequence (text + email) that doesn’t sound desperate."
     ].join("\n");
   }
 
   if (t.includes("ask elena") || t.includes("elena")) {
     return [
       "Ask Elena is your Realtor-side command center: quick answers, scripts, negotiation prep, client coaching, and deal triage.",
-      "If you drop a situation + constraints (price point, timeline, financing type, inspection issues), I’ll give you a BLUF + a plan."
+      "Drop a situation + constraints (price point, timeline, financing type, inspection issues) and I’ll give you a BLUF + a plan."
     ].join("\n");
   }
 
@@ -205,7 +246,6 @@ function buildProductHelpReply(text) {
 }
 
 function buildWorkflowReply(kind) {
-  // Deterministic checklists; short, punchy, high-trust.
   if (kind === "buyer_workflow") {
     return [
       "Buyer Workflow — clean, repeatable:",
@@ -249,7 +289,6 @@ function buildWorkflowReply(kind) {
 
 function buildScriptReply(kind, context) {
   const buyerName = safeStr(context?.buyer?.name) || "your buyer";
-  const sellerName = safeStr(context?.seller?.name) || "the seller";
   const address = safeStr(context?.listing?.address) || "the property";
   const issue = safeStr(context?.issue) || "";
 
@@ -308,7 +347,6 @@ function buildScriptReply(kind, context) {
 }
 
 function buildComplianceReply(text) {
-  // Not legal advice; keep it safe + broker-forward.
   const t = String(text || "").toLowerCase();
 
   if (t.includes("fair housing") || t.includes("protected class") || t.includes("discrimination")) {
@@ -318,7 +356,7 @@ function buildComplianceReply(text) {
       "• Avoid steering language (schools, neighborhoods ‘for families,’ ‘safe,’ etc.).",
       "• If a client requests something that touches protected classes, redirect to objective criteria and let them choose.",
       "",
-      "If you want, paste the exact sentence you’re about to say/write and I’ll clean it up safely."
+      "Paste the exact sentence you’re about to say/write and I’ll clean it up safely."
     ].join("\n");
   }
 
@@ -341,10 +379,229 @@ function buildComplianceReply(text) {
 }
 
 /* ============================================================
+   //#4B — Deterministic: Real Estate Basics answers (from JSON)
+============================================================ */
+function normalizeTextForMatch(s) {
+  return String(s || "")
+    .toLowerCase()
+    .replace(/[^\w\s/.-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function scoreHit(query, candidate) {
+  const q = normalizeTextForMatch(query);
+  const c = normalizeTextForMatch(candidate);
+  if (!q || !c) return 0;
+  if (c === q) return 8;
+  if (c.includes(q)) return 6;
+  const qWords = q.split(" ").filter(Boolean);
+  let hits = 0;
+  for (const w of qWords) if (w.length > 2 && c.includes(w)) hits++;
+  return hits;
+}
+
+function findBestMatches(userText, basics) {
+  const q = normalizeTextForMatch(userText);
+  if (!q || !basics) return [];
+
+  const pools = [];
+
+  // terminology
+  if (Array.isArray(basics?.terminology_quick_hits)) {
+    for (const item of basics.terminology_quick_hits) {
+      pools.push({
+        type: "term",
+        title: item?.term || "",
+        meaning: item?.meaning || ""
+      });
+    }
+  }
+
+  // parties + docs
+  if (Array.isArray(basics?.core_concepts?.parties)) {
+    for (const item of basics.core_concepts.parties) {
+      pools.push({
+        type: "party",
+        title: item?.term || "",
+        meaning: item?.meaning || ""
+      });
+    }
+  }
+  if (Array.isArray(basics?.core_concepts?.key_documents)) {
+    for (const item of basics.core_concepts.key_documents) {
+      pools.push({
+        type: "doc",
+        title: item?.term || "",
+        meaning: item?.meaning || ""
+      });
+    }
+  }
+
+  // contingencies
+  if (Array.isArray(basics?.process_flow?.common_contingencies)) {
+    for (const item of basics.process_flow.common_contingencies) {
+      pools.push({
+        type: "contingency",
+        title: item?.term || "",
+        meaning: item?.why_it_exists || ""
+      });
+    }
+  }
+
+  // metrics
+  const metrics = basics?.money_math?.key_metrics || {};
+  for (const k of Object.keys(metrics)) {
+    pools.push({
+      type: "metric",
+      title: k,
+      meaning: `${metrics?.[k]?.meaning || ""} ${metrics?.[k]?.why_it_matters ? "— " + metrics[k].why_it_matters : ""}`.trim()
+    });
+  }
+
+  // payment components
+  if (Array.isArray(basics?.money_math?.monthly_payment_components)) {
+    for (const item of basics.money_math.monthly_payment_components) {
+      pools.push({
+        type: "payment_component",
+        title: item?.component || "",
+        meaning: item?.meaning || ""
+      });
+    }
+  }
+
+  // closing costs
+  const cc = basics?.money_math?.closing_costs_ranges || {};
+  if (cc?.buyer_closing_costs_percent) {
+    pools.push({
+      type: "closing_costs",
+      title: "Buyer Closing Costs",
+      meaning: `Typical: ${cc.buyer_closing_costs_percent.typical || "2%–5%"} of purchase price. ${cc.buyer_closing_costs_percent.note || ""}`.trim()
+    });
+  }
+  if (cc?.seller_concessions) {
+    pools.push({
+      type: "closing_costs",
+      title: "Seller Concessions",
+      meaning: `${cc.seller_concessions.meaning || ""} Tradeoff: ${cc.seller_concessions.tradeoff || ""}`.trim()
+    });
+  }
+
+  // risk flags (useful when user asks “red flags”)
+  if (Array.isArray(basics?.property_risk_flags?.major_red_flags)) {
+    pools.push({
+      type: "risk",
+      title: "Major Red Flags",
+      meaning: basics.property_risk_flags.major_red_flags.join("; ")
+    });
+  }
+
+  const scored = pools
+    .map((p) => {
+      const s1 = scoreHit(q, p.title);
+      const s2 = scoreHit(q, p.meaning);
+      return { ...p, score: Math.max(s1, s2) };
+    })
+    .filter((p) => p.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5);
+
+  return scored;
+}
+
+function buildBasicsReply(userText, basics) {
+  const matches = findBestMatches(userText, basics);
+
+  // If they asked broadly for “basics”, give a structured overview
+  const t = normalizeTextForMatch(userText);
+  const broad =
+    t.includes("basics") ||
+    t.includes("real estate 101") ||
+    t.includes("explain the process") ||
+    t.includes("how does buying a house work") ||
+    t.includes("home buying steps");
+
+  if (broad && basics?.process_flow?.home_buying_steps) {
+    const steps = basics.process_flow.home_buying_steps
+      .slice(0, 7)
+      .map((s) => `${s.step}) ${s.name}`)
+      .join("\n");
+
+    const contingencies = Array.isArray(basics?.process_flow?.common_contingencies)
+      ? basics.process_flow.common_contingencies.map((c) => `• ${c.term}: ${c.why_it_exists}`).join("\n")
+      : "";
+
+    const cc = basics?.money_math?.closing_costs_ranges?.buyer_closing_costs_percent?.typical || "2%–5%";
+    const guard = basics?.money_math?.rule_of_thumb_thresholds?.housing_ratio || null;
+
+    return [
+      `BLUF: Real estate is a timeline + paperwork machine — win it by controlling *deadlines, risk, and money math*.`,
+      "",
+      "The 7-step flow:",
+      steps,
+      "",
+      `Money reality: buyer closing costs are typically ${cc} of price (ballpark).`,
+      guard
+        ? `Affordability guardrail: keep housing ≤ ${guard.safe_zone.max_percent_of_gross_income}% gross for “GREEN”; ≤ ${guard.caution_zone.max_percent_of_gross_income}% is “CAUTION”.`
+        : "",
+      "",
+      contingencies ? "Most common contingencies:\n" + contingencies : "",
+      "",
+      "Tell me what you want next: definitions (escrow/earnest/option), negotiation (inspection/appraisal), or client scripts."
+    ].filter(Boolean).join("\n");
+  }
+
+  // Otherwise answer the specific term(s) they asked
+  if (matches.length) {
+    const top = matches[0];
+    const bullets = matches.slice(0, 4).map((m) => `• ${m.title}: ${m.meaning}`).join("\n");
+
+    const guard = basics?.money_math?.rule_of_thumb_thresholds?.housing_ratio || null;
+    const guardLine = guard
+      ? `Guardrail: housing ≤ ${guard.safe_zone.max_percent_of_gross_income}% gross (GREEN), ≤ ${guard.caution_zone.max_percent_of_gross_income}% (CAUTION).`
+      : "";
+
+    return [
+      `BLUF: Here’s the clean definition for **${top.title}** — and what to watch.`,
+      "",
+      bullets,
+      guardLine ? "\n" + guardLine : "",
+      "",
+      "If you tell me the state + deal stage (offer / option / appraisal / close), I’ll translate this into the exact move + wording."
+    ].filter(Boolean).join("\n");
+  }
+
+  // Fallback when basics pack can’t match well
+  return [
+    "BLUF: I can explain it — tell me the exact term or situation.",
+    "Examples: escrow, earnest money, option period, contingencies, DTI, appraisal gap, seller concessions, closing disclosure.",
+    "",
+    "Ask it like this: “Elena, explain escrow in 3 bullets and what buyers mess up.”"
+  ].join("\n");
+}
+
+/* ============================================================
    //#5 — Intent detection (simple + reliable)
 ============================================================ */
 function detectIntent(text) {
   const t = String(text || "").toLowerCase();
+
+  // Real Estate fundamentals / definitions / 101
+  if (
+    t.includes("real estate basics") ||
+    t.includes("real estate 101") ||
+    t.includes("home buying process") ||
+    t.includes("how does buying a house work") ||
+    t.includes("what is escrow") ||
+    t.includes("what is earnest") ||
+    t.includes("what is option fee") ||
+    t.includes("what is contingency") ||
+    t.includes("what is dti") ||
+    t.includes("what is ltv") ||
+    t.includes("closing costs") ||
+    t.includes("seller concessions") ||
+    t.includes("appraisal contingency")
+  ) return { type: "realestate_basics" };
 
   // Profile awareness
   if (
@@ -438,6 +695,9 @@ module.exports.handler = async (event) => {
   const userText = safeStr(payload.message);
   if (!userText) return respond(400, headers, { error: "Missing message" });
 
+  // Load Real Estate Basics pack (safe)
+  const basics = loadRealEstateBasics();
+
   // Context (optional)
   const context = payload?.context && typeof payload.context === "object" ? payload.context : {};
   const contextProfile =
@@ -493,7 +753,27 @@ module.exports.handler = async (event) => {
   const intent = detectIntent(userText);
 
   /* ==========================================================
-     //#6.1 — Deterministic: Profile
+     //#6.1 — Deterministic: Real Estate Basics (from JSON)
+  ========================================================== */
+  if (intent?.type === "realestate_basics") {
+    const reply = buildBasicsReply(userText, basics);
+    return respond(200, headers, {
+      intent: "realestate_basics",
+      reply,
+      profile: profileContext || null,
+      basics_meta: basics?.meta || null,
+      debug: {
+        basicsLoaded: !!basics,
+        basicsLoadError: __basicsLoadError || null,
+        usedSupabase,
+        hasContextProfile: !!contextProfile,
+        supabaseError: supabaseError || null
+      }
+    });
+  }
+
+  /* ==========================================================
+     //#6.2 — Deterministic: Profile
   ========================================================== */
   if (intent?.type === "profile_question") {
     if (!profileContext || !profileContext.email) {
@@ -503,6 +783,8 @@ module.exports.handler = async (event) => {
           "I can pull your profile instantly once your email is synced. Send your email (or load your profile in the shell) and I’ll greet you properly + use your saved info.",
         profile: null,
         debug: {
+          basicsLoaded: !!basics,
+          basicsLoadError: __basicsLoadError || null,
           usedSupabase,
           hasContextProfile: !!contextProfile,
           supabaseError: supabaseError || null,
@@ -519,6 +801,8 @@ module.exports.handler = async (event) => {
       reply: bits.join("\n"),
       profile: profileContext,
       debug: {
+        basicsLoaded: !!basics,
+        basicsLoadError: __basicsLoadError || null,
         usedSupabase,
         hasContextProfile: !!contextProfile,
         supabaseError: supabaseError || null,
@@ -527,7 +811,7 @@ module.exports.handler = async (event) => {
   }
 
   /* ==========================================================
-     //#6.2 — Deterministic: Product help
+     //#6.3 — Deterministic: Product help
   ========================================================== */
   if (intent?.type === "product_question") {
     const reply = buildProductHelpReply(userText);
@@ -536,6 +820,8 @@ module.exports.handler = async (event) => {
       reply,
       profile: profileContext || null,
       debug: {
+        basicsLoaded: !!basics,
+        basicsLoadError: __basicsLoadError || null,
         usedSupabase,
         hasContextProfile: !!contextProfile,
         supabaseError: supabaseError || null,
@@ -544,7 +830,7 @@ module.exports.handler = async (event) => {
   }
 
   /* ==========================================================
-     //#6.3 — Deterministic: Workflows
+     //#6.4 — Deterministic: Workflows
   ========================================================== */
   if (intent?.type === "workflow_question") {
     const t = userText.toLowerCase();
@@ -560,6 +846,8 @@ module.exports.handler = async (event) => {
       reply,
       profile: profileContext || null,
       debug: {
+        basicsLoaded: !!basics,
+        basicsLoadError: __basicsLoadError || null,
         usedSupabase,
         hasContextProfile: !!contextProfile,
         supabaseError: supabaseError || null,
@@ -568,7 +856,7 @@ module.exports.handler = async (event) => {
   }
 
   /* ==========================================================
-     //#6.4 — Deterministic: Scripts
+     //#6.5 — Deterministic: Scripts
   ========================================================== */
   if (intent?.type === "script_request") {
     const t = userText.toLowerCase();
@@ -585,6 +873,8 @@ module.exports.handler = async (event) => {
       reply,
       profile: profileContext || null,
       debug: {
+        basicsLoaded: !!basics,
+        basicsLoadError: __basicsLoadError || null,
         usedSupabase,
         hasContextProfile: !!contextProfile,
         supabaseError: supabaseError || null,
@@ -593,7 +883,7 @@ module.exports.handler = async (event) => {
   }
 
   /* ==========================================================
-     //#6.5 — Deterministic: Compliance guardrails
+     //#6.6 — Deterministic: Compliance guardrails
   ========================================================== */
   if (intent?.type === "compliance_question") {
     const reply = buildComplianceReply(userText);
@@ -602,6 +892,8 @@ module.exports.handler = async (event) => {
       reply,
       profile: profileContext || null,
       debug: {
+        basicsLoaded: !!basics,
+        basicsLoadError: __basicsLoadError || null,
         usedSupabase,
         hasContextProfile: !!contextProfile,
         supabaseError: supabaseError || null,
@@ -610,7 +902,7 @@ module.exports.handler = async (event) => {
   }
 
   /* ==========================================================
-     //#6.6 — OpenAI fallback (optional)
+     //#6.7 — OpenAI fallback (optional)
   ========================================================== */
   const key = process.env.OPENAI_API_KEY;
   if (!key) {
@@ -620,6 +912,8 @@ module.exports.handler = async (event) => {
       reply: `Elena (dev echo): “${userText}” — ${who} Add OPENAI_API_KEY for natural-language answers, rewriting, and strategy.`,
       profile: profileContext || null,
       debug: {
+        basicsLoaded: !!basics,
+        basicsLoadError: __basicsLoadError || null,
         usedSupabase,
         hasContextProfile: !!contextProfile,
         supabaseError: supabaseError || null,
@@ -628,6 +922,8 @@ module.exports.handler = async (event) => {
   }
 
   // Build a clean, Realtor-mentor system prompt (BLUF-first, safe, actionable)
+  const basicsSummary = basicsForPrompt(basics);
+
   const system = [
     "You are Elena, the RealtySaSS Realtor-side AI assistant and mentor.",
     "Tone: confident, warm, slightly daring, but professional. Never explicit.",
@@ -636,7 +932,8 @@ module.exports.handler = async (event) => {
     "When user asks for a plan: give next 3 moves + what to ask for.",
     "If user asks for comps/prices: ask for location + 2–3 comparable anchors (you do not have MLS access).",
     "Compliance: avoid steering/discrimination; use safe wording; recommend broker/attorney for legal interpretation.",
-    "Use the provided profile + context as truth. If missing, ask for only the minimum needed."
+    "Use the provided profile + context as truth. If missing, ask for only the minimum needed.",
+    basicsSummary ? `\n\nREFERENCE — Real Estate Basics Pack:\n${basicsSummary}\n` : ""
   ].join(" ");
 
   try {
@@ -658,8 +955,9 @@ module.exports.handler = async (event) => {
               message: userText,
               profile: profileContext,
               context: context || null,
+              basics_meta: basics?.meta || null,
               note:
-                "Give BLUF first. Then bullets. If you need info, ask for only the minimum missing inputs once.",
+                "Give BLUF first. Then bullets. If you need info, ask for only the minimum missing inputs once."
             }),
           },
         ],
@@ -676,6 +974,8 @@ module.exports.handler = async (event) => {
       reply,
       profile: profileContext || null,
       debug: {
+        basicsLoaded: !!basics,
+        basicsLoadError: __basicsLoadError || null,
         usedSupabase,
         hasContextProfile: !!contextProfile,
         supabaseError: supabaseError || null,
@@ -687,6 +987,8 @@ module.exports.handler = async (event) => {
       error: "Server exception",
       detail: String(err),
       debug: {
+        basicsLoaded: !!basics,
+        basicsLoadError: __basicsLoadError || null,
         usedSupabase,
         hasContextProfile: !!contextProfile,
         supabaseError: supabaseError || null,

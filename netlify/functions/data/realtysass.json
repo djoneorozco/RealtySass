@@ -1,0 +1,230 @@
+{
+  "schema": "realtysass.elena_knowledge.v1",
+  "brand": {
+    "name": "RealtySaSS",
+    "domain": "RealtySaSS.com",
+    "parent_brand": "House of SaSS",
+    "tagline": "Naughty Realty, Serious Returns",
+    "voice": {
+      "persona_name": "Elena",
+      "persona_role": "RealtySaSS intelligence and concierge voice (symbolic, not a real person)",
+      "tone": [
+        "warm",
+        "confident",
+        "high-clarity",
+        "slightly daring but always professional",
+        "BLUF-first"
+      ],
+      "guardrails": [
+        "Never provide legal advice; suggest broker/attorney for legal interpretation.",
+        "Avoid fair housing steering or discriminatory language; keep guidance objective and feature-focused.",
+        "No explicit sexual content."
+      ]
+    }
+  },
+  "vision": {
+    "one_liner": "A luxury, AI-powered real estate SaaS ecosystem that helps agents close faster with cleaner workflows, stronger buyer intelligence, and polished client-facing deliverables.",
+    "purpose": [
+      "Reduce deal chaos with a timeline-first operating system for buyers.",
+      "Standardize agent execution (scripts, checklists, negotiation plans).",
+      "Turn complex buyer situations into clear, defensible next steps."
+    ],
+    "positioning": {
+      "category": "Real Estate SaaS",
+      "who_it_is_for": [
+        "Realtors (solo agents and teams)",
+        "Agents who want premium UX and repeatable execution",
+        "Agents who want a buyer-first workflow system"
+      ],
+      "what_makes_it_different": [
+        "Timeline-first buyer workspace (not just a CRM board).",
+        "Premium 'fintech-luxury' UI/UX (House of SaSS theme).",
+        "Deterministic 'truth packet' approach for affordability/deal triage (agentic Elena), with optional narration."
+      ]
+    }
+  },
+  "products": [
+    {
+      "id": "buyerbrief",
+      "name": "BuyerBrief\u2122",
+      "type": "software",
+      "what_it_is": "Timeline-first buyer intelligence workspace to manage milestones, tasks, and deal readiness from intake to closing.",
+      "key_features": [
+        "Buyer timeline milestones (pre-approval \u2192 showings \u2192 offer \u2192 option period \u2192 close)",
+        "Tasks + next steps (with structured prompts)",
+        "Client-ready summaries (positioning, constraints, and action plan)",
+        "High-trust workflow guidance (reduce drop-offs and confusion)"
+      ],
+      "best_for": [
+        "Agents who want a repeatable buyer process",
+        "Agents who want cleaner communication and fewer deal surprises"
+      ]
+    },
+    {
+      "id": "crm_addon",
+      "name": "RealtySaSS CRM",
+      "type": "software_addon",
+      "what_it_is": "CRM add-on for agents already on BuyerBrief Pro (monthly or annual). No standalone purchase path.",
+      "key_features": [
+        "Pipeline + follow-up organization",
+        "Stages, tasks, reminders, notes (implementation may vary by rollout)"
+      ],
+      "purchase_rule": {
+        "standalone_allowed": false,
+        "requires": "BuyerBrief Pro (monthly or annual)",
+        "note": "CRM is a $99/mo add-on only for agents on BuyerBrief Pro; not available for the $179 single BuyerBrief unlock."
+      }
+    }
+  ],
+  "pricing": {
+    "currency": "USD",
+    "last_confirmed": "2026-01-31",
+    "catalogs": [
+      {
+        "catalog_id": "house_of_sass_software_only",
+        "name": "House of SaSS \u2014 Software-only pricing",
+        "notes": [
+          "These prices are distinct from any PCS United-fed BuyerBrief pricing.",
+          "BuyerBrief pricing below assumes bring-your-own clients."
+        ],
+        "items": [
+          {
+            "product_id": "buyerbrief",
+            "tier": "Solo",
+            "price_monthly": 99,
+            "price_annual": 899,
+            "includes": [
+              "Unlimited BuyerBriefs",
+              "Bring-your-own clients"
+            ]
+          },
+          {
+            "product_id": "buyerbrief",
+            "tier": "Teams (5 agents)",
+            "price_monthly": 299,
+            "price_annual": 2900,
+            "includes": [
+              "Team access (up to 5 agents)"
+            ]
+          },
+          {
+            "product_id": "buyerbrief",
+            "tier": "Teams (10 agents)",
+            "price_monthly": 499,
+            "price_annual": 4900,
+            "includes": [
+              "Team access (up to 10 agents)"
+            ]
+          },
+          {
+            "product_id": "crm_core",
+            "tier": "CRM Core (per agent)",
+            "price_monthly": 149,
+            "price_annual": 1400,
+            "includes": [
+              "CRM access per agent"
+            ]
+          },
+          {
+            "product_id": "crm_buyerbrief_bundle",
+            "tier": "CRM + BuyerBrief Bundle (per agent)",
+            "price_monthly": 199,
+            "price_annual": 1900,
+            "includes": [
+              "CRM + BuyerBrief bundle per agent"
+            ]
+          }
+        ]
+      },
+      {
+        "catalog_id": "buyerbrief_unlock_path",
+        "name": "BuyerBrief purchase-path rule",
+        "notes": [
+          "CRM is ONLY a $99/month add-on for agents on BuyerBrief Pro (monthly or annual).",
+          "There is NO standalone CRM purchase path.",
+          "There is NO CRM access on the $179 single BuyerBrief unlock.",
+          "Path B is the sole supported model."
+        ],
+        "rules": {
+          "crm_available_when": "BuyerBrief Pro subscription active",
+          "crm_not_available_when": "One-time $179 BuyerBrief unlock"
+        }
+      }
+    ]
+  },
+  "site_experience": {
+    "ux_principles": [
+      "Premium, frosted-glass, fintech-luxury feel (House of SaSS design system)",
+      "High-clarity UI: minimal friction, guided flows, strong affordances",
+      "Structured outputs: BLUF + action plan + scripts"
+    ],
+    "avatars": [
+      {
+        "name": "Elena",
+        "assigned_to": "RealtySaSS",
+        "role": "Realtor-side assistant/mentor and real-estate SME",
+        "style_note": "Intentionally symbolic / non-realistic; bold fashion-forward; not intended to be mistaken for a human."
+      }
+    ]
+  },
+  "support": {
+    "contact": {
+      "email": null,
+      "phone": null,
+      "support_url": null,
+      "notes": "Placeholders: set these when you decide the official support contact points."
+    },
+    "hours": {
+      "timezone": "America/Chicago",
+      "hours": null
+    }
+  },
+  "faq": [
+    {
+      "q": "What is BuyerBrief\u2122?",
+      "a": "BuyerBrief is a timeline-first buyer workspace that keeps milestones, tasks, and next steps organized from intake to closing."
+    },
+    {
+      "q": "Is RealtySaSS a CRM?",
+      "a": "RealtySaSS can include CRM capabilities, but the core philosophy is buyer execution: timeline, scripts, checklists, and clean handoffs. CRM is an add-on depending on your plan."
+    },
+    {
+      "q": "Can I buy the CRM by itself?",
+      "a": "No. The CRM is only available as a $99/month add-on for agents on BuyerBrief Pro (monthly or annual). There is no standalone CRM purchase path."
+    },
+    {
+      "q": "What\u2019s the difference between deterministic Elena and narrated Elena?",
+      "a": "Deterministic Elena (elena-agent) produces a structured truth packet (math + rails + next action). Narrated Elena (ask-elena) can turn that packet into polished human-friendly guidance and scripts."
+    }
+  ],
+  "sales_pitch": {
+    "bluf": "RealtySaSS helps agents run deals like a system: clean buyer intake, timeline execution, strong scripts, and fewer surprises.",
+    "elevator_pitch": [
+      "If you\u2019ve ever felt like every buyer deal is a custom fire drill, RealtySaSS fixes that.",
+      "BuyerBrief gives you a repeatable timeline playbook. Elena gives you scripts and next steps. You close faster with less chaos."
+    ]
+  },
+  "integration_notes_for_elena": {
+    "recommended_file_path": "netlify/functions/data/realtysass.json",
+    "how_elena_should_use_this": [
+      "Use pricing.catalogs as the single source of truth for plan rules and prices.",
+      "Use faq for instant short answers.",
+      "Use sales_pitch for marketing-style summaries.",
+      "Use support.contact for official contact answers (currently placeholders)."
+    ],
+    "safe_defaults": {
+      "if_contact_missing": "Say: 'I don\u2019t have the official support contact on file yet \u2014 tell me what you want it to be and I\u2019ll use that going forward.'",
+      "if_user_asks_legal": "Say: 'I can help with general guidance and wording, but your broker/attorney is the final authority for legal interpretation.'"
+    }
+  },
+  "meta": {
+    "version": "1.0.0",
+    "created_for": "Elena knowledge test (RealtySaSS)",
+    "updated_at_iso": "2026-02-10T00:00:00Z",
+    "data_confidence": {
+      "pricing": "high",
+      "product_definitions": "medium",
+      "support_contact": "unset"
+    }
+  }
+}

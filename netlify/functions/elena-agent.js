@@ -1,74 +1,22 @@
 // netlify/functions/elena-agent.js
 // ============================================================
-// v2.0.0 — RealtySaSS • Agentic Elena (Orchestrator)
+// v2.1.0 — RealtySaSS • Agentic Elena (Orchestrator)
 //
-// ✅ Purpose (RealtySaSS):
-// - Deterministic orchestration layer for Realtor-side Elena
-// - NO LLM required here
-// - Produces a single “truth packet” for the HUD to render
-// - Focuses on REAL ESTATE deal triage + affordability rails (generic, not military-specific)
+// ✅ Adds deterministic knowledge loading:
+// - netlify/functions/data/ask-elena-realestate-basics.json
+// - netlify/functions/data/states-<state>.json  (ex: states-texas.json)
 //
-// ✅ What changed from PCSUnited elena-agent.js:
-// - ❌ Removed PCSUnited-only dependencies (brain.js, military pay, base/cityKey assumptions)
-// - ✅ Uses Supabase directly to fetch profile (instead of calling /api/profile-by-email)
-// - ✅ Supports FAD snapshot ingest (price/expenses/downpayment/creditScore/termYears/loanType)
-// - ✅ Deterministic mortgage estimate (P&I + simple taxes/ins/HOA placeholders)
-// - ✅ Verdict engine (GREEN/CAUTION/NO-GO) based on income/expenses/housing all-in
-// - ✅ Next action is Realtor-friendly: tighten inputs, adjust price/down, reduce expenses, etc.
-// - ✅ Keeps “hypothetical credit score in question” parsing (what-if override)
-//
-// INPUT (POST JSON):
-// {
-//   email: "user@email.com",                  // optional but recommended
-//   question?: "can I afford ...",            // optional
-//   overrides?: {                             // optional scenario overrides
-//     income?: number,                        // monthly income
-//     price?: number,
-//     expenses?: number,                      // monthly non-housing expenses
-//     downpayment?: number,
-//     creditScore?: number,
-//     termYears?: number,
-//     loanType?: "va"|"conv"|"fha"|"cash"|string,
-//     taxRate?: number,                       // optional annual property tax rate (e.g., 0.022)
-//     insuranceAnnual?: number,               // optional annual insurance dollars
-//     hoaMonthly?: number                     // optional monthly HOA dollars
-//   },
-//   scenario?: { ... },                        // optional baseline scenario
-//   context?: {
-//     fad?: { ... },                           // optional FAD snapshot payload (preferred)
-//     profile?: { ... }                        // optional inline profile fallback (if no Supabase)
-//   },
-//   debug?: true
-// }
-//
-// OUTPUT (JSON):
-// {
-//   ok: true,
-//   scenario_id: "elena_...",
-//   ts: 1700000000,
-//   email: "...",
-//   profile_used?: {...},
-//   inputs_used: {...},
-//   quick?: {...},
-//   mortgage?: {...},
-//   verdict: {...},
-//   next_action: {...},
-//   missing_inputs: [...],
-//   debug?: {...}
-// }
-//
-// REQUIRED ENV (for Supabase profile lookup):
-//   SUPABASE_URL
-//   SUPABASE_SERVICE_KEY
-//
-// OPTIONAL ENV:
-//   REALTYSASS_ALLOW_ORIGINS="https://realtysass.com,https://www.realtysass.com,https://realtysass.netlify.app,https://realtysass.webflow.io"
+// ✅ Output includes:
+// - knowledge: { basics, state }      (so Ask-Elena can narrate or render)
+// - knowledge_used: receipt info (file names, load ok, errors)
 //
 // ============================================================
 
 /* eslint-disable no-console */
 
 const crypto = require("crypto");
+const path = require("path");
+const fs = require("fs");
 const { createClient } = require("@supabase/supabase-js");
 
 // ------------------------------
@@ -195,14 +143,147 @@ function pickName(profile) {
 }
 
 // ------------------------------
-// //#2A QUESTION PARSERS (DETERMINISTIC)
+// //#2A STATE NORMALIZATION + KNOWLEDGE LOADER
+// ------------------------------
+const DATA_DIR = path.join(__dirname, "data");
+const BASICS_FILENAME = "ask-elena-realestate-basics.json";
+
+// Cache across warm invocations
+let __BASICS_CACHE = null;
+const __STATE_CACHE = new Map();
+
+const STATE_ALIASES = {
+  // USPS -> full
+  tx: "texas",
+  az: "arizona",
+  ca: "california",
+  fl: "florida",
+  ny: "new-york",
+  nj: "new-jersey",
+  il: "illinois",
+  wa: "washington",
+  or: "oregon",
+  co: "colorado",
+  nv: "nevada",
+  ga: "georgia",
+  nc: "north-carolina",
+  sc: "south-carolina",
+  va: "virginia",
+  md: "maryland",
+  pa: "pennsylvania",
+
+  // common variants
+  "new york": "new-york",
+  "new jersey": "new-jersey",
+  "north carolina": "north-carolina",
+  "south carolina": "south-carolina",
+};
+
+function normalizeStateKey(raw) {
+  const s0 = safeStr(raw).toLowerCase();
+  if (!s0) return "";
+
+  // If "TX" style:
+  if (/^[a-z]{2}$/.test(s0) && STATE_ALIASES[s0]) return STATE_ALIASES[s0];
+
+  // Normalize spaces/underscores -> hyphen
+  const cleaned = s0.replace(/[_\s]+/g, "-").replace(/[^a-z-]/g, "");
+  if (!cleaned) return "";
+
+  // Map known aliases
+  if (STATE_ALIASES[cleaned]) return STATE_ALIASES[cleaned];
+
+  return cleaned;
+}
+
+function readJsonFileAbs(absPath) {
+  const raw = fs.readFileSync(absPath, "utf8");
+  return JSON.parse(raw);
+}
+
+function loadBasics() {
+  if (__BASICS_CACHE) {
+    return { ok: true, file: BASICS_FILENAME, data: __BASICS_CACHE, error: null, cached: true };
+  }
+
+  const abs = path.join(DATA_DIR, BASICS_FILENAME);
+  try {
+    const data = readJsonFileAbs(abs);
+    __BASICS_CACHE = data;
+    return { ok: true, file: BASICS_FILENAME, data, error: null, cached: false };
+  } catch (e) {
+    return {
+      ok: false,
+      file: BASICS_FILENAME,
+      data: null,
+      error: `Failed to load ${BASICS_FILENAME}: ${String(e?.message || e)}`,
+      cached: false,
+    };
+  }
+}
+
+function loadState(stateKey) {
+  const key = normalizeStateKey(stateKey);
+  if (!key) {
+    return { ok: false, key: "", file: null, data: null, error: "No state provided.", cached: false };
+  }
+
+  if (__STATE_CACHE.has(key)) {
+    return { ok: true, key, file: `states-${key}.json`, data: __STATE_CACHE.get(key), error: null, cached: true };
+  }
+
+  const filename = `states-${key}.json`;
+  const abs = path.join(DATA_DIR, filename);
+
+  try {
+    const data = readJsonFileAbs(abs);
+    __STATE_CACHE.set(key, data);
+    return { ok: true, key, file: filename, data, error: null, cached: false };
+  } catch (e) {
+    return {
+      ok: false,
+      key,
+      file: filename,
+      data: null,
+      error: `Failed to load ${filename}: ${String(e?.message || e)}`,
+      cached: false,
+    };
+  }
+}
+
+function resolveStateFromInputs({ body, profile, contextProfile }) {
+  // Priority order (tight + predictable):
+  // 1) overrides.state or overrides.license_state
+  // 2) context.state
+  // 3) context.profile.license_state
+  // 4) profile.license_state (from Supabase)
+  // 5) profile.market_state
+  // 6) scenario.state
+  const o = body?.overrides && typeof body.overrides === "object" ? body.overrides : {};
+  const ctx = body?.context && typeof body.context === "object" ? body.context : {};
+  const scenario = body?.scenario && typeof body.scenario === "object" ? body.scenario : {};
+
+  return (
+    pickFirst(
+      o.state,
+      o.license_state,
+      ctx.state,
+      ctx?.profile?.license_state,
+      ctx?.profile?.state,
+      contextProfile?.license_state,
+      contextProfile?.state,
+      profile?.license_state,
+      profile?.state,
+      profile?.market_state,
+      scenario.state
+    ) || ""
+  );
+}
+
+// ------------------------------
+// //#2B QUESTION PARSERS (DETERMINISTIC)
 // ------------------------------
 function parseHypotheticalCreditScoreFromQuestion(question) {
-  // Only treat as an override if phrasing implies a WHAT-IF / CHANGE request.
-  // Examples:
-  // - "what would my payment be if my credit score went up to 720"
-  // - "if my fico was 740"
-  // - "raise my credit score to 760"
   const t = String(question || "").toLowerCase().trim();
   if (!t) return null;
 
@@ -225,12 +306,11 @@ function parseHypotheticalCreditScoreFromQuestion(question) {
 }
 
 // ------------------------------
-// //#2B FINANCE MATH (DETERMINISTIC)
+// //#2C FINANCE MATH (DETERMINISTIC)
 // ------------------------------
 function aprTierFromScore(score) {
-  // Simple deterministic tier table (tune later)
   const s = Number.isFinite(score) ? score : null;
-  if (!s) return 0.070;       // default
+  if (!s) return 0.070;
   if (s >= 780) return 0.0625;
   if (s >= 740) return 0.0675;
   if (s >= 700) return 0.0725;
@@ -266,8 +346,6 @@ function principalFromPmt(targetPI, apr, termYears) {
   return Number.isFinite(principal) ? principal : null;
 }
 
-// Generic “all-in” housing estimator.
-// If tax/ins/hoa are missing, uses conservative placeholders (explicitly disclosed in payload).
 function estimateAllInHousing({
   price,
   downpayment,
@@ -292,10 +370,6 @@ function estimateAllInHousing({
 
   if (!Number.isFinite(pi) || pi <= 0) return { ok: false, reason: "Unable to compute P&I." };
 
-  // Defaults (explicit and deterministic):
-  // - Tax rate default 2.0% if missing
-  // - Insurance annual default $2,400 if missing
-  // - HOA default $0 if missing
   const used = {
     taxRate: Number.isFinite(taxRate) ? taxRate : 0.020,
     insuranceAnnual: Number.isFinite(insuranceAnnual) ? insuranceAnnual : 2400,
@@ -334,12 +408,12 @@ function buildQuickAffordability({
   const inc = Number.isFinite(income) ? income : null;
   if (!inc) return null;
 
-  const housingCap = inc * housingCapPct; // all-in cap
-  const piTarget = housingCap / buffer;   // buffer for taxes/ins/HOA
+  const housingCap = inc * housingCapPct;
+  const piTarget = housingCap / buffer;
 
   const principal0 = principalFromPmt(piTarget, apr, termYears);
   const price0 = principal0 ? principal0 : null;
-  const price5 = principal0 ? (principal0 / 0.95) : null;
+  const price5 = principal0 ? principal0 / 0.95 : null;
 
   return {
     housing_cap_monthly: Math.round(housingCap),
@@ -392,16 +466,13 @@ function buildScenario(body) {
   const ctx = body?.context && typeof body.context === "object" ? body.context : {};
   const fad = readFadSnapshot(body);
 
-  const question = safeStr(body?.question) || null;
+  const question = safeStr(body?.question) || safeStr(body?.message) || safeStr(body?.prompt) || null;
 
-  // Priority:
-  // overrides > FAD snapshot > scenario baseline > context.profile (income only) > missing
   const price = num(pickFirst(overrides.price, fad.price, scenario.price, scenario.homePrice));
   const expenses = num(pickFirst(overrides.expenses, fad.expenses, scenario.expenses, scenario.monthlyExpenses));
   const downpayment = num(pickFirst(overrides.downpayment, fad.downpayment, scenario.downpayment, scenario.dpAmt));
   const income = num(pickFirst(overrides.income, fad.income, scenario.income, scenario.monthlyIncome));
 
-  // creditScore supports hypothetical override in question
   let creditScoreSource = "missing";
   const creditScoreRaw = num(pickFirst(overrides.creditScore, fad.creditScore, scenario.creditScore, scenario.score));
   let creditScore = creditScoreRaw ? clamp(Math.round(creditScoreRaw), 300, 850) : null;
@@ -428,7 +499,6 @@ function buildScenario(body) {
   const insuranceAnnual = num(pickFirst(overrides.insuranceAnnual, fad.insuranceAnnual, scenario.insuranceAnnual));
   const hoaMonthly = num(pickFirst(overrides.hoaMonthly, fad.hoaMonthly, scenario.hoaMonthly));
 
-  // Profile fallback (optional) — used only for greeting + potential income fill later
   const contextProfile = ctx?.profile && typeof ctx.profile === "object" ? ctx.profile : null;
 
   return {
@@ -458,7 +528,6 @@ function listMissingInputs({ income, expenses, creditScore, downpayment, price, 
   if (!Number.isFinite(income)) missing.push("income");
   if (!Number.isFinite(expenses)) missing.push("expenses");
 
-  // For a full “mortgage verified” packet, we want these:
   if (!Number.isFinite(housingAllIn) || housingAllIn <= 0) {
     if (!Number.isFinite(price)) missing.push("price");
     if (!Number.isFinite(downpayment)) missing.push("downpayment");
@@ -473,7 +542,7 @@ function listMissingInputs({ income, expenses, creditScore, downpayment, price, 
 function computeVerdict({ income, expenses, housingAllIn }) {
   const inc = Number.isFinite(income) ? income : null;
   const exp = Number.isFinite(expenses) ? expenses : 0;
-  const hou = (Number.isFinite(housingAllIn) && housingAllIn > 0) ? housingAllIn : null;
+  const hou = Number.isFinite(housingAllIn) && housingAllIn > 0 ? housingAllIn : null;
 
   if (!inc) {
     return {
@@ -612,7 +681,10 @@ const SELECT_COLS = [
   "phone",
   "mode",
   "notes",
-  // Keep this list only to columns that exist in RealtySaSS Supabase 'profiles'
+  // OPTIONAL if you have them (only add if they exist in Supabase):
+  // "license_state",
+  // "state",
+  // "market_state",
 ].join(",");
 
 async function fetchProfileByEmail(email) {
@@ -620,7 +692,12 @@ async function fetchProfileByEmail(email) {
   const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-    return { ok: false, profile: null, source: "supabase_env_missing", error: "Missing SUPABASE_URL or SUPABASE_SERVICE_KEY" };
+    return {
+      ok: false,
+      profile: null,
+      source: "supabase_env_missing",
+      error: "Missing SUPABASE_URL or SUPABASE_SERVICE_KEY",
+    };
   }
 
   try {
@@ -649,7 +726,6 @@ async function fetchProfileByEmail(email) {
 exports.handler = async (event) => {
   const origin = event.headers?.origin || event.headers?.Origin || "";
 
-  // OPTIONS preflight
   if (event.httpMethod === "OPTIONS") {
     return respond(200, { ok: true }, origin);
   }
@@ -660,7 +736,6 @@ exports.handler = async (event) => {
 
   const body = safeJsonParse(event.body);
 
-  // Email resolution (accept multiple placements)
   const email =
     normalizeEmail(
       pickFirst(
@@ -671,7 +746,6 @@ exports.handler = async (event) => {
       )
     ) || "";
 
-  // Scenario build (overrides + fad + baseline)
   const sc = buildScenario(body);
 
   // Pull profile from Supabase if email exists; else allow context.profile
@@ -686,7 +760,6 @@ exports.handler = async (event) => {
     profileError = p.error;
   }
 
-  // Context profile fallback (if Supabase absent)
   if (!profile && sc.contextProfile) {
     profile = sc.contextProfile;
     profileSource = "context.profile";
@@ -702,33 +775,72 @@ exports.handler = async (event) => {
         phone: safeStr(profile.phone) || null,
         mode: safeStr(profile.mode) || null,
         notes: safeStr(profile.notes) || null,
+        // license_state/state fields only if they exist in your Supabase row:
+        license_state: safeStr(profile.license_state) || null,
+        state: safeStr(profile.state) || null,
+        market_state: safeStr(profile.market_state) || null,
       }
     : (email ? { email } : null);
 
-  // Income can be provided in overrides/fad/scenario. If absent, we *can’t* invent it.
-  // (RealtySaSS is Realtor-side, not pay-table driven.)
-  const income = num(pickFirst(sc.income, sc.contextProfile?.income, sc.contextProfile?.monthly_income));
+  // Knowledge resolution
+  const resolvedStateRaw = resolveStateFromInputs({
+    body,
+    profile,
+    contextProfile: sc.contextProfile,
+  });
 
+  const basicsLoad = loadBasics();
+  const stateLoad = loadState(resolvedStateRaw);
+
+  const knowledge = {
+    basics: basicsLoad.ok ? basicsLoad.data : null,
+    state: stateLoad.ok ? stateLoad.data : null,
+    state_key: stateLoad.ok ? stateLoad.key : normalizeStateKey(resolvedStateRaw) || null,
+  };
+
+  const knowledge_used = {
+    basics: {
+      ok: basicsLoad.ok,
+      file: basicsLoad.file,
+      cached: basicsLoad.cached,
+      error: basicsLoad.error || null,
+    },
+    state: {
+      ok: stateLoad.ok,
+      requested: safeStr(resolvedStateRaw) || null,
+      key: stateLoad.key || null,
+      file: stateLoad.file || null,
+      cached: stateLoad.cached || false,
+      error: stateLoad.error || null,
+    },
+  };
+
+  // Scenario values
+  const income = num(pickFirst(sc.income, sc.contextProfile?.income, sc.contextProfile?.monthly_income));
   const price = sc.price;
   const expenses = sc.expenses;
   const downpayment = sc.downpayment;
   const creditScore = sc.creditScore;
 
-  // Determine “housing all-in”
-  // If inputs exist, compute deterministic estimate.
-  // If not, keep null and rely on quick rails when possible.
+  // Mortgage estimate (deterministic)
   let mortgage = null;
   let mortgageSource = "missing";
 
   if (Number.isFinite(price) && Number.isFinite(downpayment) && Number.isFinite(creditScore)) {
+    // If state json contains defaults, use them as a fallback layer (still deterministic)
+    const stateDefaults = stateLoad.ok && stateLoad.data && typeof stateLoad.data === "object" ? stateLoad.data.defaults : null;
+    const taxRate = pickFirst(sc.taxRate, stateDefaults?.tax_rate, stateDefaults?.property_tax_rate);
+    const insuranceAnnual = pickFirst(sc.insuranceAnnual, stateDefaults?.insurance_annual, stateDefaults?.homeowners_insurance_annual);
+    const hoaMonthly = pickFirst(sc.hoaMonthly, stateDefaults?.hoa_monthly);
+
     const m = estimateAllInHousing({
       price,
       downpayment,
       creditScore,
       termYears: sc.termYears,
-      taxRate: sc.taxRate,
-      insuranceAnnual: sc.insuranceAnnual,
-      hoaMonthly: sc.hoaMonthly,
+      taxRate: num(taxRate),
+      insuranceAnnual: num(insuranceAnnual),
+      hoaMonthly: num(hoaMonthly),
     });
 
     if (m.ok && hasPositiveMoney(m.all_in_monthly)) {
@@ -744,7 +856,7 @@ exports.handler = async (event) => {
 
   const housingAllIn = mortgage?.ok ? num(mortgage.all_in_monthly) : null;
 
-  // Quick rails (only if income exists)
+  // Quick rails
   const aprAssumed = aprTierFromScore(creditScore);
   const quick = buildQuickAffordability({
     income,
@@ -754,7 +866,6 @@ exports.handler = async (event) => {
     termYears: sc.termYears,
   });
 
-  // Verdict + next actions
   const verdict = computeVerdict({
     income,
     expenses,
@@ -777,7 +888,6 @@ exports.handler = async (event) => {
     housingAllIn,
   });
 
-  // Assemble response
   const ts = nowTs();
   const scenario_id = makeScenarioId(email || "anon", ts);
 
@@ -793,18 +903,15 @@ exports.handler = async (event) => {
       housing_cap_pct: 0.30,
       buffer_allin_to_pi: 1.28,
       apr_assumed: Number.isFinite(creditScore) ? aprAssumed : null,
-      // Mortgage placeholders are explicitly reported by mortgage.assumptions_used
     },
     sources: {
       email: email ? "request" : "missing",
       profile: profileSource,
-      income: Number.isFinite(income) ? (sc.overrides?.income != null ? "overrides" : (sc.fad?.income != null ? "fad" : (sc.baseline?.income != null ? "scenario" : "context/profile"))) : "missing",
-      price: Number.isFinite(price) ? (sc.overrides?.price != null ? "overrides" : (sc.fad?.price != null ? "fad" : "scenario")) : "missing",
-      expenses: Number.isFinite(expenses) ? (sc.overrides?.expenses != null ? "overrides" : (sc.fad?.expenses != null ? "fad" : "scenario")) : "missing",
-      downpayment: Number.isFinite(downpayment) ? (sc.overrides?.downpayment != null ? "overrides" : (sc.fad?.downpayment != null ? "fad" : "scenario")) : "missing",
       creditScore: Number.isFinite(creditScore) ? sc.creditScoreSource : "missing",
       mortgage: mortgageSource,
       quick: quick ? "deterministic_quick_rails" : "missing_income",
+      knowledge_basics: basicsLoad.ok ? "file" : "missing",
+      knowledge_state: stateLoad.ok ? "file" : "missing",
     },
   };
 
@@ -814,11 +921,16 @@ exports.handler = async (event) => {
     ts,
     email: email || null,
     profile_used,
+
     intent: sc.question ? "user_question" : "affordability_check",
     question: sc.question || null,
 
     missing_inputs,
     inputs_used,
+
+    // ✅ NEW: knowledge packet for Ask-Elena to narrate/render deterministically
+    knowledge,
+    knowledge_used,
 
     quick: quick || null,
 
@@ -850,10 +962,10 @@ exports.handler = async (event) => {
     context: {
       fad_ok: !!(sc.fad && Object.keys(sc.fad).length),
       profile_ok: !!profile_used,
+      state_resolved: knowledge.state_key || null,
     },
   };
 
-  // Debug toggle: body.debug=true or ?debug=1
   const debugEnabled =
     body?.debug === true ||
     (event.queryStringParameters &&
@@ -866,6 +978,9 @@ exports.handler = async (event) => {
       fadKeys: sc.fad && sc.fad.__raw ? Object.keys(sc.fad.__raw).slice(0, 60) : [],
       creditScoreSource: sc.creditScoreSource,
       computedAprAssumed: aprAssumed,
+      dataDir: DATA_DIR,
+      basicsFile: BASICS_FILENAME,
+      stateFile: knowledge_used.state.file || null,
     };
   }
 
